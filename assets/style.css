@@ -1,0 +1,117 @@
+* {
+    
+}
+
+div#kt_toolbar {
+    padding: 5px !important;
+}
+
+.content-heading h1 {
+    font-size: 35px;
+}
+
+.under_exam {
+    padding: 80px 0px;
+    border-bottom: 1px solid #d0d0d0;
+}
+
+.under_exam a {
+    padding: 60px 100px;
+    border: 1px solid #d0d0d0;
+    display: inline-block;
+    border-top-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    box-shadow: 4px 3px 6px #d0d0d0;
+}
+
+.popular_courses .container .row .col-xs-12 h2 {
+    color: white;
+    margin: 0px 0px 65px 0px;
+    font-size: 35px;
+}
+
+.popular_courses a, .popular_courses a h3, .popular_courses a i {
+}
+
+.popular_courses {
+    background: #23085a;
+    padding: 75px 0px;
+}
+
+.popular_courses .col-xs-12 {
+    color: white !important;
+}
+
+.popular_courses .col-lg-3 {
+    padding: 0px 20px;
+    margin: 0;
+}
+
+.ele {
+    border: 1px solid black;
+    border-top-left-radius: 55px;
+    border-bottom-right-radius: 55px;
+    background: white;
+    padding: 100px 5px;
+    margin: 10px 0px;
+}
+
+nav.navbar.navbar-expand-lg.bg-body-tertiary.sticky-top {
+    background: white;
+}
+
+.col-xs-12.col-sm-12.col-md-6.text {
+    border-top-left-radius: 70px;
+    padding-top: 70px;
+    padding-left: 31px;
+    padding-bottom: 45px;
+}
+
+.col-xs-12.bor-1, .col-xs-12.bor-2 {
+    border-bottom-right-radius: 70px;
+    padding: 0px;
+    border-top-left-radius: 70px;
+    box-shadow: 1px 6px 10px #9e9898;
+    margin: 40px 0px;
+    background: white;
+}
+
+.bor-1 img.img-fluid {border-top-left-radius: 70px;}
+
+.bor-2 img.img-fluid {
+    border-bottom-right-radius: 70px;
+}
+
+.description {
+    height: 100px;
+    font-size: 25px;
+    color: white;
+}
+
+.head-content .col-xs-12.col-sm-12.col-md-6
+{
+    position: absolute;
+    bottom: 0px;
+    height: 200px;
+    background: white;
+    border-top-right-radius: 70px;
+}
+
+.head-content {
+    background: url('images_home/img1.png');
+    background-size: cover;
+    width: 100%;
+    height: 100px;
+    position: relative;
+}
+
+.content {
+    background: url('images_home/content_main_img.jpg') center;
+    background-size: cover;
+    padding-top: 0;
+}
+
+.content .content-heading {
+    margin: 80px 0px 15px 0px;
+    padding: 0px 60px;
+}
