@@ -1,5 +1,17 @@
 * {}
 
+.sub-text a.btn {
+    background: #23085A;
+    color: white;
+    padding: 10px 37px;
+    border-radius: 30px;
+}
+
+.sub-text h1 {
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+
 .item i {margin-right: 8px;margin-top: 12px;}
 
 .item {
@@ -60,12 +72,19 @@ a:hover {
 
 .levels p {font-size: 18px;margin-top: 20px;}
 
+.sub-text {
+    margin-top: 0px;
+    padding: 0px 0px 20px 0px;
+}
+
+.sub-text p {font-size: 18px;margin-top: 10px; margin-bottom: 10px}
+
 .main-content img {
     width: 100%;
     border-top-left-radius: 35px;
 }
 
-.dis-content a.btn {
+/*.dis-content a.btn {
     background: #23085A;
     color: white;
     padding: 10px 37px;
@@ -82,7 +101,7 @@ a:hover {
     position: relative;
     top: 1px;
     color: #23085A;
-}
+}*/
 
 .discover.text-center {margin: 30px 0px;padding: 40px 140px 0px 100px;background: #5DEB4B;border-top-left-radius: 35px;position: relative;}
 
