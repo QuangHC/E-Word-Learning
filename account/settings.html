@@ -2110,6 +2110,701 @@
 			height: 200%;
 		}
 	</style>
+	<style type="text/css">
+		.apexcharts-canvas {
+			position: relative;
+			user-select: none;
+			/* cannot give overflow: hidden as it will crop tooltips which overflow outside chart area */
+		}
+
+
+		/* scrollbar is not visible by default for legend, hence forcing the visibility */
+		.apexcharts-canvas ::-webkit-scrollbar {
+			-webkit-appearance: none;
+			width: 6px;
+		}
+
+		.apexcharts-canvas ::-webkit-scrollbar-thumb {
+			border-radius: 4px;
+			background-color: rgba(0, 0, 0, .5);
+			box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+			-webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+		}
+
+
+		.apexcharts-inner {
+			position: relative;
+		}
+
+		.apexcharts-text tspan {
+			font-family: inherit;
+		}
+
+		.legend-mouseover-inactive {
+			transition: 0.15s ease all;
+			opacity: 0.20;
+		}
+
+		.apexcharts-series-collapsed {
+			opacity: 0;
+		}
+
+		.apexcharts-tooltip {
+			border-radius: 5px;
+			box-shadow: 2px 2px 6px -4px #999;
+			cursor: default;
+			font-size: 14px;
+			left: 62px;
+			opacity: 0;
+			pointer-events: none;
+			position: absolute;
+			top: 20px;
+			display: flex;
+			flex-direction: column;
+			overflow: hidden;
+			white-space: nowrap;
+			z-index: 12;
+			transition: 0.15s ease all;
+		}
+
+		.apexcharts-tooltip.apexcharts-active {
+			opacity: 1;
+			transition: 0.15s ease all;
+		}
+
+		.apexcharts-tooltip.apexcharts-theme-light {
+			border: 1px solid #e3e3e3;
+			background: rgba(255, 255, 255, 0.96);
+		}
+
+		.apexcharts-tooltip.apexcharts-theme-dark {
+			color: #fff;
+			background: rgba(30, 30, 30, 0.8);
+		}
+
+		.apexcharts-tooltip * {
+			font-family: inherit;
+		}
+
+
+		.apexcharts-tooltip-title {
+			padding: 6px;
+			font-size: 15px;
+			margin-bottom: 4px;
+		}
+
+		.apexcharts-tooltip.apexcharts-theme-light .apexcharts-tooltip-title {
+			background: #ECEFF1;
+			border-bottom: 1px solid #ddd;
+		}
+
+		.apexcharts-tooltip.apexcharts-theme-dark .apexcharts-tooltip-title {
+			background: rgba(0, 0, 0, 0.7);
+			border-bottom: 1px solid #333;
+		}
+
+		.apexcharts-tooltip-text-y-value,
+		.apexcharts-tooltip-text-goals-value,
+		.apexcharts-tooltip-text-z-value {
+			display: inline-block;
+			font-weight: 600;
+			margin-left: 5px;
+		}
+
+		.apexcharts-tooltip-text-y-label:empty,
+		.apexcharts-tooltip-text-y-value:empty,
+		.apexcharts-tooltip-text-goals-label:empty,
+		.apexcharts-tooltip-text-goals-value:empty,
+		.apexcharts-tooltip-text-z-value:empty {
+			display: none;
+		}
+
+		.apexcharts-tooltip-text-y-value,
+		.apexcharts-tooltip-text-goals-value,
+		.apexcharts-tooltip-text-z-value {
+			font-weight: 600;
+		}
+
+		.apexcharts-tooltip-text-goals-label,
+		.apexcharts-tooltip-text-goals-value {
+			padding: 6px 0 5px;
+		}
+
+		.apexcharts-tooltip-goals-group,
+		.apexcharts-tooltip-text-goals-label,
+		.apexcharts-tooltip-text-goals-value {
+			display: flex;
+		}
+
+		.apexcharts-tooltip-text-goals-label:not(:empty),
+		.apexcharts-tooltip-text-goals-value:not(:empty) {
+			margin-top: -6px;
+		}
+
+		.apexcharts-tooltip-marker {
+			width: 12px;
+			height: 12px;
+			position: relative;
+			top: 0px;
+			margin-right: 10px;
+			border-radius: 50%;
+		}
+
+		.apexcharts-tooltip-series-group {
+			padding: 0 10px;
+			display: none;
+			text-align: left;
+			justify-content: left;
+			align-items: center;
+		}
+
+		.apexcharts-tooltip-series-group.apexcharts-active .apexcharts-tooltip-marker {
+			opacity: 1;
+		}
+
+		.apexcharts-tooltip-series-group.apexcharts-active,
+		.apexcharts-tooltip-series-group:last-child {
+			padding-bottom: 4px;
+		}
+
+		.apexcharts-tooltip-series-group-hidden {
+			opacity: 0;
+			height: 0;
+			line-height: 0;
+			padding: 0 !important;
+		}
+
+		.apexcharts-tooltip-y-group {
+			padding: 6px 0 5px;
+		}
+
+		.apexcharts-tooltip-box,
+		.apexcharts-custom-tooltip {
+			padding: 4px 8px;
+		}
+
+		.apexcharts-tooltip-boxPlot {
+			display: flex;
+			flex-direction: column-reverse;
+		}
+
+		.apexcharts-tooltip-box>div {
+			margin: 4px 0;
+		}
+
+		.apexcharts-tooltip-box span.value {
+			font-weight: bold;
+		}
+
+		.apexcharts-tooltip-rangebar {
+			padding: 5px 8px;
+		}
+
+		.apexcharts-tooltip-rangebar .category {
+			font-weight: 600;
+			color: #777;
+		}
+
+		.apexcharts-tooltip-rangebar .series-name {
+			font-weight: bold;
+			display: block;
+			margin-bottom: 5px;
+		}
+
+		.apexcharts-xaxistooltip {
+			opacity: 0;
+			padding: 9px 10px;
+			pointer-events: none;
+			color: #373d3f;
+			font-size: 13px;
+			text-align: center;
+			border-radius: 2px;
+			position: absolute;
+			z-index: 10;
+			background: #ECEFF1;
+			border: 1px solid #90A4AE;
+			transition: 0.15s ease all;
+		}
+
+		.apexcharts-xaxistooltip.apexcharts-theme-dark {
+			background: rgba(0, 0, 0, 0.7);
+			border: 1px solid rgba(0, 0, 0, 0.5);
+			color: #fff;
+		}
+
+		.apexcharts-xaxistooltip:after,
+		.apexcharts-xaxistooltip:before {
+			left: 50%;
+			border: solid transparent;
+			content: " ";
+			height: 0;
+			width: 0;
+			position: absolute;
+			pointer-events: none;
+		}
+
+		.apexcharts-xaxistooltip:after {
+			border-color: rgba(236, 239, 241, 0);
+			border-width: 6px;
+			margin-left: -6px;
+		}
+
+		.apexcharts-xaxistooltip:before {
+			border-color: rgba(144, 164, 174, 0);
+			border-width: 7px;
+			margin-left: -7px;
+		}
+
+		.apexcharts-xaxistooltip-bottom:after,
+		.apexcharts-xaxistooltip-bottom:before {
+			bottom: 100%;
+		}
+
+		.apexcharts-xaxistooltip-top:after,
+		.apexcharts-xaxistooltip-top:before {
+			top: 100%;
+		}
+
+		.apexcharts-xaxistooltip-bottom:after {
+			border-bottom-color: #ECEFF1;
+		}
+
+		.apexcharts-xaxistooltip-bottom:before {
+			border-bottom-color: #90A4AE;
+		}
+
+		.apexcharts-xaxistooltip-bottom.apexcharts-theme-dark:after {
+			border-bottom-color: rgba(0, 0, 0, 0.5);
+		}
+
+		.apexcharts-xaxistooltip-bottom.apexcharts-theme-dark:before {
+			border-bottom-color: rgba(0, 0, 0, 0.5);
+		}
+
+		.apexcharts-xaxistooltip-top:after {
+			border-top-color: #ECEFF1
+		}
+
+		.apexcharts-xaxistooltip-top:before {
+			border-top-color: #90A4AE;
+		}
+
+		.apexcharts-xaxistooltip-top.apexcharts-theme-dark:after {
+			border-top-color: rgba(0, 0, 0, 0.5);
+		}
+
+		.apexcharts-xaxistooltip-top.apexcharts-theme-dark:before {
+			border-top-color: rgba(0, 0, 0, 0.5);
+		}
+
+		.apexcharts-xaxistooltip.apexcharts-active {
+			opacity: 1;
+			transition: 0.15s ease all;
+		}
+
+		.apexcharts-yaxistooltip {
+			opacity: 0;
+			padding: 4px 10px;
+			pointer-events: none;
+			color: #373d3f;
+			font-size: 13px;
+			text-align: center;
+			border-radius: 2px;
+			position: absolute;
+			z-index: 10;
+			background: #ECEFF1;
+			border: 1px solid #90A4AE;
+		}
+
+		.apexcharts-yaxistooltip.apexcharts-theme-dark {
+			background: rgba(0, 0, 0, 0.7);
+			border: 1px solid rgba(0, 0, 0, 0.5);
+			color: #fff;
+		}
+
+		.apexcharts-yaxistooltip:after,
+		.apexcharts-yaxistooltip:before {
+			top: 50%;
+			border: solid transparent;
+			content: " ";
+			height: 0;
+			width: 0;
+			position: absolute;
+			pointer-events: none;
+		}
+
+		.apexcharts-yaxistooltip:after {
+			border-color: rgba(236, 239, 241, 0);
+			border-width: 6px;
+			margin-top: -6px;
+		}
+
+		.apexcharts-yaxistooltip:before {
+			border-color: rgba(144, 164, 174, 0);
+			border-width: 7px;
+			margin-top: -7px;
+		}
+
+		.apexcharts-yaxistooltip-left:after,
+		.apexcharts-yaxistooltip-left:before {
+			left: 100%;
+		}
+
+		.apexcharts-yaxistooltip-right:after,
+		.apexcharts-yaxistooltip-right:before {
+			right: 100%;
+		}
+
+		.apexcharts-yaxistooltip-left:after {
+			border-left-color: #ECEFF1;
+		}
+
+		.apexcharts-yaxistooltip-left:before {
+			border-left-color: #90A4AE;
+		}
+
+		.apexcharts-yaxistooltip-left.apexcharts-theme-dark:after {
+			border-left-color: rgba(0, 0, 0, 0.5);
+		}
+
+		.apexcharts-yaxistooltip-left.apexcharts-theme-dark:before {
+			border-left-color: rgba(0, 0, 0, 0.5);
+		}
+
+		.apexcharts-yaxistooltip-right:after {
+			border-right-color: #ECEFF1;
+		}
+
+		.apexcharts-yaxistooltip-right:before {
+			border-right-color: #90A4AE;
+		}
+
+		.apexcharts-yaxistooltip-right.apexcharts-theme-dark:after {
+			border-right-color: rgba(0, 0, 0, 0.5);
+		}
+
+		.apexcharts-yaxistooltip-right.apexcharts-theme-dark:before {
+			border-right-color: rgba(0, 0, 0, 0.5);
+		}
+
+		.apexcharts-yaxistooltip.apexcharts-active {
+			opacity: 1;
+		}
+
+		.apexcharts-yaxistooltip-hidden {
+			display: none;
+		}
+
+		.apexcharts-xcrosshairs,
+		.apexcharts-ycrosshairs {
+			pointer-events: none;
+			opacity: 0;
+			transition: 0.15s ease all;
+		}
+
+		.apexcharts-xcrosshairs.apexcharts-active,
+		.apexcharts-ycrosshairs.apexcharts-active {
+			opacity: 1;
+			transition: 0.15s ease all;
+		}
+
+		.apexcharts-ycrosshairs-hidden {
+			opacity: 0;
+		}
+
+		.apexcharts-selection-rect {
+			cursor: move;
+		}
+
+		.svg_select_boundingRect,
+		.svg_select_points_rot {
+			pointer-events: none;
+			opacity: 0;
+			visibility: hidden;
+		}
+
+		.apexcharts-selection-rect+g .svg_select_boundingRect,
+		.apexcharts-selection-rect+g .svg_select_points_rot {
+			opacity: 0;
+			visibility: hidden;
+		}
+
+		.apexcharts-selection-rect+g .svg_select_points_l,
+		.apexcharts-selection-rect+g .svg_select_points_r {
+			cursor: ew-resize;
+			opacity: 1;
+			visibility: visible;
+		}
+
+		.svg_select_points {
+			fill: #efefef;
+			stroke: #333;
+			rx: 2;
+		}
+
+		.apexcharts-svg.apexcharts-zoomable.hovering-zoom {
+			cursor: crosshair
+		}
+
+		.apexcharts-svg.apexcharts-zoomable.hovering-pan {
+			cursor: move
+		}
+
+		.apexcharts-zoom-icon,
+		.apexcharts-zoomin-icon,
+		.apexcharts-zoomout-icon,
+		.apexcharts-reset-icon,
+		.apexcharts-pan-icon,
+		.apexcharts-selection-icon,
+		.apexcharts-menu-icon,
+		.apexcharts-toolbar-custom-icon {
+			cursor: pointer;
+			width: 20px;
+			height: 20px;
+			line-height: 24px;
+			color: #6E8192;
+			text-align: center;
+		}
+
+		.apexcharts-zoom-icon svg,
+		.apexcharts-zoomin-icon svg,
+		.apexcharts-zoomout-icon svg,
+		.apexcharts-reset-icon svg,
+		.apexcharts-menu-icon svg {
+			fill: #6E8192;
+		}
+
+		.apexcharts-selection-icon svg {
+			fill: #444;
+			transform: scale(0.76)
+		}
+
+		.apexcharts-theme-dark .apexcharts-zoom-icon svg,
+		.apexcharts-theme-dark .apexcharts-zoomin-icon svg,
+		.apexcharts-theme-dark .apexcharts-zoomout-icon svg,
+		.apexcharts-theme-dark .apexcharts-reset-icon svg,
+		.apexcharts-theme-dark .apexcharts-pan-icon svg,
+		.apexcharts-theme-dark .apexcharts-selection-icon svg,
+		.apexcharts-theme-dark .apexcharts-menu-icon svg,
+		.apexcharts-theme-dark .apexcharts-toolbar-custom-icon svg {
+			fill: #f3f4f5;
+		}
+
+		.apexcharts-canvas .apexcharts-zoom-icon.apexcharts-selected svg,
+		.apexcharts-canvas .apexcharts-selection-icon.apexcharts-selected svg,
+		.apexcharts-canvas .apexcharts-reset-zoom-icon.apexcharts-selected svg {
+			fill: #008FFB;
+		}
+
+		.apexcharts-theme-light .apexcharts-selection-icon:not(.apexcharts-selected):hover svg,
+		.apexcharts-theme-light .apexcharts-zoom-icon:not(.apexcharts-selected):hover svg,
+		.apexcharts-theme-light .apexcharts-zoomin-icon:hover svg,
+		.apexcharts-theme-light .apexcharts-zoomout-icon:hover svg,
+		.apexcharts-theme-light .apexcharts-reset-icon:hover svg,
+		.apexcharts-theme-light .apexcharts-menu-icon:hover svg {
+			fill: #333;
+		}
+
+		.apexcharts-selection-icon,
+		.apexcharts-menu-icon {
+			position: relative;
+		}
+
+		.apexcharts-reset-icon {
+			margin-left: 5px;
+		}
+
+		.apexcharts-zoom-icon,
+		.apexcharts-reset-icon,
+		.apexcharts-menu-icon {
+			transform: scale(0.85);
+		}
+
+		.apexcharts-zoomin-icon,
+		.apexcharts-zoomout-icon {
+			transform: scale(0.7)
+		}
+
+		.apexcharts-zoomout-icon {
+			margin-right: 3px;
+		}
+
+		.apexcharts-pan-icon {
+			transform: scale(0.62);
+			position: relative;
+			left: 1px;
+			top: 0px;
+		}
+
+		.apexcharts-pan-icon svg {
+			fill: #fff;
+			stroke: #6E8192;
+			stroke-width: 2;
+		}
+
+		.apexcharts-pan-icon.apexcharts-selected svg {
+			stroke: #008FFB;
+		}
+
+		.apexcharts-pan-icon:not(.apexcharts-selected):hover svg {
+			stroke: #333;
+		}
+
+		.apexcharts-toolbar {
+			position: absolute;
+			z-index: 11;
+			max-width: 176px;
+			text-align: right;
+			border-radius: 3px;
+			padding: 0px 6px 2px 6px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.apexcharts-menu {
+			background: #fff;
+			position: absolute;
+			top: 100%;
+			border: 1px solid #ddd;
+			border-radius: 3px;
+			padding: 3px;
+			right: 10px;
+			opacity: 0;
+			min-width: 110px;
+			transition: 0.15s ease all;
+			pointer-events: none;
+		}
+
+		.apexcharts-menu.apexcharts-menu-open {
+			opacity: 1;
+			pointer-events: all;
+			transition: 0.15s ease all;
+		}
+
+		.apexcharts-menu-item {
+			padding: 6px 7px;
+			font-size: 12px;
+			cursor: pointer;
+		}
+
+		.apexcharts-theme-light .apexcharts-menu-item:hover {
+			background: #eee;
+		}
+
+		.apexcharts-theme-dark .apexcharts-menu {
+			background: rgba(0, 0, 0, 0.7);
+			color: #fff;
+		}
+
+		@media screen and (min-width: 768px) {
+			.apexcharts-canvas:hover .apexcharts-toolbar {
+				opacity: 1;
+			}
+		}
+
+		.apexcharts-datalabel.apexcharts-element-hidden {
+			opacity: 0;
+		}
+
+		.apexcharts-pie-label,
+		.apexcharts-datalabels,
+		.apexcharts-datalabel,
+		.apexcharts-datalabel-label,
+		.apexcharts-datalabel-value {
+			cursor: default;
+			pointer-events: none;
+		}
+
+		.apexcharts-pie-label-delay {
+			opacity: 0;
+			animation-name: opaque;
+			animation-duration: 0.3s;
+			animation-fill-mode: forwards;
+			animation-timing-function: ease;
+		}
+
+		.apexcharts-canvas .apexcharts-element-hidden {
+			opacity: 0;
+		}
+
+		.apexcharts-hide .apexcharts-series-points {
+			opacity: 0;
+		}
+
+		.apexcharts-gridline,
+		.apexcharts-annotation-rect,
+		.apexcharts-tooltip .apexcharts-marker,
+		.apexcharts-area-series .apexcharts-area,
+		.apexcharts-line,
+		.apexcharts-zoom-rect,
+		.apexcharts-toolbar svg,
+		.apexcharts-area-series .apexcharts-series-markers .apexcharts-marker.no-pointer-events,
+		.apexcharts-line-series .apexcharts-series-markers .apexcharts-marker.no-pointer-events,
+		.apexcharts-radar-series path,
+		.apexcharts-radar-series polygon {
+			pointer-events: none;
+		}
+
+
+		/* markers */
+
+		.apexcharts-marker {
+			transition: 0.15s ease all;
+		}
+
+		@keyframes opaque {
+			0% {
+				opacity: 0;
+			}
+
+			100% {
+				opacity: 1;
+			}
+		}
+
+
+		/* Resize generated styles */
+
+		@keyframes resizeanim {
+			from {
+				opacity: 0;
+			}
+
+			to {
+				opacity: 0;
+			}
+		}
+
+		.resize-triggers {
+			animation: 1ms resizeanim;
+			visibility: hidden;
+			opacity: 0;
+		}
+
+		.resize-triggers,
+		.resize-triggers>div,
+		.contract-trigger:before {
+			content: " ";
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+			overflow: hidden;
+		}
+
+		.resize-triggers>div {
+			background: #eee;
+			overflow: auto;
+		}
+
+		.contract-trigger:before {
+			width: 200%;
+			height: 200%;
+		}
+	</style>
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -3304,6 +3999,25 @@
 															<option value="on">On</option>
 														</select><span
 															class="select2 select2-container select2-container--bootstrap5"
+															dir="ltr" data-select2-id="select2-data-1-gcl9"
+															style="width: 100%;"><span class="selection"><span
+																	class="select2-selection select2-selection--single form-select form-select-sm form-select-solid"
+																	role="combobox" aria-haspopup="true"
+																	aria-expanded="false" tabindex="-1"
+																	aria-disabled="false"
+																	aria-labelledby="select2-timezone-vk-container"
+																	aria-controls="select2-timezone-vk-container"><span
+																		class="select2-selection__rendered"
+																		id="select2-timezone-vk-container"
+																		role="textbox" aria-readonly="true" title="
+																Within the next">
+																		Within the next</span><span
+																		class="select2-selection__arrow"
+																		role="presentation"><b
+																			role="presentation"></b></span></span></span><span
+																class="dropdown-wrapper"
+																aria-hidden="true"></span></span><span
+															class="select2 select2-container select2-container--bootstrap5"
 															dir="ltr" data-select2-id="select2-data-1-zkxt"
 															style="width: 100%;"><span class="selection"><span
 																	class="select2-selection select2-selection--single form-select form-select-sm form-select-solid"
@@ -3460,6 +4174,24 @@
 																<option value="months">Months</option>
 																<option value="years">Years</option>
 															</select><span
+																class="select2 select2-container select2-container--bootstrap5"
+																dir="ltr" data-select2-id="select2-data-2-593v"
+																style="width: 100%;"><span class="selection"><span
+																		class="select2-selection select2-selection--single form-select form-select-sm form-select-solid"
+																		role="combobox" aria-haspopup="true"
+																		aria-expanded="false" tabindex="-1"
+																		aria-disabled="false"
+																		aria-labelledby="select2-date_typer-vx-container"
+																		aria-controls="select2-date_typer-vx-container"><span
+																			class="select2-selection__rendered"
+																			id="select2-date_typer-vx-container"
+																			role="textbox" aria-readonly="true"
+																			title="Days">Days</span><span
+																			class="select2-selection__arrow"
+																			role="presentation"><b
+																				role="presentation"></b></span></span></span><span
+																	class="dropdown-wrapper"
+																	aria-hidden="true"></span></span><span
 																class="select2 select2-container select2-container--bootstrap5"
 																dir="ltr" data-select2-id="select2-data-2-p6um"
 																style="width: 100%;"><span class="selection"><span
@@ -4705,219 +5437,182 @@
 					<!--begin::Post-->
 					<div class="content flex-row-fluid" id="kt_content">
 						<!--begin::Navbar-->
-						<div class="card mb-5 mb-xl-10">
-							<div class="card-body pt-9 pb-0">
-								<!--begin::Details-->
-								<div class="d-flex flex-wrap flex-sm-nowrap mb-3">
-									<!--begin: Pic-->
-									<div class="me-7 mb-4">
-										<div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-											<img src="assets/media/avatars/150-26.jpg" alt="image">
-											<div
-												class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px">
-											</div>
-										</div>
-									</div>
-									<!--end::Pic-->
-									<!--begin::Info-->
-									<div class="flex-grow-1">
-										<!--begin::Title-->
-										<div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
-											<!--begin::User-->
-											<div class="d-flex flex-column">
-												<!--begin::Name-->
-												<div class="d-flex align-items-center mb-2">
-													<a href="#"
-														class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">Max
-														Smith</a>
-													<a href="#">
-														<!--begin::Svg Icon | path: icons/duotune/general/gen026.svg-->
-														<span class="svg-icon svg-icon-1 svg-icon-primary">
-															<svg xmlns="http://www.w3.org/2000/svg" width="24px"
-																height="24px" viewBox="0 0 24 24">
-																<path
-																	d="M10.0813 3.7242C10.8849 2.16438 13.1151 2.16438 13.9187 3.7242V3.7242C14.4016 4.66147 15.4909 5.1127 16.4951 4.79139V4.79139C18.1663 4.25668 19.7433 5.83365 19.2086 7.50485V7.50485C18.8873 8.50905 19.3385 9.59842 20.2758 10.0813V10.0813C21.8356 10.8849 21.8356 13.1151 20.2758 13.9187V13.9187C19.3385 14.4016 18.8873 15.491 19.2086 16.4951V16.4951C19.7433 18.1663 18.1663 19.7433 16.4951 19.2086V19.2086C15.491 18.8873 14.4016 19.3385 13.9187 20.2758V20.2758C13.1151 21.8356 10.8849 21.8356 10.0813 20.2758V20.2758C9.59842 19.3385 8.50905 18.8873 7.50485 19.2086V19.2086C5.83365 19.7433 4.25668 18.1663 4.79139 16.4951V16.4951C5.1127 15.491 4.66147 14.4016 3.7242 13.9187V13.9187C2.16438 13.1151 2.16438 10.8849 3.7242 10.0813V10.0813C4.66147 9.59842 5.1127 8.50905 4.79139 7.50485V7.50485C4.25668 5.83365 5.83365 4.25668 7.50485 4.79139V4.79139C8.50905 5.1127 9.59842 4.66147 10.0813 3.7242V3.7242Z"
-																	fill="#00A3FF"></path>
-																<path class="permanent"
-																	d="M14.8563 9.1903C15.0606 8.94984 15.3771 8.9385 15.6175 9.14289C15.858 9.34728 15.8229 9.66433 15.6185 9.9048L11.863 14.6558C11.6554 14.9001 11.2876 14.9258 11.048 14.7128L8.47656 12.4271C8.24068 12.2174 8.21944 11.8563 8.42911 11.6204C8.63877 11.3845 8.99996 11.3633 9.23583 11.5729L11.3706 13.4705L14.8563 9.1903Z"
-																	fill="white"></path>
-															</svg>
-														</span>
-														<!--end::Svg Icon-->
-													</a>
-													<a href="#"
-														class="btn btn-sm btn-light-success fw-bolder ms-2 fs-8 py-1 px-3"
-														data-bs-toggle="modal"
-														data-bs-target="#kt_modal_upgrade_plan">Upgrade to Pro</a>
-												</div>
-												<!--end::Name-->
-												<!--begin::Info-->
-												<div class="d-flex flex-wrap fw-bold fs-6 mb-4 pe-2">
-													<a href="#"
-														class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
-														<!--begin::Svg Icon | path: icons/duotune/communication/com006.svg-->
-														<span class="svg-icon svg-icon-4 me-1">
-															<svg xmlns="http://www.w3.org/2000/svg" width="24"
-																height="24" viewBox="0 0 24 24" fill="none">
-																<path opacity="0.3"
-																	d="M22 12C22 17.5 17.5 22 12 22C6.5 22 2 17.5 2 12C2 6.5 6.5 2 12 2C17.5 2 22 6.5 22 12ZM12 7C10.3 7 9 8.3 9 10C9 11.7 10.3 13 12 13C13.7 13 15 11.7 15 10C15 8.3 13.7 7 12 7Z"
-																	fill="black"></path>
-																<path
-																	d="M12 22C14.6 22 17 21 18.7 19.4C17.9 16.9 15.2 15 12 15C8.8 15 6.09999 16.9 5.29999 19.4C6.99999 21 9.4 22 12 22Z"
-																	fill="black"></path>
-															</svg>
-														</span>
-														<!--end::Svg Icon-->Developer</a>
-													<a href="#"
-														class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
-														<!--begin::Svg Icon | path: icons/duotune/general/gen018.svg-->
-														<span class="svg-icon svg-icon-4 me-1">
-															<svg xmlns="http://www.w3.org/2000/svg" width="24"
-																height="24" viewBox="0 0 24 24" fill="none">
-																<path opacity="0.3"
-																	d="M18.0624 15.3453L13.1624 20.7453C12.5624 21.4453 11.5624 21.4453 10.9624 20.7453L6.06242 15.3453C4.56242 13.6453 3.76242 11.4453 4.06242 8.94534C4.56242 5.34534 7.46242 2.44534 11.0624 2.04534C15.8624 1.54534 19.9624 5.24534 19.9624 9.94534C20.0624 12.0453 19.2624 13.9453 18.0624 15.3453Z"
-																	fill="black"></path>
-																<path
-																	d="M12.0624 13.0453C13.7193 13.0453 15.0624 11.7022 15.0624 10.0453C15.0624 8.38849 13.7193 7.04535 12.0624 7.04535C10.4056 7.04535 9.06241 8.38849 9.06241 10.0453C9.06241 11.7022 10.4056 13.0453 12.0624 13.0453Z"
-																	fill="black"></path>
-															</svg>
-														</span>
-														<!--end::Svg Icon-->SF, Bay Area</a>
-													<a href="#"
-														class="d-flex align-items-center text-gray-400 text-hover-primary mb-2">
-														<!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
-														<span class="svg-icon svg-icon-4 me-1">
-															<svg xmlns="http://www.w3.org/2000/svg" width="24"
-																height="24" viewBox="0 0 24 24" fill="none">
-																<path opacity="0.3"
-																	d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19Z"
-																	fill="black"></path>
-																<path
-																	d="M21 5H2.99999C2.69999 5 2.49999 5.10005 2.29999 5.30005L11.2 13.3C11.7 13.7 12.4 13.7 12.8 13.3L21.7 5.30005C21.5 5.10005 21.3 5 21 5Z"
-																	fill="black"></path>
-															</svg>
-														</span>
-														<!--end::Svg Icon-->max@kt.com</a>
-												</div>
-												<!--end::Info-->
-											</div>
-											<!--end::User-->
-											<!--begin::Actions-->
+                        <div class="card mb-5 mb-xl-10">
+                            <div class="card-body pt-9 pb-0">
+                                <!--begin::Details-->
+                                <div class="d-flex flex-wrap flex-sm-nowrap mb-3">
+                                    <!--begin: Pic-->
+                                    <div class="me-7 mb-4">
+                                        <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
+                                            <img src="assets/media/avatars/150-26.jpg" alt="image">
+                                            <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end::Pic-->
+                                    <!--begin::Info-->
+                                    <div class="flex-grow-1">
+                                        <!--begin::Title-->
+                                        <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+                                            <!--begin::User-->
+                                            <div class="d-flex flex-column">
+                                                <!--begin::Name-->
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">Max
+                                                        Smith</a>
+                                                    <a href="#">
+                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen026.svg-->
+                                                        <span class="svg-icon svg-icon-1 svg-icon-primary">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
+                                                                <path d="M10.0813 3.7242C10.8849 2.16438 13.1151 2.16438 13.9187 3.7242V3.7242C14.4016 4.66147 15.4909 5.1127 16.4951 4.79139V4.79139C18.1663 4.25668 19.7433 5.83365 19.2086 7.50485V7.50485C18.8873 8.50905 19.3385 9.59842 20.2758 10.0813V10.0813C21.8356 10.8849 21.8356 13.1151 20.2758 13.9187V13.9187C19.3385 14.4016 18.8873 15.491 19.2086 16.4951V16.4951C19.7433 18.1663 18.1663 19.7433 16.4951 19.2086V19.2086C15.491 18.8873 14.4016 19.3385 13.9187 20.2758V20.2758C13.1151 21.8356 10.8849 21.8356 10.0813 20.2758V20.2758C9.59842 19.3385 8.50905 18.8873 7.50485 19.2086V19.2086C5.83365 19.7433 4.25668 18.1663 4.79139 16.4951V16.4951C5.1127 15.491 4.66147 14.4016 3.7242 13.9187V13.9187C2.16438 13.1151 2.16438 10.8849 3.7242 10.0813V10.0813C4.66147 9.59842 5.1127 8.50905 4.79139 7.50485V7.50485C4.25668 5.83365 5.83365 4.25668 7.50485 4.79139V4.79139C8.50905 5.1127 9.59842 4.66147 10.0813 3.7242V3.7242Z" fill="#00A3FF"></path>
+                                                                <path class="permanent" d="M14.8563 9.1903C15.0606 8.94984 15.3771 8.9385 15.6175 9.14289C15.858 9.34728 15.8229 9.66433 15.6185 9.9048L11.863 14.6558C11.6554 14.9001 11.2876 14.9258 11.048 14.7128L8.47656 12.4271C8.24068 12.2174 8.21944 11.8563 8.42911 11.6204C8.63877 11.3845 8.99996 11.3633 9.23583 11.5729L11.3706 13.4705L14.8563 9.1903Z" fill="white"></path>
+                                                            </svg>
+                                                        </span>
+                                                        <!--end::Svg Icon-->
+                                                    </a>
+                                                    <a href="#" class="btn btn-sm btn-light-success fw-bolder ms-2 fs-8 py-1 px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">Upgrade to Pro</a>
+                                                </div>
+                                                <!--end::Name-->
+                                                <!--begin::Info-->
+                                                <div class="d-flex flex-wrap fw-bold fs-6 mb-4 pe-2">
+                                                    <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
+                                                        <!--begin::Svg Icon | path: icons/duotune/communication/com006.svg-->
+                                                        <span class="svg-icon svg-icon-4 me-1">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                <path opacity="0.3" d="M22 12C22 17.5 17.5 22 12 22C6.5 22 2 17.5 2 12C2 6.5 6.5 2 12 2C17.5 2 22 6.5 22 12ZM12 7C10.3 7 9 8.3 9 10C9 11.7 10.3 13 12 13C13.7 13 15 11.7 15 10C15 8.3 13.7 7 12 7Z" fill="black"></path>
+                                                                <path d="M12 22C14.6 22 17 21 18.7 19.4C17.9 16.9 15.2 15 12 15C8.8 15 6.09999 16.9 5.29999 19.4C6.99999 21 9.4 22 12 22Z" fill="black"></path>
+                                                            </svg>
+                                                        </span>
+                                                        <!--end::Svg Icon-->Developer</a>
+                                                    <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
+                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen018.svg-->
+                                                        <span class="svg-icon svg-icon-4 me-1">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                <path opacity="0.3" d="M18.0624 15.3453L13.1624 20.7453C12.5624 21.4453 11.5624 21.4453 10.9624 20.7453L6.06242 15.3453C4.56242 13.6453 3.76242 11.4453 4.06242 8.94534C4.56242 5.34534 7.46242 2.44534 11.0624 2.04534C15.8624 1.54534 19.9624 5.24534 19.9624 9.94534C20.0624 12.0453 19.2624 13.9453 18.0624 15.3453Z" fill="black"></path>
+                                                                <path d="M12.0624 13.0453C13.7193 13.0453 15.0624 11.7022 15.0624 10.0453C15.0624 8.38849 13.7193 7.04535 12.0624 7.04535C10.4056 7.04535 9.06241 8.38849 9.06241 10.0453C9.06241 11.7022 10.4056 13.0453 12.0624 13.0453Z" fill="black"></path>
+                                                            </svg>
+                                                        </span>
+                                                        <!--end::Svg Icon-->SF, Bay Area</a>
+                                                    <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary mb-2">
+                                                        <!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
+                                                        <span class="svg-icon svg-icon-4 me-1">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                <path opacity="0.3" d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19Z" fill="black"></path>
+                                                                <path d="M21 5H2.99999C2.69999 5 2.49999 5.10005 2.29999 5.30005L11.2 13.3C11.7 13.7 12.4 13.7 12.8 13.3L21.7 5.30005C21.5 5.10005 21.3 5 21 5Z" fill="black"></path>
+                                                            </svg>
+                                                        </span>
+                                                        <!--end::Svg Icon-->max@kt.com</a>
+                                                </div>
+                                                <!--end::Info-->
+                                            </div>
+                                            <!--end::User-->
+                                            <!--begin::Actions-->
 
-											<!--end::Actions-->
-										</div>
-										<!--end::Title-->
-										<!--begin::Stats-->
-										<div class="d-flex flex-wrap flex-stack">
-											<!--begin::Wrapper-->
-											<div class="d-flex flex-column flex-grow-1 pe-8">
-												<!--begin::Stats-->
-												<div class="d-flex flex-wrap">
-													<!--begin::Stat-->
-													<div
-														class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-														<!--begin::Number-->
-														<div class="d-flex align-items-center">
-															<!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
-															<i class="fa-solid fa-bolt-lightning"></i>
-															<!--end::Svg Icon-->
-															<div class="fs-2 fw-bolder counted" data-kt-countup="true"
-																data-kt-countup-value="4500" data-kt-countup-prefix="$">
-																4500</div>
-														</div>
-														<!--end::Number-->
-														<!--begin::Label-->
-														<div class="fw-bold fs-6 text-gray-400">Experience</div>
-														<!--end::Label-->
-													</div>
-													<!--end::Stat-->
-													<!--begin::Stat-->
-													<div
-														class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-														<!--begin::Number-->
-														<div class="d-flex align-items-center">
-															<!--begin::Svg Icon | path: icons/duotune/arrows/arr065.svg-->
-															<i class="fa-solid fa-bolt-lightning"></i>
-															<!--end::Svg Icon-->
-															<div class="fs-2 fw-bolder counted" data-kt-countup="true"
-																data-kt-countup-value="75">75</div>
-														</div>
-														<!--end::Number-->
-														<!--begin::Label-->
-														<div class="fw-bold fs-6 text-gray-400">Level</div>
-														<!--end::Label-->
-													</div>
-													<!--end::Stat-->
-													<!--begin::Stat-->
-													<div
-														class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-														<!--begin::Number-->
-														<div class="d-flex align-items-center">
-															<!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
-															<i class="fa-solid fa-bolt-lightning"></i>
-															<!--end::Svg Icon-->
-															<div class="fs-2 fw-bolder counted" data-kt-countup="true"
-																data-kt-countup-value="60" data-kt-countup-prefix="%">
-																Broze</div>
-														</div>
-														<!--end::Number-->
-														<!--begin::Label-->
-														<div class="fw-bold fs-6 text-gray-400">Rank</div>
-														<!--end::Label-->
-													</div>
-													<!--end::Stat-->
-												</div>
-												<!--end::Stats-->
-											</div>
-											<!--end::Wrapper-->
-											<!--begin::Progress-->
+                                            <!--end::Actions-->
+                                        </div>
+                                        <!--end::Title-->
+                                        <!--begin::Stats-->
+                                        <div class="d-flex flex-wrap flex-stack">
+                                            <!--begin::Wrapper-->
+                                            <div class="d-flex flex-column flex-grow-1 pe-8">
+                                                <!--begin::Stats-->
+                                                <div class="d-flex flex-wrap">
+                                                    <!--begin::Stat-->
+                                                    <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                                        <!--begin::Number-->
+                                                        <div class="d-flex align-items-center">
+                                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+                                                            <i class="fa-solid fa-bolt-lightning"></i>
+                                                            <!--end::Svg Icon-->
+                                                            <div class="fs-2 fw-bolder counted" data-kt-countup="true" data-kt-countup-value="4500" data-kt-countup-prefix="$">
+                                                                4500</div>
+                                                        </div>
+                                                        <!--end::Number-->
+                                                        <!--begin::Label-->
+                                                        <div class="fw-bold fs-6 text-gray-400">Experience</div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <!--end::Stat-->
+                                                    <!--begin::Stat-->
+                                                    <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                                        <!--begin::Number-->
+                                                        <div class="d-flex align-items-center">
+                                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr065.svg-->
+                                                            <i class="fa-solid fa-bolt-lightning"></i>
+                                                            <!--end::Svg Icon-->
+                                                            <div class="fs-2 fw-bolder counted" data-kt-countup="true" data-kt-countup-value="75">75</div>
+                                                        </div>
+                                                        <!--end::Number-->
+                                                        <!--begin::Label-->
+                                                        <div class="fw-bold fs-6 text-gray-400">Level</div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <!--end::Stat-->
+                                                    <!--begin::Stat-->
+                                                    <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                                        <!--begin::Number-->
+                                                        <div class="d-flex align-items-center">
+                                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+                                                            <i class="fa-solid fa-bolt-lightning"></i>
+                                                            <!--end::Svg Icon-->
+                                                            <div class="fs-2 fw-bolder counted" data-kt-countup="true" data-kt-countup-value="60" data-kt-countup-prefix="%">
+                                                                Broze</div>
+                                                        </div>
+                                                        <!--end::Number-->
+                                                        <!--begin::Label-->
+                                                        <div class="fw-bold fs-6 text-gray-400">Rank</div>
+                                                        <!--end::Label-->
+                                                    </div>
+                                                    <!--end::Stat-->
+                                                </div>
+                                                <!--end::Stats-->
+                                            </div>
+                                            <!--end::Wrapper-->
+                                            <!--begin::Progress-->
 
-											<!--end::Progress-->
-										</div>
-										<!--end::Stats-->
-									</div>
-									<!--end::Info-->
-								</div>
-								<!--end::Details-->
-								<!--begin::Navs-->
-								<div class="d-flex overflow-auto h-55px">
-									<ul
-										class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder flex-nowrap">
-										<!--begin::Nav item-->
-										<li class="nav-item">
-											<a class="nav-link text-active-primary me-6"
-												href="account/overview.html">Overview</a>
-										</li>
-										<!--end::Nav item-->
-										<!--begin::Nav item-->
-										<li class="nav-item">
-											<a class="nav-link text-active-primary me-6 active"
-												href="account/settings.html">Settings</a>
-										</li>
-										<!--end::Nav item-->
-										<!--begin::Nav item-->
+                                            <!--end::Progress-->
+                                        </div>
+                                        <!--end::Stats-->
+                                    </div>
+                                    <!--end::Info-->
+                                </div>
+                                <!--end::Details-->
+                                <!--begin::Navs-->
+                                <div class="d-flex overflow-auto h-55px">
+                                    <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder flex-nowrap">
+                                        <!--begin::Nav item-->
+                                        <li class="nav-item">
+                                            <a class="nav-link text-active-primary me-6 " href="account/overview.html">Overview</a>
+                                        </li>
+                                        <!--end::Nav item-->
+                                        <!--begin::Nav item-->
+                                        <li class="nav-item">
+                                            <a class="nav-link text-active-primary me-6 active" href="account/settings.html">Settings</a>
+                                        </li>
+                                        <!--end::Nav item-->
+                                        <!--begin::Nav item-->
 
-										<!--end::Nav item-->
-										<!--begin::Nav item-->
+                                        <!--end::Nav item-->
+                                        <!--begin::Nav item-->
 
-										<!--end::Nav item-->
-										<!--begin::Nav item-->
+                                        <!--end::Nav item-->
+                                        <!--begin::Nav item-->
 
-										<!--end::Nav item-->
-										<!--begin::Nav item-->
+                                        <!--end::Nav item-->
+                                        <!--begin::Nav item-->
 
-										<!--end::Nav item-->
-										<!--begin::Nav item-->
+                                        <!--end::Nav item-->
+                                        <!--begin::Nav item-->
 
-										<!--end::Nav item-->
-									</ul>
-								</div>
-								<!--begin::Navs-->
-							</div>
-						</div>
+                                        <!--end::Nav item-->
+                                    </ul>
+                                </div>
+                                <!--begin::Navs-->
+                            </div>
+                        </div>
 						<!--end::Navbar-->
 						<!--begin::Basic info-->
-						<div class="card mb-5 mb-xl-10" data-select2-id="select2-data-29-ruc4">
+						<div class="card mb-5 mb-xl-10">
 							<!--begin::Card header-->
 							<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse"
 								data-bs-target="#kt_account_profile_details" aria-expanded="true"
@@ -4930,12 +5625,10 @@
 							</div>
 							<!--begin::Card header-->
 							<!--begin::Content-->
-							<div id="kt_account_profile_details" class="collapse show"
-								data-select2-id="select2-data-kt_account_profile_details">
+							<div id="kt_account_profile_details" class="collapse show">
 								<!--begin::Form-->
 								<form id="kt_account_profile_details_form"
-									class="form fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate"
-									data-select2-id="select2-data-kt_account_profile_details_form">
+									class="form fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate">
 									<!--begin::Card body-->
 									<div class="card-body border-top p-9">
 										<!--begin::Input group-->
@@ -4946,12 +5639,12 @@
 											<!--begin::Col-->
 											<div class="col-lg-8">
 												<!--begin::Image input-->
-												<div class="image-input image-input-outline image-input-empty"
-													data-kt-image-input="true"
+												<div class="image-input image-input-outline" data-kt-image-input="true"
 													style="background-image: url(assets/media/avatars/blank.png)">
 													<!--begin::Preview existing avatar-->
 													<div class="image-input-wrapper w-125px h-125px"
-														style="background-image: none;"></div>
+														style="background-image: url(assets/media/avatars/150-26.jpg)">
+													</div>
 													<!--end::Preview existing avatar-->
 													<!--begin::Label-->
 													<label
@@ -4961,7 +5654,7 @@
 														<i class="bi bi-pencil-fill fs-7"></i>
 														<!--begin::Inputs-->
 														<input type="file" name="avatar" accept=".png, .jpg, .jpeg">
-														<input type="hidden" name="avatar_remove" value="1">
+														<input type="hidden" name="avatar_remove">
 														<!--end::Inputs-->
 													</label>
 													<!--end::Label-->
@@ -5001,53 +5694,25 @@
 												<!--begin::Row-->
 												<div class="row">
 													<!--begin::Col-->
-													<div
-														class="col-lg-6 fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-valid">
+													<div class="col-lg-6 fv-row fv-plugins-icon-container">
 														<input type="text" name="fname"
 															class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
 															placeholder="First name" value="Max">
 														<div class="fv-plugins-message-container invalid-feedback">
 														</div>
-														<div class="fv-plugins-message-container invalid-feedback">
-														</div>
-														<div class="fv-plugins-message-container invalid-feedback">
-														</div>
 													</div>
 													<!--end::Col-->
 													<!--begin::Col-->
-													<div
-														class="col-lg-6 fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-valid">
+													<div class="col-lg-6 fv-row fv-plugins-icon-container">
 														<input type="text" name="lname"
 															class="form-control form-control-lg form-control-solid"
 															placeholder="Last name" value="Smith">
-														<div class="fv-plugins-message-container invalid-feedback">
-														</div>
-														<div class="fv-plugins-message-container invalid-feedback">
-														</div>
 														<div class="fv-plugins-message-container invalid-feedback">
 														</div>
 													</div>
 													<!--end::Col-->
 												</div>
 												<!--end::Row-->
-											</div>
-											<!--end::Col-->
-										</div>
-										<!--end::Input group-->
-										<!--begin::Input group-->
-										<div class="row mb-6">
-											<!--begin::Label-->
-											<label class="col-lg-4 col-form-label required fw-bold fs-6">Company</label>
-											<!--end::Label-->
-											<!--begin::Col-->
-											<div
-												class="col-lg-8 fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-valid">
-												<input type="text" name="company"
-													class="form-control form-control-lg form-control-solid"
-													placeholder="Company name" value="Keenthemes">
-												<div class="fv-plugins-message-container invalid-feedback"></div>
-												<div class="fv-plugins-message-container invalid-feedback"></div>
-												<div class="fv-plugins-message-container invalid-feedback"></div>
 											</div>
 											<!--end::Col-->
 										</div>
@@ -5063,28 +5728,11 @@
 											</label>
 											<!--end::Label-->
 											<!--begin::Col-->
-											<div
-												class="col-lg-8 fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-valid">
+											<div class="col-lg-8 fv-row fv-plugins-icon-container">
 												<input type="tel" name="phone"
 													class="form-control form-control-lg form-control-solid"
 													placeholder="Phone number" value="044 3276 454 935">
 												<div class="fv-plugins-message-container invalid-feedback"></div>
-												<div class="fv-plugins-message-container invalid-feedback"></div>
-												<div class="fv-plugins-message-container invalid-feedback"></div>
-											</div>
-											<!--end::Col-->
-										</div>
-										<!--end::Input group-->
-										<!--begin::Input group-->
-										<div class="row mb-6">
-											<!--begin::Label-->
-											<label class="col-lg-4 col-form-label fw-bold fs-6">Company Site</label>
-											<!--end::Label-->
-											<!--begin::Col-->
-											<div class="col-lg-8 fv-row">
-												<input type="text" name="website"
-													class="form-control form-control-lg form-control-solid"
-													placeholder="Company website" value="keenthemes.com">
 											</div>
 											<!--end::Col-->
 										</div>
@@ -5094,422 +5742,239 @@
 											<!--begin::Label-->
 											<label class="col-lg-4 col-form-label fw-bold fs-6">
 												<span class="required">Country</span>
-												<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
-													title="" data-bs-original-title="Country of origination"
-													aria-label="Country of origination"></i>
+												<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Your country "></i>
 											</label>
 											<!--end::Label-->
 											<!--begin::Col-->
-											<div
-												class="col-lg-8 fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-invalid">
-												<select name="country" aria-label="Select a Country"
-													data-control="select2" data-placeholder="Select a country..."
-													class="form-select form-select-solid form-select-lg fw-bold select2-hidden-accessible"
-													data-select2-id="select2-data-3-jqwc" tabindex="-1"
-													aria-hidden="true">
-													<option value="" data-select2-id="select2-data-5-emc6">Select a
-														Country...</option>
-													<option data-kt-flag="flags/afghanistan.svg" value="AF">Afghanistan
-													</option>
-													<option data-kt-flag="flags/aland-islands.svg" value="AX">Aland
-														Islands</option>
+											<div class="col-lg-8 fv-row">
+												<select name="country" aria-label="Select a Country" data-control="select2" data-placeholder="Select a country..." class="form-select form-select-solid form-select-lg fw-bold">
+													<option value="">Select a Country...</option>
+													<option data-kt-flag="flags/afghanistan.svg" value="AF">Afghanistan</option>
+													<option data-kt-flag="flags/aland-islands.svg" value="AX">Aland Islands</option>
 													<option data-kt-flag="flags/albania.svg" value="AL">Albania</option>
 													<option data-kt-flag="flags/algeria.svg" value="DZ">Algeria</option>
-													<option data-kt-flag="flags/american-samoa.svg" value="AS">American
-														Samoa</option>
+													<option data-kt-flag="flags/american-samoa.svg" value="AS">American Samoa</option>
 													<option data-kt-flag="flags/andorra.svg" value="AD">Andorra</option>
 													<option data-kt-flag="flags/angola.svg" value="AO">Angola</option>
-													<option data-kt-flag="flags/anguilla.svg" value="AI">Anguilla
-													</option>
-													<option data-kt-flag="flags/antigua-and-barbuda.svg" value="AG">
-														Antigua and Barbuda</option>
-													<option data-kt-flag="flags/argentina.svg" value="AR">Argentina
-													</option>
+													<option data-kt-flag="flags/anguilla.svg" value="AI">Anguilla</option>
+													<option data-kt-flag="flags/antigua-and-barbuda.svg" value="AG">Antigua and Barbuda</option>
+													<option data-kt-flag="flags/argentina.svg" value="AR">Argentina</option>
 													<option data-kt-flag="flags/armenia.svg" value="AM">Armenia</option>
 													<option data-kt-flag="flags/aruba.svg" value="AW">Aruba</option>
-													<option data-kt-flag="flags/australia.svg" value="AU">Australia
-													</option>
+													<option data-kt-flag="flags/australia.svg" value="AU">Australia</option>
 													<option data-kt-flag="flags/austria.svg" value="AT">Austria</option>
-													<option data-kt-flag="flags/azerbaijan.svg" value="AZ">Azerbaijan
-													</option>
+													<option data-kt-flag="flags/azerbaijan.svg" value="AZ">Azerbaijan</option>
 													<option data-kt-flag="flags/bahamas.svg" value="BS">Bahamas</option>
 													<option data-kt-flag="flags/bahrain.svg" value="BH">Bahrain</option>
-													<option data-kt-flag="flags/bangladesh.svg" value="BD">Bangladesh
-													</option>
-													<option data-kt-flag="flags/barbados.svg" value="BB">Barbados
-													</option>
+													<option data-kt-flag="flags/bangladesh.svg" value="BD">Bangladesh</option>
+													<option data-kt-flag="flags/barbados.svg" value="BB">Barbados</option>
 													<option data-kt-flag="flags/belarus.svg" value="BY">Belarus</option>
 													<option data-kt-flag="flags/belgium.svg" value="BE">Belgium</option>
 													<option data-kt-flag="flags/belize.svg" value="BZ">Belize</option>
 													<option data-kt-flag="flags/benin.svg" value="BJ">Benin</option>
 													<option data-kt-flag="flags/bermuda.svg" value="BM">Bermuda</option>
 													<option data-kt-flag="flags/bhutan.svg" value="BT">Bhutan</option>
-													<option data-kt-flag="flags/bolivia.svg" value="BO">Bolivia,
-														Plurinational State of</option>
-													<option data-kt-flag="flags/bonaire.svg" value="BQ">Bonaire, Sint
-														Eustatius and Saba</option>
-													<option data-kt-flag="flags/bosnia-and-herzegovina.svg" value="BA">
-														Bosnia and Herzegovina</option>
-													<option data-kt-flag="flags/botswana.svg" value="BW">Botswana
-													</option>
+													<option data-kt-flag="flags/bolivia.svg" value="BO">Bolivia, Plurinational State of</option>
+													<option data-kt-flag="flags/bonaire.svg" value="BQ">Bonaire, Sint Eustatius and Saba</option>
+													<option data-kt-flag="flags/bosnia-and-herzegovina.svg" value="BA">Bosnia and Herzegovina</option>
+													<option data-kt-flag="flags/botswana.svg" value="BW">Botswana</option>
 													<option data-kt-flag="flags/brazil.svg" value="BR">Brazil</option>
-													<option data-kt-flag="flags/british-indian-ocean-territory.svg"
-														value="IO">British Indian Ocean Territory</option>
-													<option data-kt-flag="flags/brunei.svg" value="BN">Brunei Darussalam
-													</option>
-													<option data-kt-flag="flags/bulgaria.svg" value="BG">Bulgaria
-													</option>
-													<option data-kt-flag="flags/burkina-faso.svg" value="BF">Burkina
-														Faso</option>
+													<option data-kt-flag="flags/british-indian-ocean-territory.svg" value="IO">British Indian Ocean Territory</option>
+													<option data-kt-flag="flags/brunei.svg" value="BN">Brunei Darussalam</option>
+													<option data-kt-flag="flags/bulgaria.svg" value="BG">Bulgaria</option>
+													<option data-kt-flag="flags/burkina-faso.svg" value="BF">Burkina Faso</option>
 													<option data-kt-flag="flags/burundi.svg" value="BI">Burundi</option>
-													<option data-kt-flag="flags/cambodia.svg" value="KH">Cambodia
-													</option>
-													<option data-kt-flag="flags/cameroon.svg" value="CM">Cameroon
-													</option>
+													<option data-kt-flag="flags/cambodia.svg" value="KH">Cambodia</option>
+													<option data-kt-flag="flags/cameroon.svg" value="CM">Cameroon</option>
 													<option data-kt-flag="flags/canada.svg" value="CA">Canada</option>
-													<option data-kt-flag="flags/cape-verde.svg" value="CV">Cape Verde
-													</option>
-													<option data-kt-flag="flags/cayman-islands.svg" value="KY">Cayman
-														Islands</option>
-													<option data-kt-flag="flags/central-african-republic.svg"
-														value="CF">Central African Republic</option>
+													<option data-kt-flag="flags/cape-verde.svg" value="CV">Cape Verde</option>
+													<option data-kt-flag="flags/cayman-islands.svg" value="KY">Cayman Islands</option>
+													<option data-kt-flag="flags/central-african-republic.svg" value="CF">Central African Republic</option>
 													<option data-kt-flag="flags/chad.svg" value="TD">Chad</option>
 													<option data-kt-flag="flags/chile.svg" value="CL">Chile</option>
 													<option data-kt-flag="flags/china.svg" value="CN">China</option>
-													<option data-kt-flag="flags/christmas-island.svg" value="CX">
-														Christmas Island</option>
-													<option data-kt-flag="flags/cocos-island.svg" value="CC">Cocos
-														(Keeling) Islands</option>
-													<option data-kt-flag="flags/colombia.svg" value="CO">Colombia
-													</option>
+													<option data-kt-flag="flags/christmas-island.svg" value="CX">Christmas Island</option>
+													<option data-kt-flag="flags/cocos-island.svg" value="CC">Cocos (Keeling) Islands</option>
+													<option data-kt-flag="flags/colombia.svg" value="CO">Colombia</option>
 													<option data-kt-flag="flags/comoros.svg" value="KM">Comoros</option>
-													<option data-kt-flag="flags/cook-islands.svg" value="CK">Cook
-														Islands</option>
-													<option data-kt-flag="flags/costa-rica.svg" value="CR">Costa Rica
-													</option>
-													<option data-kt-flag="flags/ivory-coast.svg" value="CI">Côte
-														d'Ivoire</option>
+													<option data-kt-flag="flags/cook-islands.svg" value="CK">Cook Islands</option>
+													<option data-kt-flag="flags/costa-rica.svg" value="CR">Costa Rica</option>
+													<option data-kt-flag="flags/ivory-coast.svg" value="CI">Côte d'Ivoire</option>
 													<option data-kt-flag="flags/croatia.svg" value="HR">Croatia</option>
 													<option data-kt-flag="flags/cuba.svg" value="CU">Cuba</option>
 													<option data-kt-flag="flags/curacao.svg" value="CW">Curaçao</option>
-													<option data-kt-flag="flags/czech-republic.svg" value="CZ">Czech
-														Republic</option>
+													<option data-kt-flag="flags/czech-republic.svg" value="CZ">Czech Republic</option>
 													<option data-kt-flag="flags/denmark.svg" value="DK">Denmark</option>
-													<option data-kt-flag="flags/djibouti.svg" value="DJ">Djibouti
-													</option>
-													<option data-kt-flag="flags/dominica.svg" value="DM">Dominica
-													</option>
-													<option data-kt-flag="flags/dominican-republic.svg" value="DO">
-														Dominican Republic</option>
+													<option data-kt-flag="flags/djibouti.svg" value="DJ">Djibouti</option>
+													<option data-kt-flag="flags/dominica.svg" value="DM">Dominica</option>
+													<option data-kt-flag="flags/dominican-republic.svg" value="DO">Dominican Republic</option>
 													<option data-kt-flag="flags/ecuador.svg" value="EC">Ecuador</option>
 													<option data-kt-flag="flags/egypt.svg" value="EG">Egypt</option>
-													<option data-kt-flag="flags/el-salvador.svg" value="SV">El Salvador
-													</option>
-													<option data-kt-flag="flags/equatorial-guinea.svg" value="GQ">
-														Equatorial Guinea</option>
+													<option data-kt-flag="flags/el-salvador.svg" value="SV">El Salvador</option>
+													<option data-kt-flag="flags/equatorial-guinea.svg" value="GQ">Equatorial Guinea</option>
 													<option data-kt-flag="flags/eritrea.svg" value="ER">Eritrea</option>
 													<option data-kt-flag="flags/estonia.svg" value="EE">Estonia</option>
-													<option data-kt-flag="flags/ethiopia.svg" value="ET">Ethiopia
-													</option>
-													<option data-kt-flag="flags/falkland-islands.svg" value="FK">
-														Falkland Islands (Malvinas)</option>
+													<option data-kt-flag="flags/ethiopia.svg" value="ET">Ethiopia</option>
+													<option data-kt-flag="flags/falkland-islands.svg" value="FK">Falkland Islands (Malvinas)</option>
 													<option data-kt-flag="flags/fiji.svg" value="FJ">Fiji</option>
 													<option data-kt-flag="flags/finland.svg" value="FI">Finland</option>
 													<option data-kt-flag="flags/france.svg" value="FR">France</option>
-													<option data-kt-flag="flags/french-polynesia.svg" value="PF">French
-														Polynesia</option>
+													<option data-kt-flag="flags/french-polynesia.svg" value="PF">French Polynesia</option>
 													<option data-kt-flag="flags/gabon.svg" value="GA">Gabon</option>
 													<option data-kt-flag="flags/gambia.svg" value="GM">Gambia</option>
 													<option data-kt-flag="flags/georgia.svg" value="GE">Georgia</option>
 													<option data-kt-flag="flags/germany.svg" value="DE">Germany</option>
 													<option data-kt-flag="flags/ghana.svg" value="GH">Ghana</option>
-													<option data-kt-flag="flags/gibraltar.svg" value="GI">Gibraltar
-													</option>
+													<option data-kt-flag="flags/gibraltar.svg" value="GI">Gibraltar</option>
 													<option data-kt-flag="flags/greece.svg" value="GR">Greece</option>
-													<option data-kt-flag="flags/greenland.svg" value="GL">Greenland
-													</option>
+													<option data-kt-flag="flags/greenland.svg" value="GL">Greenland</option>
 													<option data-kt-flag="flags/grenada.svg" value="GD">Grenada</option>
 													<option data-kt-flag="flags/guam.svg" value="GU">Guam</option>
-													<option data-kt-flag="flags/guatemala.svg" value="GT">Guatemala
-													</option>
-													<option data-kt-flag="flags/guernsey.svg" value="GG">Guernsey
-													</option>
+													<option data-kt-flag="flags/guatemala.svg" value="GT">Guatemala</option>
+													<option data-kt-flag="flags/guernsey.svg" value="GG">Guernsey</option>
 													<option data-kt-flag="flags/guinea.svg" value="GN">Guinea</option>
-													<option data-kt-flag="flags/guinea-bissau.svg" value="GW">
-														Guinea-Bissau</option>
+													<option data-kt-flag="flags/guinea-bissau.svg" value="GW">Guinea-Bissau</option>
 													<option data-kt-flag="flags/haiti.svg" value="HT">Haiti</option>
-													<option data-kt-flag="flags/vatican-city.svg" value="VA">Holy See
-														(Vatican City State)</option>
-													<option data-kt-flag="flags/honduras.svg" value="HN">Honduras
-													</option>
-													<option data-kt-flag="flags/hong-kong.svg" value="HK">Hong Kong
-													</option>
+													<option data-kt-flag="flags/vatican-city.svg" value="VA">Holy See (Vatican City State)</option>
+													<option data-kt-flag="flags/honduras.svg" value="HN">Honduras</option>
+													<option data-kt-flag="flags/hong-kong.svg" value="HK">Hong Kong</option>
 													<option data-kt-flag="flags/hungary.svg" value="HU">Hungary</option>
 													<option data-kt-flag="flags/iceland.svg" value="IS">Iceland</option>
 													<option data-kt-flag="flags/india.svg" value="IN">India</option>
-													<option data-kt-flag="flags/indonesia.svg" value="ID">Indonesia
-													</option>
-													<option data-kt-flag="flags/iran.svg" value="IR">Iran, Islamic
-														Republic of</option>
+													<option data-kt-flag="flags/indonesia.svg" value="ID">Indonesia</option>
+													<option data-kt-flag="flags/iran.svg" value="IR">Iran, Islamic Republic of</option>
 													<option data-kt-flag="flags/iraq.svg" value="IQ">Iraq</option>
 													<option data-kt-flag="flags/ireland.svg" value="IE">Ireland</option>
-													<option data-kt-flag="flags/isle-of-man.svg" value="IM">Isle of Man
-													</option>
+													<option data-kt-flag="flags/isle-of-man.svg" value="IM">Isle of Man</option>
 													<option data-kt-flag="flags/israel.svg" value="IL">Israel</option>
 													<option data-kt-flag="flags/italy.svg" value="IT">Italy</option>
 													<option data-kt-flag="flags/jamaica.svg" value="JM">Jamaica</option>
 													<option data-kt-flag="flags/japan.svg" value="JP">Japan</option>
 													<option data-kt-flag="flags/jersey.svg" value="JE">Jersey</option>
 													<option data-kt-flag="flags/jordan.svg" value="JO">Jordan</option>
-													<option data-kt-flag="flags/kazakhstan.svg" value="KZ">Kazakhstan
-													</option>
+													<option data-kt-flag="flags/kazakhstan.svg" value="KZ">Kazakhstan</option>
 													<option data-kt-flag="flags/kenya.svg" value="KE">Kenya</option>
-													<option data-kt-flag="flags/kiribati.svg" value="KI">Kiribati
-													</option>
-													<option data-kt-flag="flags/north-korea.svg" value="KP">Korea,
-														Democratic People's Republic of</option>
+													<option data-kt-flag="flags/kiribati.svg" value="KI">Kiribati</option>
+													<option data-kt-flag="flags/north-korea.svg" value="KP">Korea, Democratic People's Republic of</option>
 													<option data-kt-flag="flags/kuwait.svg" value="KW">Kuwait</option>
-													<option data-kt-flag="flags/kyrgyzstan.svg" value="KG">Kyrgyzstan
-													</option>
-													<option data-kt-flag="flags/laos.svg" value="LA">Lao People's
-														Democratic Republic</option>
+													<option data-kt-flag="flags/kyrgyzstan.svg" value="KG">Kyrgyzstan</option>
+													<option data-kt-flag="flags/laos.svg" value="LA">Lao People's Democratic Republic</option>
 													<option data-kt-flag="flags/latvia.svg" value="LV">Latvia</option>
 													<option data-kt-flag="flags/lebanon.svg" value="LB">Lebanon</option>
 													<option data-kt-flag="flags/lesotho.svg" value="LS">Lesotho</option>
 													<option data-kt-flag="flags/liberia.svg" value="LR">Liberia</option>
 													<option data-kt-flag="flags/libya.svg" value="LY">Libya</option>
-													<option data-kt-flag="flags/liechtenstein.svg" value="LI">
-														Liechtenstein</option>
-													<option data-kt-flag="flags/lithuania.svg" value="LT">Lithuania
-													</option>
-													<option data-kt-flag="flags/luxembourg.svg" value="LU">Luxembourg
-													</option>
+													<option data-kt-flag="flags/liechtenstein.svg" value="LI">Liechtenstein</option>
+													<option data-kt-flag="flags/lithuania.svg" value="LT">Lithuania</option>
+													<option data-kt-flag="flags/luxembourg.svg" value="LU">Luxembourg</option>
 													<option data-kt-flag="flags/macao.svg" value="MO">Macao</option>
-													<option data-kt-flag="flags/madagascar.svg" value="MG">Madagascar
-													</option>
+													<option data-kt-flag="flags/madagascar.svg" value="MG">Madagascar</option>
 													<option data-kt-flag="flags/malawi.svg" value="MW">Malawi</option>
-													<option data-kt-flag="flags/malaysia.svg" value="MY">Malaysia
-													</option>
-													<option data-kt-flag="flags/maldives.svg" value="MV">Maldives
-													</option>
+													<option data-kt-flag="flags/malaysia.svg" value="MY">Malaysia</option>
+													<option data-kt-flag="flags/maldives.svg" value="MV">Maldives</option>
 													<option data-kt-flag="flags/mali.svg" value="ML">Mali</option>
 													<option data-kt-flag="flags/malta.svg" value="MT">Malta</option>
-													<option data-kt-flag="flags/marshall-island.svg" value="MH">Marshall
-														Islands</option>
-													<option data-kt-flag="flags/martinique.svg" value="MQ">Martinique
-													</option>
-													<option data-kt-flag="flags/mauritania.svg" value="MR">Mauritania
-													</option>
-													<option data-kt-flag="flags/mauritius.svg" value="MU">Mauritius
-													</option>
+													<option data-kt-flag="flags/marshall-island.svg" value="MH">Marshall Islands</option>
+													<option data-kt-flag="flags/martinique.svg" value="MQ">Martinique</option>
+													<option data-kt-flag="flags/mauritania.svg" value="MR">Mauritania</option>
+													<option data-kt-flag="flags/mauritius.svg" value="MU">Mauritius</option>
 													<option data-kt-flag="flags/mexico.svg" value="MX">Mexico</option>
-													<option data-kt-flag="flags/micronesia.svg" value="FM">Micronesia,
-														Federated States of</option>
-													<option data-kt-flag="flags/moldova.svg" value="MD">Moldova,
-														Republic of</option>
+													<option data-kt-flag="flags/micronesia.svg" value="FM">Micronesia, Federated States of</option>
+													<option data-kt-flag="flags/moldova.svg" value="MD">Moldova, Republic of</option>
 													<option data-kt-flag="flags/monaco.svg" value="MC">Monaco</option>
-													<option data-kt-flag="flags/mongolia.svg" value="MN">Mongolia
-													</option>
-													<option data-kt-flag="flags/montenegro.svg" value="ME">Montenegro
-													</option>
-													<option data-kt-flag="flags/montserrat.svg" value="MS">Montserrat
-													</option>
+													<option data-kt-flag="flags/mongolia.svg" value="MN">Mongolia</option>
+													<option data-kt-flag="flags/montenegro.svg" value="ME">Montenegro</option>
+													<option data-kt-flag="flags/montserrat.svg" value="MS">Montserrat</option>
 													<option data-kt-flag="flags/morocco.svg" value="MA">Morocco</option>
-													<option data-kt-flag="flags/mozambique.svg" value="MZ">Mozambique
-													</option>
+													<option data-kt-flag="flags/mozambique.svg" value="MZ">Mozambique</option>
 													<option data-kt-flag="flags/myanmar.svg" value="MM">Myanmar</option>
 													<option data-kt-flag="flags/namibia.svg" value="NA">Namibia</option>
 													<option data-kt-flag="flags/nauru.svg" value="NR">Nauru</option>
 													<option data-kt-flag="flags/nepal.svg" value="NP">Nepal</option>
-													<option data-kt-flag="flags/netherlands.svg" value="NL">Netherlands
-													</option>
-													<option data-kt-flag="flags/new-zealand.svg" value="NZ">New Zealand
-													</option>
-													<option data-kt-flag="flags/nicaragua.svg" value="NI">Nicaragua
-													</option>
+													<option data-kt-flag="flags/netherlands.svg" value="NL">Netherlands</option>
+													<option data-kt-flag="flags/new-zealand.svg" value="NZ">New Zealand</option>
+													<option data-kt-flag="flags/nicaragua.svg" value="NI">Nicaragua</option>
 													<option data-kt-flag="flags/niger.svg" value="NE">Niger</option>
 													<option data-kt-flag="flags/nigeria.svg" value="NG">Nigeria</option>
 													<option data-kt-flag="flags/niue.svg" value="NU">Niue</option>
-													<option data-kt-flag="flags/norfolk-island.svg" value="NF">Norfolk
-														Island</option>
-													<option data-kt-flag="flags/northern-mariana-islands.svg"
-														value="MP">Northern Mariana Islands</option>
+													<option data-kt-flag="flags/norfolk-island.svg" value="NF">Norfolk Island</option>
+													<option data-kt-flag="flags/northern-mariana-islands.svg" value="MP">Northern Mariana Islands</option>
 													<option data-kt-flag="flags/norway.svg" value="NO">Norway</option>
 													<option data-kt-flag="flags/oman.svg" value="OM">Oman</option>
-													<option data-kt-flag="flags/pakistan.svg" value="PK">Pakistan
-													</option>
+													<option data-kt-flag="flags/pakistan.svg" value="PK">Pakistan</option>
 													<option data-kt-flag="flags/palau.svg" value="PW">Palau</option>
-													<option data-kt-flag="flags/palestine.svg" value="PS">Palestinian
-														Territory, Occupied</option>
+													<option data-kt-flag="flags/palestine.svg" value="PS">Palestinian Territory, Occupied</option>
 													<option data-kt-flag="flags/panama.svg" value="PA">Panama</option>
-													<option data-kt-flag="flags/papua-new-guinea.svg" value="PG">Papua
-														New Guinea</option>
-													<option data-kt-flag="flags/paraguay.svg" value="PY">Paraguay
-													</option>
+													<option data-kt-flag="flags/papua-new-guinea.svg" value="PG">Papua New Guinea</option>
+													<option data-kt-flag="flags/paraguay.svg" value="PY">Paraguay</option>
 													<option data-kt-flag="flags/peru.svg" value="PE">Peru</option>
-													<option data-kt-flag="flags/philippines.svg" value="PH">Philippines
-													</option>
+													<option data-kt-flag="flags/philippines.svg" value="PH">Philippines</option>
 													<option data-kt-flag="flags/poland.svg" value="PL">Poland</option>
-													<option data-kt-flag="flags/portugal.svg" value="PT">Portugal
-													</option>
-													<option data-kt-flag="flags/puerto-rico.svg" value="PR">Puerto Rico
-													</option>
+													<option data-kt-flag="flags/portugal.svg" value="PT">Portugal</option>
+													<option data-kt-flag="flags/puerto-rico.svg" value="PR">Puerto Rico</option>
 													<option data-kt-flag="flags/qatar.svg" value="QA">Qatar</option>
 													<option data-kt-flag="flags/romania.svg" value="RO">Romania</option>
-													<option data-kt-flag="flags/russia.svg" value="RU">Russian
-														Federation</option>
+													<option data-kt-flag="flags/russia.svg" value="RU">Russian Federation</option>
 													<option data-kt-flag="flags/rwanda.svg" value="RW">Rwanda</option>
-													<option data-kt-flag="flags/st-barts.svg" value="BL">Saint
-														Barthélemy</option>
-													<option data-kt-flag="flags/saint-kitts-and-nevis.svg" value="KN">
-														Saint Kitts and Nevis</option>
-													<option data-kt-flag="flags/st-lucia.svg" value="LC">Saint Lucia
-													</option>
-													<option data-kt-flag="flags/sint-maarten.svg" value="MF">Saint
-														Martin (French part)</option>
-													<option data-kt-flag="flags/saint-pierre.svg" value="PM">Saint
-														Pierre and Miquelon</option>
-													<option data-kt-flag="flags/st-vincent-and-the-grenadines.svg"
-														value="VC">Saint Vincent and the Grenadines</option>
+													<option data-kt-flag="flags/st-barts.svg" value="BL">Saint Barthélemy</option>
+													<option data-kt-flag="flags/saint-kitts-and-nevis.svg" value="KN">Saint Kitts and Nevis</option>
+													<option data-kt-flag="flags/st-lucia.svg" value="LC">Saint Lucia</option>
+													<option data-kt-flag="flags/sint-maarten.svg" value="MF">Saint Martin (French part)</option>
+													<option data-kt-flag="flags/saint-pierre.svg" value="PM">Saint Pierre and Miquelon</option>
+													<option data-kt-flag="flags/st-vincent-and-the-grenadines.svg" value="VC">Saint Vincent and the Grenadines</option>
 													<option data-kt-flag="flags/samoa.svg" value="WS">Samoa</option>
-													<option data-kt-flag="flags/san-marino.svg" value="SM">San Marino
-													</option>
-													<option data-kt-flag="flags/sao-tome-and-prince.svg" value="ST">Sao
-														Tome and Principe</option>
-													<option data-kt-flag="flags/saudi-arabia.svg" value="SA">Saudi
-														Arabia</option>
+													<option data-kt-flag="flags/san-marino.svg" value="SM">San Marino</option>
+													<option data-kt-flag="flags/sao-tome-and-prince.svg" value="ST">Sao Tome and Principe</option>
+													<option data-kt-flag="flags/saudi-arabia.svg" value="SA">Saudi Arabia</option>
 													<option data-kt-flag="flags/senegal.svg" value="SN">Senegal</option>
 													<option data-kt-flag="flags/serbia.svg" value="RS">Serbia</option>
-													<option data-kt-flag="flags/seychelles.svg" value="SC">Seychelles
-													</option>
-													<option data-kt-flag="flags/sierra-leone.svg" value="SL">Sierra
-														Leone</option>
-													<option data-kt-flag="flags/singapore.svg" value="SG">Singapore
-													</option>
-													<option data-kt-flag="flags/sint-maarten.svg" value="SX">Sint
-														Maarten (Dutch part)</option>
-													<option data-kt-flag="flags/slovakia.svg" value="SK">Slovakia
-													</option>
-													<option data-kt-flag="flags/slovenia.svg" value="SI">Slovenia
-													</option>
-													<option data-kt-flag="flags/solomon-islands.svg" value="SB">Solomon
-														Islands</option>
+													<option data-kt-flag="flags/seychelles.svg" value="SC">Seychelles</option>
+													<option data-kt-flag="flags/sierra-leone.svg" value="SL">Sierra Leone</option>
+													<option data-kt-flag="flags/singapore.svg" value="SG">Singapore</option>
+													<option data-kt-flag="flags/sint-maarten.svg" value="SX">Sint Maarten (Dutch part)</option>
+													<option data-kt-flag="flags/slovakia.svg" value="SK">Slovakia</option>
+													<option data-kt-flag="flags/slovenia.svg" value="SI">Slovenia</option>
+													<option data-kt-flag="flags/solomon-islands.svg" value="SB">Solomon Islands</option>
 													<option data-kt-flag="flags/somalia.svg" value="SO">Somalia</option>
-													<option data-kt-flag="flags/south-africa.svg" value="ZA">South
-														Africa</option>
-													<option data-kt-flag="flags/south-korea.svg" value="KR">South Korea
-													</option>
-													<option data-kt-flag="flags/south-sudan.svg" value="SS">South Sudan
-													</option>
+													<option data-kt-flag="flags/south-africa.svg" value="ZA">South Africa</option>
+													<option data-kt-flag="flags/south-korea.svg" value="KR">South Korea</option>
+													<option data-kt-flag="flags/south-sudan.svg" value="SS">South Sudan</option>
 													<option data-kt-flag="flags/spain.svg" value="ES">Spain</option>
-													<option data-kt-flag="flags/sri-lanka.svg" value="LK">Sri Lanka
-													</option>
+													<option data-kt-flag="flags/sri-lanka.svg" value="LK">Sri Lanka</option>
 													<option data-kt-flag="flags/sudan.svg" value="SD">Sudan</option>
-													<option data-kt-flag="flags/suriname.svg" value="SR">Suriname
-													</option>
-													<option data-kt-flag="flags/swaziland.svg" value="SZ">Swaziland
-													</option>
+													<option data-kt-flag="flags/suriname.svg" value="SR">Suriname</option>
+													<option data-kt-flag="flags/swaziland.svg" value="SZ">Swaziland</option>
 													<option data-kt-flag="flags/sweden.svg" value="SE">Sweden</option>
-													<option data-kt-flag="flags/switzerland.svg" value="CH">Switzerland
-													</option>
-													<option data-kt-flag="flags/syria.svg" value="SY">Syrian Arab
-														Republic</option>
-													<option data-kt-flag="flags/taiwan.svg" value="TW">Taiwan, Province
-														of China</option>
-													<option data-kt-flag="flags/tajikistan.svg" value="TJ">Tajikistan
-													</option>
-													<option data-kt-flag="flags/tanzania.svg" value="TZ">Tanzania,
-														United Republic of</option>
-													<option data-kt-flag="flags/thailand.svg" value="TH">Thailand
-													</option>
+													<option data-kt-flag="flags/switzerland.svg" value="CH">Switzerland</option>
+													<option data-kt-flag="flags/syria.svg" value="SY">Syrian Arab Republic</option>
+													<option data-kt-flag="flags/taiwan.svg" value="TW">Taiwan, Province of China</option>
+													<option data-kt-flag="flags/tajikistan.svg" value="TJ">Tajikistan</option>
+													<option data-kt-flag="flags/tanzania.svg" value="TZ">Tanzania, United Republic of</option>
+													<option data-kt-flag="flags/thailand.svg" value="TH">Thailand</option>
 													<option data-kt-flag="flags/togo.svg" value="TG">Togo</option>
 													<option data-kt-flag="flags/tokelau.svg" value="TK">Tokelau</option>
 													<option data-kt-flag="flags/tonga.svg" value="TO">Tonga</option>
-													<option data-kt-flag="flags/trinidad-and-tobago.svg" value="TT">
-														Trinidad and Tobago</option>
+													<option data-kt-flag="flags/trinidad-and-tobago.svg" value="TT">Trinidad and Tobago</option>
 													<option data-kt-flag="flags/tunisia.svg" value="TN">Tunisia</option>
 													<option data-kt-flag="flags/turkey.svg" value="TR">Turkey</option>
-													<option data-kt-flag="flags/turkmenistan.svg" value="TM">
-														Turkmenistan</option>
-													<option data-kt-flag="flags/turks-and-caicos.svg" value="TC">Turks
-														and Caicos Islands</option>
+													<option data-kt-flag="flags/turkmenistan.svg" value="TM">Turkmenistan</option>
+													<option data-kt-flag="flags/turks-and-caicos.svg" value="TC">Turks and Caicos Islands</option>
 													<option data-kt-flag="flags/tuvalu.svg" value="TV">Tuvalu</option>
 													<option data-kt-flag="flags/uganda.svg" value="UG">Uganda</option>
 													<option data-kt-flag="flags/ukraine.svg" value="UA">Ukraine</option>
-													<option data-kt-flag="flags/united-arab-emirates.svg" value="AE">
-														United Arab Emirates</option>
-													<option data-kt-flag="flags/united-kingdom.svg" value="GB">United
-														Kingdom</option>
-													<option data-kt-flag="flags/united-states.svg" value="US">United
-														States</option>
+													<option data-kt-flag="flags/united-arab-emirates.svg" value="AE">United Arab Emirates</option>
+													<option data-kt-flag="flags/united-kingdom.svg" value="GB">United Kingdom</option>
+													<option data-kt-flag="flags/united-states.svg" value="US">United States</option>
 													<option data-kt-flag="flags/uruguay.svg" value="UY">Uruguay</option>
-													<option data-kt-flag="flags/uzbekistan.svg" value="UZ">Uzbekistan
-													</option>
+													<option data-kt-flag="flags/uzbekistan.svg" value="UZ">Uzbekistan</option>
 													<option data-kt-flag="flags/vanuatu.svg" value="VU">Vanuatu</option>
-													<option data-kt-flag="flags/venezuela.svg" value="VE">Venezuela,
-														Bolivarian Republic of</option>
+													<option data-kt-flag="flags/venezuela.svg" value="VE">Venezuela, Bolivarian Republic of</option>
 													<option data-kt-flag="flags/vietnam.svg" value="VN">Vietnam</option>
-													<option data-kt-flag="flags/virgin-islands.svg" value="VI">Virgin
-														Islands</option>
+													<option data-kt-flag="flags/virgin-islands.svg" value="VI">Virgin Islands</option>
 													<option data-kt-flag="flags/yemen.svg" value="YE">Yemen</option>
 													<option data-kt-flag="flags/zambia.svg" value="ZM">Zambia</option>
-													<option data-kt-flag="flags/zimbabwe.svg" value="ZW">Zimbabwe
-													</option>
-												</select><span
-													class="select2 select2-container select2-container--bootstrap5"
-													dir="ltr" data-select2-id="select2-data-3-y7kq"
-													style="width: 100%;"><span class="selection"><span
-															class="select2-selection select2-selection--single form-select form-select-solid form-select-lg fw-bold"
-															role="combobox" aria-haspopup="true" aria-expanded="false"
-															tabindex="-1" aria-disabled="false"
-															aria-labelledby="select2-country-eb-container"
-															aria-controls="select2-country-eb-container"><span
-																class="select2-selection__rendered"
-																id="select2-country-eb-container" role="textbox"
-																aria-readonly="true" title="Select a country..."><span
-																	class="select2-selection__placeholder">Select a
-																	country...</span></span><span
-																class="select2-selection__arrow" role="presentation"><b
-																	role="presentation"></b></span></span></span><span
-														class="dropdown-wrapper" aria-hidden="true"></span></span><span
-													class="select2 select2-container select2-container--bootstrap5"
-													dir="ltr" data-select2-id="select2-data-3-4t0w"
-													style="width: 100%;"><span class="selection"><span
-															class="select2-selection select2-selection--single form-select form-select-solid form-select-lg fw-bold"
-															role="combobox" aria-haspopup="true" aria-expanded="false"
-															tabindex="-1" aria-disabled="false"
-															aria-labelledby="select2-country-e0-container"
-															aria-controls="select2-country-e0-container"><span
-																class="select2-selection__rendered"
-																id="select2-country-e0-container" role="textbox"
-																aria-readonly="true" title="Select a country..."><span
-																	class="select2-selection__placeholder">Select a
-																	country...</span></span><span
-																class="select2-selection__arrow" role="presentation"><b
-																	role="presentation"></b></span></span></span><span
-														class="dropdown-wrapper" aria-hidden="true"></span></span><span
-													class="select2 select2-container select2-container--bootstrap5"
-													dir="ltr" data-select2-id="select2-data-4-0zbf"
-													style="width: 100%;"><span class="selection"><span
-															class="select2-selection select2-selection--single form-select form-select-solid form-select-lg fw-bold"
-															role="combobox" aria-haspopup="true" aria-expanded="false"
-															tabindex="0" aria-disabled="false"
-															aria-labelledby="select2-country-hp-container"
-															aria-controls="select2-country-hp-container"><span
-																class="select2-selection__rendered"
-																id="select2-country-hp-container" role="textbox"
-																aria-readonly="true" title="Select a country..."><span
-																	class="select2-selection__placeholder">Select a
-																	country...</span></span><span
-																class="select2-selection__arrow" role="presentation"><b
-																	role="presentation"></b></span></span></span><span
-														class="dropdown-wrapper" aria-hidden="true"></span></span>
-												<div class="fv-plugins-message-container invalid-feedback"></div>
-												<div class="fv-plugins-message-container invalid-feedback">
-													<div data-field="country" data-validator="notEmpty">Please select a
-														country</div>
-												</div>
-												<div class="fv-plugins-message-container invalid-feedback"></div>
+													<option data-kt-flag="flags/zimbabwe.svg" value="ZW">Zimbabwe</option>
+												</select>
 											</div>
 											<!--end::Col-->
 										</div>
@@ -5517,759 +5982,64 @@
 										<!--begin::Input group-->
 										<div class="row mb-6">
 											<!--begin::Label-->
-											<label
-												class="col-lg-4 col-form-label required fw-bold fs-6">Language</label>
+											<label class="col-lg-4 col-form-label required fw-bold fs-6">Language</label>
 											<!--end::Label-->
 											<!--begin::Col-->
-											<div
-												class="col-lg-8 fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-invalid">
+											<div class="col-lg-8 fv-row">
 												<!--begin::Input-->
-												<select name="language" aria-label="Select a Language"
-													data-control="select2" data-placeholder="Select a language..."
-													class="form-select form-select-solid form-select-lg select2-hidden-accessible"
-													data-select2-id="select2-data-6-ir7m" tabindex="-1"
-													aria-hidden="true">
-													<option value="" data-select2-id="select2-data-8-12ue">Select a
-														Language...</option>
-													<option data-kt-flag="flags/indonesia.svg" value="id">Bahasa
-														Indonesia - Indonesian</option>
-													<option data-kt-flag="flags/malaysia.svg" value="msa">Bahasa Melayu
-														- Malay</option>
-													<option data-kt-flag="flags/canada.svg" value="ca">Català - Catalan
-													</option>
-													<option data-kt-flag="flags/czech-republic.svg" value="cs">Čeština -
-														Czech</option>
-													<option data-kt-flag="flags/netherlands.svg" value="da">Dansk -
-														Danish</option>
-													<option data-kt-flag="flags/germany.svg" value="de">Deutsch - German
-													</option>
-													<option data-kt-flag="flags/united-kingdom.svg" value="en">English
-													</option>
-													<option data-kt-flag="flags/united-kingdom.svg" value="en-gb">
-														English UK - British English</option>
-													<option data-kt-flag="flags/spain.svg" value="es">Español - Spanish
-													</option>
-													<option data-kt-flag="flags/philippines.svg" value="fil">Filipino
-													</option>
-													<option data-kt-flag="flags/france.svg" value="fr">Français - French
-													</option>
-													<option data-kt-flag="flags/gabon.svg" value="ga">Gaeilge - Irish
-														(beta)</option>
-													<option data-kt-flag="flags/greenland.svg" value="gl">Galego -
-														Galician (beta)</option>
-													<option data-kt-flag="flags/croatia.svg" value="hr">Hrvatski -
-														Croatian</option>
-													<option data-kt-flag="flags/italy.svg" value="it">Italiano - Italian
-													</option>
-													<option data-kt-flag="flags/hungary.svg" value="hu">Magyar -
-														Hungarian</option>
-													<option data-kt-flag="flags/netherlands.svg" value="nl">Nederlands -
-														Dutch</option>
-													<option data-kt-flag="flags/norway.svg" value="no">Norsk - Norwegian
-													</option>
-													<option data-kt-flag="flags/poland.svg" value="pl">Polski - Polish
-													</option>
-													<option data-kt-flag="flags/portugal.svg" value="pt">Português -
-														Portuguese</option>
-													<option data-kt-flag="flags/romania.svg" value="ro">Română -
-														Romanian</option>
-													<option data-kt-flag="flags/slovakia.svg" value="sk">Slovenčina -
-														Slovak</option>
-													<option data-kt-flag="flags/finland.svg" value="fi">Suomi - Finnish
-													</option>
-													<option data-kt-flag="flags/el-salvador.svg" value="sv">Svenska -
-														Swedish</option>
-													<option data-kt-flag="flags/virgin-islands.svg" value="vi">Tiếng
-														Việt - Vietnamese</option>
-													<option data-kt-flag="flags/turkey.svg" value="tr">Türkçe - Turkish
-													</option>
-													<option data-kt-flag="flags/greece.svg" value="el">Ελληνικά - Greek
-													</option>
-													<option data-kt-flag="flags/bulgaria.svg" value="bg">Български език
-														- Bulgarian</option>
-													<option data-kt-flag="flags/russia.svg" value="ru">Русский - Russian
-													</option>
-													<option data-kt-flag="flags/suriname.svg" value="sr">Српски -
-														Serbian</option>
-													<option data-kt-flag="flags/ukraine.svg" value="uk">Українська мова
-														- Ukrainian</option>
-													<option data-kt-flag="flags/israel.svg" value="he">עִבְרִית - Hebrew
-													</option>
-													<option data-kt-flag="flags/pakistan.svg" value="ur">اردو - Urdu
-														(beta)</option>
-													<option data-kt-flag="flags/argentina.svg" value="ar">العربية -
-														Arabic</option>
-													<option data-kt-flag="flags/argentina.svg" value="fa">فارسی -
-														Persian</option>
-													<option data-kt-flag="flags/mauritania.svg" value="mr">मराठी -
-														Marathi</option>
-													<option data-kt-flag="flags/india.svg" value="hi">हिन्दी - Hindi
-													</option>
-													<option data-kt-flag="flags/bangladesh.svg" value="bn">বাংলা -
-														Bangla</option>
-													<option data-kt-flag="flags/guam.svg" value="gu">ગુજરાતી - Gujarati
-													</option>
-													<option data-kt-flag="flags/india.svg" value="ta">தமிழ் - Tamil
-													</option>
-													<option data-kt-flag="flags/saint-kitts-and-nevis.svg" value="kn">
-														ಕನ್ನಡ - Kannada</option>
-													<option data-kt-flag="flags/thailand.svg" value="th">ภาษาไทย - Thai
-													</option>
-													<option data-kt-flag="flags/south-korea.svg" value="ko">한국어 - Korean
-													</option>
-													<option data-kt-flag="flags/japan.svg" value="ja">日本語 - Japanese
-													</option>
-													<option data-kt-flag="flags/china.svg" value="zh-cn">简体中文 -
-														Simplified Chinese</option>
-													<option data-kt-flag="flags/taiwan.svg" value="zh-tw">繁體中文 -
-														Traditional Chinese</option>
-												</select><span
-													class="select2 select2-container select2-container--bootstrap5"
-													dir="ltr" data-select2-id="select2-data-4-48u5"
-													style="width: 100%;"><span class="selection"><span
-															class="select2-selection select2-selection--single form-select form-select-solid form-select-lg"
-															role="combobox" aria-haspopup="true" aria-expanded="false"
-															tabindex="-1" aria-disabled="false"
-															aria-labelledby="select2-language-gx-container"
-															aria-controls="select2-language-gx-container"><span
-																class="select2-selection__rendered"
-																id="select2-language-gx-container" role="textbox"
-																aria-readonly="true" title="Select a language..."><span
-																	class="select2-selection__placeholder">Select a
-																	language...</span></span><span
-																class="select2-selection__arrow" role="presentation"><b
-																	role="presentation"></b></span></span></span><span
-														class="dropdown-wrapper" aria-hidden="true"></span></span><span
-													class="select2 select2-container select2-container--bootstrap5"
-													dir="ltr" data-select2-id="select2-data-4-h6po"
-													style="width: 100%;"><span class="selection"><span
-															class="select2-selection select2-selection--single form-select form-select-solid form-select-lg"
-															role="combobox" aria-haspopup="true" aria-expanded="false"
-															tabindex="-1" aria-disabled="false"
-															aria-labelledby="select2-language-k3-container"
-															aria-controls="select2-language-k3-container"><span
-																class="select2-selection__rendered"
-																id="select2-language-k3-container" role="textbox"
-																aria-readonly="true" title="Select a language..."><span
-																	class="select2-selection__placeholder">Select a
-																	language...</span></span><span
-																class="select2-selection__arrow" role="presentation"><b
-																	role="presentation"></b></span></span></span><span
-														class="dropdown-wrapper" aria-hidden="true"></span></span><span
-													class="select2 select2-container select2-container--bootstrap5"
-													dir="ltr" data-select2-id="select2-data-7-e2xv"
-													style="width: 100%;"><span class="selection"><span
-															class="select2-selection select2-selection--single form-select form-select-solid form-select-lg"
-															role="combobox" aria-haspopup="true" aria-expanded="false"
-															tabindex="0" aria-disabled="false"
-															aria-labelledby="select2-language-7j-container"
-															aria-controls="select2-language-7j-container"><span
-																class="select2-selection__rendered"
-																id="select2-language-7j-container" role="textbox"
-																aria-readonly="true" title="Select a language..."><span
-																	class="select2-selection__placeholder">Select a
-																	language...</span></span><span
-																class="select2-selection__arrow" role="presentation"><b
-																	role="presentation"></b></span></span></span><span
-														class="dropdown-wrapper" aria-hidden="true"></span></span>
+												<select name="language" aria-label="Select a Language" data-control="select2" data-placeholder="Select a language..." class="form-select form-select-solid form-select-lg">
+													<option value="">Select a Language...</option>
+													<option data-kt-flag="flags/indonesia.svg" value="id">Bahasa Indonesia - Indonesian</option>
+													<option data-kt-flag="flags/malaysia.svg" value="msa">Bahasa Melayu - Malay</option>
+													<option data-kt-flag="flags/canada.svg" value="ca">Català - Catalan</option>
+													<option data-kt-flag="flags/czech-republic.svg" value="cs">Čeština - Czech</option>
+													<option data-kt-flag="flags/netherlands.svg" value="da">Dansk - Danish</option>
+													<option data-kt-flag="flags/germany.svg" value="de">Deutsch - German</option>
+													<option data-kt-flag="flags/united-kingdom.svg" value="en">English</option>
+													<option data-kt-flag="flags/united-kingdom.svg" value="en-gb">English UK - British English</option>
+													<option data-kt-flag="flags/spain.svg" value="es">Español - Spanish</option>
+													<option data-kt-flag="flags/philippines.svg" value="fil">Filipino</option>
+													<option data-kt-flag="flags/france.svg" value="fr">Français - French</option>
+													<option data-kt-flag="flags/gabon.svg" value="ga">Gaeilge - Irish (beta)</option>
+													<option data-kt-flag="flags/greenland.svg" value="gl">Galego - Galician (beta)</option>
+													<option data-kt-flag="flags/croatia.svg" value="hr">Hrvatski - Croatian</option>
+													<option data-kt-flag="flags/italy.svg" value="it">Italiano - Italian</option>
+													<option data-kt-flag="flags/hungary.svg" value="hu">Magyar - Hungarian</option>
+													<option data-kt-flag="flags/netherlands.svg" value="nl">Nederlands - Dutch</option>
+													<option data-kt-flag="flags/norway.svg" value="no">Norsk - Norwegian</option>
+													<option data-kt-flag="flags/poland.svg" value="pl">Polski - Polish</option>
+													<option data-kt-flag="flags/portugal.svg" value="pt">Português - Portuguese</option>
+													<option data-kt-flag="flags/romania.svg" value="ro">Română - Romanian</option>
+													<option data-kt-flag="flags/slovakia.svg" value="sk">Slovenčina - Slovak</option>
+													<option data-kt-flag="flags/finland.svg" value="fi">Suomi - Finnish</option>
+													<option data-kt-flag="flags/el-salvador.svg" value="sv">Svenska - Swedish</option>
+													<option data-kt-flag="flags/virgin-islands.svg" value="vi">Tiếng Việt - Vietnamese</option>
+													<option data-kt-flag="flags/turkey.svg" value="tr">Türkçe - Turkish</option>
+													<option data-kt-flag="flags/greece.svg" value="el">Ελληνικά - Greek</option>
+													<option data-kt-flag="flags/bulgaria.svg" value="bg">Български език - Bulgarian</option>
+													<option data-kt-flag="flags/russia.svg" value="ru">Русский - Russian</option>
+													<option data-kt-flag="flags/suriname.svg" value="sr">Српски - Serbian</option>
+													<option data-kt-flag="flags/ukraine.svg" value="uk">Українська мова - Ukrainian</option>
+													<option data-kt-flag="flags/israel.svg" value="he">עִבְרִית - Hebrew</option>
+													<option data-kt-flag="flags/pakistan.svg" value="ur">اردو - Urdu (beta)</option>
+													<option data-kt-flag="flags/argentina.svg" value="ar">العربية - Arabic</option>
+													<option data-kt-flag="flags/argentina.svg" value="fa">فارسی - Persian</option>
+													<option data-kt-flag="flags/mauritania.svg" value="mr">मराठी - Marathi</option>
+													<option data-kt-flag="flags/india.svg" value="hi">हिन्दी - Hindi</option>
+													<option data-kt-flag="flags/bangladesh.svg" value="bn">বাংলা - Bangla</option>
+													<option data-kt-flag="flags/guam.svg" value="gu">ગુજરાતી - Gujarati</option>
+													<option data-kt-flag="flags/india.svg" value="ta">தமிழ் - Tamil</option>
+													<option data-kt-flag="flags/saint-kitts-and-nevis.svg" value="kn">ಕನ್ನಡ - Kannada</option>
+													<option data-kt-flag="flags/thailand.svg" value="th">ภาษาไทย - Thai</option>
+													<option data-kt-flag="flags/south-korea.svg" value="ko">한국어 - Korean</option>
+													<option data-kt-flag="flags/japan.svg" value="ja">日本語 - Japanese</option>
+													<option data-kt-flag="flags/china.svg" value="zh-cn">简体中文 - Simplified Chinese</option>
+													<option data-kt-flag="flags/taiwan.svg" value="zh-tw">繁體中文 - Traditional Chinese</option>
+												</select>
 												<!--end::Input-->
 												<!--begin::Hint-->
-												<div class="form-text">Please select a preferred language, including
-													date, time, and number formatting.</div>
+												<div class="form-text">Please select a preferred language, including date, time, and number formatting.</div>
 												<!--end::Hint-->
-												<div class="fv-plugins-message-container invalid-feedback"></div>
-												<div class="fv-plugins-message-container invalid-feedback">
-													<div data-field="language" data-validator="notEmpty">Please select a
-														language</div>
-												</div>
-												<div class="fv-plugins-message-container invalid-feedback"></div>
-											</div>
-											<!--end::Col-->
-										</div>
-										<!--end::Input group-->
-										<!--begin::Input group-->
-										<div class="row mb-6" data-select2-id="select2-data-28-jnm2">
-											<!--begin::Label-->
-											<label class="col-lg-4 col-form-label required fw-bold fs-6">Time
-												Zone</label>
-											<!--end::Label-->
-											<!--begin::Col-->
-											<div class="col-lg-8 fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-invalid"
-												data-select2-id="select2-data-27-exzl">
-												<select name="timezone" aria-label="Select a Timezone"
-													data-control="select2" data-placeholder="Select a timezone.."
-													class="form-select form-select-solid form-select-lg select2-hidden-accessible"
-													data-select2-id="select2-data-9-wd7y" tabindex="-1"
-													aria-hidden="true">
-													<option value="" data-select2-id="select2-data-11-x9tz">Select a
-														Timezone..</option>
-													<option data-bs-offset="-39600" value="International Date Line West"
-														data-select2-id="select2-data-31-6a9l">(GMT-11:00) International
-														Date Line West</option>
-													<option data-bs-offset="-39600" value="Midway Island"
-														data-select2-id="select2-data-32-8vbc">(GMT-11:00) Midway Island
-													</option>
-													<option data-bs-offset="-39600" value="Samoa"
-														data-select2-id="select2-data-33-fmkl">(GMT-11:00) Samoa
-													</option>
-													<option data-bs-offset="-36000" value="Hawaii"
-														data-select2-id="select2-data-34-yopj">(GMT-10:00) Hawaii
-													</option>
-													<option data-bs-offset="-28800" value="Alaska"
-														data-select2-id="select2-data-35-hbs3">(GMT-08:00) Alaska
-													</option>
-													<option data-bs-offset="-25200"
-														value="Pacific Time (US &amp; Canada)"
-														data-select2-id="select2-data-36-bx7z">(GMT-07:00) Pacific Time
-														(US &amp; Canada)</option>
-													<option data-bs-offset="-25200" value="Tijuana"
-														data-select2-id="select2-data-37-jg9j">(GMT-07:00) Tijuana
-													</option>
-													<option data-bs-offset="-25200" value="Arizona"
-														data-select2-id="select2-data-38-dhsx">(GMT-07:00) Arizona
-													</option>
-													<option data-bs-offset="-21600"
-														value="Mountain Time (US &amp; Canada)"
-														data-select2-id="select2-data-39-yuh2">(GMT-06:00) Mountain Time
-														(US &amp; Canada)</option>
-													<option data-bs-offset="-21600" value="Chihuahua"
-														data-select2-id="select2-data-40-e5mf">(GMT-06:00) Chihuahua
-													</option>
-													<option data-bs-offset="-21600" value="Mazatlan"
-														data-select2-id="select2-data-41-y526">(GMT-06:00) Mazatlan
-													</option>
-													<option data-bs-offset="-21600" value="Saskatchewan"
-														data-select2-id="select2-data-42-amob">(GMT-06:00) Saskatchewan
-													</option>
-													<option data-bs-offset="-21600" value="Central America"
-														data-select2-id="select2-data-43-q0gv">(GMT-06:00) Central
-														America</option>
-													<option data-bs-offset="-18000"
-														value="Central Time (US &amp; Canada)"
-														data-select2-id="select2-data-44-s5f7">(GMT-05:00) Central Time
-														(US &amp; Canada)</option>
-													<option data-bs-offset="-18000" value="Guadalajara"
-														data-select2-id="select2-data-45-e3w2">(GMT-05:00) Guadalajara
-													</option>
-													<option data-bs-offset="-18000" value="Mexico City"
-														data-select2-id="select2-data-46-jwln">(GMT-05:00) Mexico City
-													</option>
-													<option data-bs-offset="-18000" value="Monterrey"
-														data-select2-id="select2-data-47-vz5b">(GMT-05:00) Monterrey
-													</option>
-													<option data-bs-offset="-18000" value="Bogota"
-														data-select2-id="select2-data-48-6zlx">(GMT-05:00) Bogota
-													</option>
-													<option data-bs-offset="-18000" value="Lima"
-														data-select2-id="select2-data-49-pjbb">(GMT-05:00) Lima</option>
-													<option data-bs-offset="-18000" value="Quito"
-														data-select2-id="select2-data-50-god2">(GMT-05:00) Quito
-													</option>
-													<option data-bs-offset="-14400"
-														value="Eastern Time (US &amp; Canada)"
-														data-select2-id="select2-data-51-14bw">(GMT-04:00) Eastern Time
-														(US &amp; Canada)</option>
-													<option data-bs-offset="-14400" value="Indiana (East)"
-														data-select2-id="select2-data-52-crhd">(GMT-04:00) Indiana
-														(East)</option>
-													<option data-bs-offset="-14400" value="Caracas"
-														data-select2-id="select2-data-53-q04e">(GMT-04:00) Caracas
-													</option>
-													<option data-bs-offset="-14400" value="La Paz"
-														data-select2-id="select2-data-54-365m">(GMT-04:00) La Paz
-													</option>
-													<option data-bs-offset="-14400" value="Georgetown"
-														data-select2-id="select2-data-55-82ix">(GMT-04:00) Georgetown
-													</option>
-													<option data-bs-offset="-10800" value="Atlantic Time (Canada)"
-														data-select2-id="select2-data-56-og7c">(GMT-03:00) Atlantic Time
-														(Canada)</option>
-													<option data-bs-offset="-10800" value="Santiago"
-														data-select2-id="select2-data-57-q5iw">(GMT-03:00) Santiago
-													</option>
-													<option data-bs-offset="-10800" value="Brasilia"
-														data-select2-id="select2-data-58-4wqw">(GMT-03:00) Brasilia
-													</option>
-													<option data-bs-offset="-10800" value="Buenos Aires"
-														data-select2-id="select2-data-59-y3yc">(GMT-03:00) Buenos Aires
-													</option>
-													<option data-bs-offset="-9000" value="Newfoundland"
-														data-select2-id="select2-data-60-09wn">(GMT-02:30) Newfoundland
-													</option>
-													<option data-bs-offset="-7200" value="Greenland"
-														data-select2-id="select2-data-61-foau">(GMT-02:00) Greenland
-													</option>
-													<option data-bs-offset="-7200" value="Mid-Atlantic"
-														data-select2-id="select2-data-62-kly2">(GMT-02:00) Mid-Atlantic
-													</option>
-													<option data-bs-offset="-3600" value="Cape Verde Is."
-														data-select2-id="select2-data-63-x0xq">(GMT-01:00) Cape Verde
-														Is.</option>
-													<option data-bs-offset="0" value="Azores"
-														data-select2-id="select2-data-64-r1u3">(GMT) Azores</option>
-													<option data-bs-offset="0" value="Monrovia"
-														data-select2-id="select2-data-65-acop">(GMT) Monrovia</option>
-													<option data-bs-offset="0" value="UTC"
-														data-select2-id="select2-data-66-1uvg">(GMT) UTC</option>
-													<option data-bs-offset="3600" value="Dublin"
-														data-select2-id="select2-data-67-qyoj">(GMT+01:00) Dublin
-													</option>
-													<option data-bs-offset="3600" value="Edinburgh"
-														data-select2-id="select2-data-68-wygb">(GMT+01:00) Edinburgh
-													</option>
-													<option data-bs-offset="3600" value="Lisbon"
-														data-select2-id="select2-data-69-0g3r">(GMT+01:00) Lisbon
-													</option>
-													<option data-bs-offset="3600" value="London"
-														data-select2-id="select2-data-70-h64r">(GMT+01:00) London
-													</option>
-													<option data-bs-offset="3600" value="Casablanca"
-														data-select2-id="select2-data-71-i7nq">(GMT+01:00) Casablanca
-													</option>
-													<option data-bs-offset="3600" value="West Central Africa"
-														data-select2-id="select2-data-72-gwok">(GMT+01:00) West Central
-														Africa</option>
-													<option data-bs-offset="7200" value="Belgrade"
-														data-select2-id="select2-data-73-u1mm">(GMT+02:00) Belgrade
-													</option>
-													<option data-bs-offset="7200" value="Bratislava"
-														data-select2-id="select2-data-74-m075">(GMT+02:00) Bratislava
-													</option>
-													<option data-bs-offset="7200" value="Budapest"
-														data-select2-id="select2-data-75-wb54">(GMT+02:00) Budapest
-													</option>
-													<option data-bs-offset="7200" value="Ljubljana"
-														data-select2-id="select2-data-76-vwlj">(GMT+02:00) Ljubljana
-													</option>
-													<option data-bs-offset="7200" value="Prague"
-														data-select2-id="select2-data-77-am45">(GMT+02:00) Prague
-													</option>
-													<option data-bs-offset="7200" value="Sarajevo"
-														data-select2-id="select2-data-78-n9ep">(GMT+02:00) Sarajevo
-													</option>
-													<option data-bs-offset="7200" value="Skopje"
-														data-select2-id="select2-data-79-4dqz">(GMT+02:00) Skopje
-													</option>
-													<option data-bs-offset="7200" value="Warsaw"
-														data-select2-id="select2-data-80-98ht">(GMT+02:00) Warsaw
-													</option>
-													<option data-bs-offset="7200" value="Zagreb"
-														data-select2-id="select2-data-81-w6qs">(GMT+02:00) Zagreb
-													</option>
-													<option data-bs-offset="7200" value="Brussels"
-														data-select2-id="select2-data-82-w9p2">(GMT+02:00) Brussels
-													</option>
-													<option data-bs-offset="7200" value="Copenhagen"
-														data-select2-id="select2-data-83-tk2y">(GMT+02:00) Copenhagen
-													</option>
-													<option data-bs-offset="7200" value="Madrid"
-														data-select2-id="select2-data-84-wqpx">(GMT+02:00) Madrid
-													</option>
-													<option data-bs-offset="7200" value="Paris"
-														data-select2-id="select2-data-85-amzp">(GMT+02:00) Paris
-													</option>
-													<option data-bs-offset="7200" value="Amsterdam"
-														data-select2-id="select2-data-86-dwdd">(GMT+02:00) Amsterdam
-													</option>
-													<option data-bs-offset="7200" value="Berlin"
-														data-select2-id="select2-data-87-8w2g">(GMT+02:00) Berlin
-													</option>
-													<option data-bs-offset="7200" value="Bern"
-														data-select2-id="select2-data-88-trvy">(GMT+02:00) Bern</option>
-													<option data-bs-offset="7200" value="Rome"
-														data-select2-id="select2-data-89-cmot">(GMT+02:00) Rome</option>
-													<option data-bs-offset="7200" value="Stockholm"
-														data-select2-id="select2-data-90-qksd">(GMT+02:00) Stockholm
-													</option>
-													<option data-bs-offset="7200" value="Vienna"
-														data-select2-id="select2-data-91-o55k">(GMT+02:00) Vienna
-													</option>
-													<option data-bs-offset="7200" value="Cairo"
-														data-select2-id="select2-data-92-ihyn">(GMT+02:00) Cairo
-													</option>
-													<option data-bs-offset="7200" value="Harare"
-														data-select2-id="select2-data-93-mcnu">(GMT+02:00) Harare
-													</option>
-													<option data-bs-offset="7200" value="Pretoria"
-														data-select2-id="select2-data-94-ju0q">(GMT+02:00) Pretoria
-													</option>
-													<option data-bs-offset="10800" value="Bucharest"
-														data-select2-id="select2-data-95-qmg3">(GMT+03:00) Bucharest
-													</option>
-													<option data-bs-offset="10800" value="Helsinki"
-														data-select2-id="select2-data-96-7l6x">(GMT+03:00) Helsinki
-													</option>
-													<option data-bs-offset="10800" value="Kiev"
-														data-select2-id="select2-data-97-9nrv">(GMT+03:00) Kiev</option>
-													<option data-bs-offset="10800" value="Kyiv"
-														data-select2-id="select2-data-98-l2hu">(GMT+03:00) Kyiv</option>
-													<option data-bs-offset="10800" value="Riga"
-														data-select2-id="select2-data-99-cqwj">(GMT+03:00) Riga</option>
-													<option data-bs-offset="10800" value="Sofia"
-														data-select2-id="select2-data-100-miw8">(GMT+03:00) Sofia
-													</option>
-													<option data-bs-offset="10800" value="Tallinn"
-														data-select2-id="select2-data-101-vmbv">(GMT+03:00) Tallinn
-													</option>
-													<option data-bs-offset="10800" value="Vilnius"
-														data-select2-id="select2-data-102-n3c5">(GMT+03:00) Vilnius
-													</option>
-													<option data-bs-offset="10800" value="Athens"
-														data-select2-id="select2-data-103-javt">(GMT+03:00) Athens
-													</option>
-													<option data-bs-offset="10800" value="Istanbul"
-														data-select2-id="select2-data-104-gfkf">(GMT+03:00) Istanbul
-													</option>
-													<option data-bs-offset="10800" value="Minsk"
-														data-select2-id="select2-data-105-nun3">(GMT+03:00) Minsk
-													</option>
-													<option data-bs-offset="10800" value="Jerusalem"
-														data-select2-id="select2-data-106-1tpq">(GMT+03:00) Jerusalem
-													</option>
-													<option data-bs-offset="10800" value="Moscow"
-														data-select2-id="select2-data-107-rgrs">(GMT+03:00) Moscow
-													</option>
-													<option data-bs-offset="10800" value="St. Petersburg"
-														data-select2-id="select2-data-108-z9ok">(GMT+03:00) St.
-														Petersburg</option>
-													<option data-bs-offset="10800" value="Volgograd"
-														data-select2-id="select2-data-109-bg2v">(GMT+03:00) Volgograd
-													</option>
-													<option data-bs-offset="10800" value="Kuwait"
-														data-select2-id="select2-data-110-64io">(GMT+03:00) Kuwait
-													</option>
-													<option data-bs-offset="10800" value="Riyadh"
-														data-select2-id="select2-data-111-ohib">(GMT+03:00) Riyadh
-													</option>
-													<option data-bs-offset="10800" value="Nairobi"
-														data-select2-id="select2-data-112-wuws">(GMT+03:00) Nairobi
-													</option>
-													<option data-bs-offset="10800" value="Baghdad"
-														data-select2-id="select2-data-113-6zxy">(GMT+03:00) Baghdad
-													</option>
-													<option data-bs-offset="14400" value="Abu Dhabi"
-														data-select2-id="select2-data-114-rfyy">(GMT+04:00) Abu Dhabi
-													</option>
-													<option data-bs-offset="14400" value="Muscat"
-														data-select2-id="select2-data-115-m3mi">(GMT+04:00) Muscat
-													</option>
-													<option data-bs-offset="14400" value="Baku"
-														data-select2-id="select2-data-116-jujy">(GMT+04:00) Baku
-													</option>
-													<option data-bs-offset="14400" value="Tbilisi"
-														data-select2-id="select2-data-117-neh9">(GMT+04:00) Tbilisi
-													</option>
-													<option data-bs-offset="14400" value="Yerevan"
-														data-select2-id="select2-data-118-ptcr">(GMT+04:00) Yerevan
-													</option>
-													<option data-bs-offset="16200" value="Tehran"
-														data-select2-id="select2-data-119-ga13">(GMT+04:30) Tehran
-													</option>
-													<option data-bs-offset="16200" value="Kabul"
-														data-select2-id="select2-data-120-6d5v">(GMT+04:30) Kabul
-													</option>
-													<option data-bs-offset="18000" value="Ekaterinburg"
-														data-select2-id="select2-data-121-jgte">(GMT+05:00) Ekaterinburg
-													</option>
-													<option data-bs-offset="18000" value="Islamabad"
-														data-select2-id="select2-data-122-e51h">(GMT+05:00) Islamabad
-													</option>
-													<option data-bs-offset="18000" value="Karachi"
-														data-select2-id="select2-data-123-4s0u">(GMT+05:00) Karachi
-													</option>
-													<option data-bs-offset="18000" value="Tashkent"
-														data-select2-id="select2-data-124-w5ja">(GMT+05:00) Tashkent
-													</option>
-													<option data-bs-offset="19800" value="Chennai"
-														data-select2-id="select2-data-125-2i25">(GMT+05:30) Chennai
-													</option>
-													<option data-bs-offset="19800" value="Kolkata"
-														data-select2-id="select2-data-126-3x2a">(GMT+05:30) Kolkata
-													</option>
-													<option data-bs-offset="19800" value="Mumbai"
-														data-select2-id="select2-data-127-vv8l">(GMT+05:30) Mumbai
-													</option>
-													<option data-bs-offset="19800" value="New Delhi"
-														data-select2-id="select2-data-128-adgw">(GMT+05:30) New Delhi
-													</option>
-													<option data-bs-offset="19800" value="Sri Jayawardenepura"
-														data-select2-id="select2-data-129-qe27">(GMT+05:30) Sri
-														Jayawardenepura</option>
-													<option data-bs-offset="20700" value="Kathmandu"
-														data-select2-id="select2-data-130-97pf">(GMT+05:45) Kathmandu
-													</option>
-													<option data-bs-offset="21600" value="Astana"
-														data-select2-id="select2-data-131-qp81">(GMT+06:00) Astana
-													</option>
-													<option data-bs-offset="21600" value="Dhaka"
-														data-select2-id="select2-data-132-904j">(GMT+06:00) Dhaka
-													</option>
-													<option data-bs-offset="21600" value="Almaty"
-														data-select2-id="select2-data-133-00xe">(GMT+06:00) Almaty
-													</option>
-													<option data-bs-offset="21600" value="Urumqi"
-														data-select2-id="select2-data-134-xqqt">(GMT+06:00) Urumqi
-													</option>
-													<option data-bs-offset="23400" value="Rangoon"
-														data-select2-id="select2-data-135-d084">(GMT+06:30) Rangoon
-													</option>
-													<option data-bs-offset="25200" value="Novosibirsk"
-														data-select2-id="select2-data-136-1xqh">(GMT+07:00) Novosibirsk
-													</option>
-													<option data-bs-offset="25200" value="Bangkok"
-														data-select2-id="select2-data-137-u9wf">(GMT+07:00) Bangkok
-													</option>
-													<option data-bs-offset="25200" value="Hanoi"
-														data-select2-id="select2-data-138-slxs">(GMT+07:00) Hanoi
-													</option>
-													<option data-bs-offset="25200" value="Jakarta"
-														data-select2-id="select2-data-139-btsx">(GMT+07:00) Jakarta
-													</option>
-													<option data-bs-offset="25200" value="Krasnoyarsk"
-														data-select2-id="select2-data-140-75cp">(GMT+07:00) Krasnoyarsk
-													</option>
-													<option data-bs-offset="28800" value="Beijing"
-														data-select2-id="select2-data-141-pmwu">(GMT+08:00) Beijing
-													</option>
-													<option data-bs-offset="28800" value="Chongqing"
-														data-select2-id="select2-data-142-dl7a">(GMT+08:00) Chongqing
-													</option>
-													<option data-bs-offset="28800" value="Hong Kong"
-														data-select2-id="select2-data-143-yupf">(GMT+08:00) Hong Kong
-													</option>
-													<option data-bs-offset="28800" value="Kuala Lumpur"
-														data-select2-id="select2-data-144-xjli">(GMT+08:00) Kuala Lumpur
-													</option>
-													<option data-bs-offset="28800" value="Singapore"
-														data-select2-id="select2-data-145-m13w">(GMT+08:00) Singapore
-													</option>
-													<option data-bs-offset="28800" value="Taipei"
-														data-select2-id="select2-data-146-yq5e">(GMT+08:00) Taipei
-													</option>
-													<option data-bs-offset="28800" value="Perth"
-														data-select2-id="select2-data-147-09h0">(GMT+08:00) Perth
-													</option>
-													<option data-bs-offset="28800" value="Irkutsk"
-														data-select2-id="select2-data-148-8w6k">(GMT+08:00) Irkutsk
-													</option>
-													<option data-bs-offset="28800" value="Ulaan Bataar"
-														data-select2-id="select2-data-149-057r">(GMT+08:00) Ulaan Bataar
-													</option>
-													<option data-bs-offset="32400" value="Seoul"
-														data-select2-id="select2-data-150-dkkf">(GMT+09:00) Seoul
-													</option>
-													<option data-bs-offset="32400" value="Osaka"
-														data-select2-id="select2-data-151-vaac">(GMT+09:00) Osaka
-													</option>
-													<option data-bs-offset="32400" value="Sapporo"
-														data-select2-id="select2-data-152-cmd1">(GMT+09:00) Sapporo
-													</option>
-													<option data-bs-offset="32400" value="Tokyo"
-														data-select2-id="select2-data-153-v9wy">(GMT+09:00) Tokyo
-													</option>
-													<option data-bs-offset="32400" value="Yakutsk"
-														data-select2-id="select2-data-154-mlsf">(GMT+09:00) Yakutsk
-													</option>
-													<option data-bs-offset="34200" value="Darwin"
-														data-select2-id="select2-data-155-broo">(GMT+09:30) Darwin
-													</option>
-													<option data-bs-offset="34200" value="Adelaide"
-														data-select2-id="select2-data-156-8cim">(GMT+09:30) Adelaide
-													</option>
-													<option data-bs-offset="36000" value="Canberra"
-														data-select2-id="select2-data-157-8y0z">(GMT+10:00) Canberra
-													</option>
-													<option data-bs-offset="36000" value="Melbourne"
-														data-select2-id="select2-data-158-w2h9">(GMT+10:00) Melbourne
-													</option>
-													<option data-bs-offset="36000" value="Sydney"
-														data-select2-id="select2-data-159-3bou">(GMT+10:00) Sydney
-													</option>
-													<option data-bs-offset="36000" value="Brisbane"
-														data-select2-id="select2-data-160-6wig">(GMT+10:00) Brisbane
-													</option>
-													<option data-bs-offset="36000" value="Hobart"
-														data-select2-id="select2-data-161-91qv">(GMT+10:00) Hobart
-													</option>
-													<option data-bs-offset="36000" value="Vladivostok"
-														data-select2-id="select2-data-162-mx89">(GMT+10:00) Vladivostok
-													</option>
-													<option data-bs-offset="36000" value="Guam"
-														data-select2-id="select2-data-163-fsh7">(GMT+10:00) Guam
-													</option>
-													<option data-bs-offset="36000" value="Port Moresby"
-														data-select2-id="select2-data-164-spca">(GMT+10:00) Port Moresby
-													</option>
-													<option data-bs-offset="36000" value="Solomon Is."
-														data-select2-id="select2-data-165-smqu">(GMT+10:00) Solomon Is.
-													</option>
-													<option data-bs-offset="39600" value="Magadan"
-														data-select2-id="select2-data-166-g28a">(GMT+11:00) Magadan
-													</option>
-													<option data-bs-offset="39600" value="New Caledonia"
-														data-select2-id="select2-data-167-spz1">(GMT+11:00) New
-														Caledonia</option>
-													<option data-bs-offset="43200" value="Fiji"
-														data-select2-id="select2-data-168-2ikb">(GMT+12:00) Fiji
-													</option>
-													<option data-bs-offset="43200" value="Kamchatka"
-														data-select2-id="select2-data-169-2yx8">(GMT+12:00) Kamchatka
-													</option>
-													<option data-bs-offset="43200" value="Marshall Is."
-														data-select2-id="select2-data-170-yx18">(GMT+12:00) Marshall Is.
-													</option>
-													<option data-bs-offset="43200" value="Auckland"
-														data-select2-id="select2-data-171-itfo">(GMT+12:00) Auckland
-													</option>
-													<option data-bs-offset="43200" value="Wellington"
-														data-select2-id="select2-data-172-no2b">(GMT+12:00) Wellington
-													</option>
-													<option data-bs-offset="46800" value="Nuku'alofa"
-														data-select2-id="select2-data-173-gk3n">(GMT+13:00) Nuku'alofa
-													</option>
-												</select><span
-													class="select2 select2-container select2-container--bootstrap5"
-													dir="ltr" data-select2-id="select2-data-5-cvq3"
-													style="width: 100%;"><span class="selection"><span
-															class="select2-selection select2-selection--single form-select form-select-solid form-select-lg"
-															role="combobox" aria-haspopup="true" aria-expanded="false"
-															tabindex="-1" aria-disabled="false"
-															aria-labelledby="select2-timezone-gh-container"
-															aria-controls="select2-timezone-gh-container"><span
-																class="select2-selection__rendered"
-																id="select2-timezone-gh-container" role="textbox"
-																aria-readonly="true" title="Select a timezone.."><span
-																	class="select2-selection__placeholder">Select a
-																	timezone..</span></span><span
-																class="select2-selection__arrow" role="presentation"><b
-																	role="presentation"></b></span></span></span><span
-														class="dropdown-wrapper" aria-hidden="true"></span></span><span
-													class="select2 select2-container select2-container--bootstrap5 select2-container--below"
-													dir="ltr" data-select2-id="select2-data-5-4cp5"
-													style="width: 100%;"><span class="selection"><span
-															class="select2-selection select2-selection--single form-select form-select-solid form-select-lg"
-															role="combobox" aria-haspopup="true" aria-expanded="false"
-															tabindex="-1" aria-disabled="false"
-															aria-labelledby="select2-timezone-wi-container"
-															aria-controls="select2-timezone-wi-container"><span
-																class="select2-selection__rendered"
-																id="select2-timezone-wi-container" role="textbox"
-																aria-readonly="true" title="Select a timezone.."><span
-																	class="select2-selection__placeholder">Select a
-																	timezone..</span></span><span
-																class="select2-selection__arrow" role="presentation"><b
-																	role="presentation"></b></span></span></span><span
-														class="dropdown-wrapper" aria-hidden="true"></span></span><span
-													class="select2 select2-container select2-container--bootstrap5"
-													dir="ltr" data-select2-id="select2-data-10-hbx0"
-													style="width: 100%;"><span class="selection"><span
-															class="select2-selection select2-selection--single form-select form-select-solid form-select-lg"
-															role="combobox" aria-haspopup="true" aria-expanded="false"
-															tabindex="0" aria-disabled="false"
-															aria-labelledby="select2-timezone-oq-container"
-															aria-controls="select2-timezone-oq-container"><span
-																class="select2-selection__rendered"
-																id="select2-timezone-oq-container" role="textbox"
-																aria-readonly="true" title="Select a timezone.."><span
-																	class="select2-selection__placeholder">Select a
-																	timezone..</span></span><span
-																class="select2-selection__arrow" role="presentation"><b
-																	role="presentation"></b></span></span></span><span
-														class="dropdown-wrapper" aria-hidden="true"></span></span>
-												<div class="fv-plugins-message-container invalid-feedback"></div>
-												<div class="fv-plugins-message-container invalid-feedback">
-													<div data-field="timezone" data-validator="notEmpty">Please select a
-														timezone</div>
-												</div>
-												<div class="fv-plugins-message-container invalid-feedback"></div>
-											</div>
-											<!--end::Col-->
-										</div>
-										<!--end::Input group-->
-										<!--begin::Input group-->
-										<div class="row mb-6" data-select2-id="select2-data-176-dfnq">
-											<!--begin::Label-->
-											<label class="col-lg-4 col-form-label fw-bold fs-6">Currency</label>
-											<!--end::Label-->
-											<!--begin::Col-->
-											<div class="col-lg-8 fv-row" data-select2-id="select2-data-175-ycld">
-												<select name="currnecy" aria-label="Select a Timezone"
-													data-control="select2" data-placeholder="Select a currency.."
-													class="form-select form-select-solid form-select-lg select2-hidden-accessible"
-													data-select2-id="select2-data-12-8phn" tabindex="-1"
-													aria-hidden="true">
-													<option value="" data-select2-id="select2-data-14-5y2v">Select a
-														currency..</option>
-													<option data-kt-flag="flags/united-states.svg" value="USD"
-														data-select2-id="select2-data-177-mexk">
-														USD&nbsp;-&nbsp;USA dollar</option>
-													<option data-kt-flag="flags/united-kingdom.svg" value="GBP"
-														data-select2-id="select2-data-178-7su9">
-														GBP&nbsp;-&nbsp;British pound</option>
-													<option data-kt-flag="flags/australia.svg" value="AUD"
-														data-select2-id="select2-data-179-0w5m">
-														AUD&nbsp;-&nbsp;Australian dollar</option>
-													<option data-kt-flag="flags/japan.svg" value="JPY"
-														data-select2-id="select2-data-180-4v0v">
-														JPY&nbsp;-&nbsp;Japanese yen</option>
-													<option data-kt-flag="flags/sweden.svg" value="SEK"
-														data-select2-id="select2-data-181-n8f3">
-														SEK&nbsp;-&nbsp;Swedish krona</option>
-													<option data-kt-flag="flags/canada.svg" value="CAD"
-														data-select2-id="select2-data-182-m855">
-														CAD&nbsp;-&nbsp;Canadian dollar</option>
-													<option data-kt-flag="flags/switzerland.svg" value="CHF"
-														data-select2-id="select2-data-183-iyta">
-														CHF&nbsp;-&nbsp;Swiss franc</option>
-												</select><span
-													class="select2 select2-container select2-container--bootstrap5"
-													dir="ltr" data-select2-id="select2-data-6-qzys"
-													style="width: 100%;"><span class="selection"><span
-															class="select2-selection select2-selection--single form-select form-select-solid form-select-lg"
-															role="combobox" aria-haspopup="true" aria-expanded="false"
-															tabindex="-1" aria-disabled="false"
-															aria-labelledby="select2-currnecy-k8-container"
-															aria-controls="select2-currnecy-k8-container"><span
-																class="select2-selection__rendered"
-																id="select2-currnecy-k8-container" role="textbox"
-																aria-readonly="true" title="Select a currency.."><span
-																	class="select2-selection__placeholder">Select a
-																	currency..</span></span><span
-																class="select2-selection__arrow" role="presentation"><b
-																	role="presentation"></b></span></span></span><span
-														class="dropdown-wrapper" aria-hidden="true"></span></span><span
-													class="select2 select2-container select2-container--bootstrap5 select2-container--below"
-													dir="ltr" data-select2-id="select2-data-6-oakb"
-													style="width: 100%;"><span class="selection"><span
-															class="select2-selection select2-selection--single form-select form-select-solid form-select-lg"
-															role="combobox" aria-haspopup="true" aria-expanded="false"
-															tabindex="-1" aria-disabled="false"
-															aria-labelledby="select2-currnecy-vq-container"
-															aria-controls="select2-currnecy-vq-container"><span
-																class="select2-selection__rendered"
-																id="select2-currnecy-vq-container" role="textbox"
-																aria-readonly="true" title="Select a currency.."><span
-																	class="select2-selection__placeholder">Select a
-																	currency..</span></span><span
-																class="select2-selection__arrow" role="presentation"><b
-																	role="presentation"></b></span></span></span><span
-														class="dropdown-wrapper" aria-hidden="true"></span></span><span
-													class="select2 select2-container select2-container--bootstrap5"
-													dir="ltr" data-select2-id="select2-data-13-nf5m"
-													style="width: 100%;"><span class="selection"><span
-															class="select2-selection select2-selection--single form-select form-select-solid form-select-lg"
-															role="combobox" aria-haspopup="true" aria-expanded="false"
-															tabindex="0" aria-disabled="false"
-															aria-labelledby="select2-currnecy-1x-container"
-															aria-controls="select2-currnecy-1x-container"><span
-																class="select2-selection__rendered"
-																id="select2-currnecy-1x-container" role="textbox"
-																aria-readonly="true" title="Select a currency.."><span
-																	class="select2-selection__placeholder">Select a
-																	currency..</span></span><span
-																class="select2-selection__arrow" role="presentation"><b
-																	role="presentation"></b></span></span></span><span
-														class="dropdown-wrapper" aria-hidden="true"></span></span>
 											</div>
 											<!--end::Col-->
 										</div>
@@ -6281,21 +6051,18 @@
 												class="col-lg-4 col-form-label required fw-bold fs-6">Communication</label>
 											<!--end::Label-->
 											<!--begin::Col-->
-											<div
-												class="col-lg-8 fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-invalid">
+											<div class="col-lg-8 fv-row fv-plugins-icon-container">
 												<!--begin::Options-->
 												<div class="d-flex align-items-center mt-3">
 													<!--begin::Option-->
-													<label
-														class="form-check form-check-inline form-check-solid me-5 is-invalid">
+													<label class="form-check form-check-inline form-check-solid me-5">
 														<input class="form-check-input" name="communication[]"
 															type="checkbox" value="1">
 														<span class="fw-bold ps-2 fs-6">Email</span>
 													</label>
 													<!--end::Option-->
 													<!--begin::Option-->
-													<label
-														class="form-check form-check-inline form-check-solid is-valid">
+													<label class="form-check form-check-inline form-check-solid">
 														<input class="form-check-input" name="communication[]"
 															type="checkbox" value="2">
 														<span class="fw-bold ps-2 fs-6">Phone</span>
@@ -6304,29 +6071,8 @@
 												</div>
 												<!--end::Options-->
 												<div class="fv-plugins-message-container invalid-feedback"></div>
-												<div class="fv-plugins-message-container invalid-feedback">
-													<div data-field="communication[]" data-validator="notEmpty">Please
-														select at least one communication method</div>
-												</div>
-												<div class="fv-plugins-message-container invalid-feedback"></div>
 											</div>
 											<!--end::Col-->
-										</div>
-										<!--end::Input group-->
-										<!--begin::Input group-->
-										<div class="row mb-0">
-											<!--begin::Label-->
-											<label class="col-lg-4 col-form-label fw-bold fs-6">Allow Marketing</label>
-											<!--begin::Label-->
-											<!--begin::Label-->
-											<div class="col-lg-8 d-flex align-items-center">
-												<div class="form-check form-check-solid form-switch fv-row">
-													<input class="form-check-input w-45px h-30px" type="checkbox"
-														id="allowmarketing" checked="checked">
-													<label class="form-check-label" for="allowmarketing"></label>
-												</div>
-											</div>
-											<!--begin::Label-->
 										</div>
 										<!--end::Input group-->
 									</div>
@@ -6340,8 +6086,6 @@
 									</div>
 									<!--end::Actions-->
 									<input type="hidden">
-									<div></div><input type="hidden">
-									<div></div><input type="hidden">
 									<div></div>
 								</form>
 								<!--end::Form-->
@@ -6389,10 +6133,6 @@
 																name="emailaddress" value="support@keenthemes.com">
 															<div class="fv-plugins-message-container invalid-feedback">
 															</div>
-															<div class="fv-plugins-message-container invalid-feedback">
-															</div>
-															<div class="fv-plugins-message-container invalid-feedback">
-															</div>
 														</div>
 													</div>
 													<div class="col-lg-6">
@@ -6405,10 +6145,6 @@
 																name="confirmemailpassword" id="confirmemailpassword">
 															<div class="fv-plugins-message-container invalid-feedback">
 															</div>
-															<div class="fv-plugins-message-container invalid-feedback">
-															</div>
-															<div class="fv-plugins-message-container invalid-feedback">
-															</div>
 														</div>
 													</div>
 												</div>
@@ -6418,8 +6154,6 @@
 													<button id="kt_signin_cancel" type="button"
 														class="btn btn-color-gray-400 btn-active-light-primary px-6">Cancel</button>
 												</div>
-												<div></div>
-												<div></div>
 												<div></div>
 											</form>
 											<!--end::Form-->
@@ -6460,10 +6194,6 @@
 																name="currentpassword" id="currentpassword">
 															<div class="fv-plugins-message-container invalid-feedback">
 															</div>
-															<div class="fv-plugins-message-container invalid-feedback">
-															</div>
-															<div class="fv-plugins-message-container invalid-feedback">
-															</div>
 														</div>
 													</div>
 													<div class="col-lg-4">
@@ -6474,10 +6204,6 @@
 															<input type="password"
 																class="form-control form-control-lg form-control-solid"
 																name="newpassword" id="newpassword">
-															<div class="fv-plugins-message-container invalid-feedback">
-															</div>
-															<div class="fv-plugins-message-container invalid-feedback">
-															</div>
 															<div class="fv-plugins-message-container invalid-feedback">
 															</div>
 														</div>
@@ -6492,10 +6218,6 @@
 																name="confirmpassword" id="confirmpassword">
 															<div class="fv-plugins-message-container invalid-feedback">
 															</div>
-															<div class="fv-plugins-message-container invalid-feedback">
-															</div>
-															<div class="fv-plugins-message-container invalid-feedback">
-															</div>
 														</div>
 													</div>
 												</div>
@@ -6507,8 +6229,6 @@
 													<button id="kt_password_cancel" type="button"
 														class="btn btn-color-gray-400 btn-active-light-primary px-6">Cancel</button>
 												</div>
-												<div></div>
-												<div></div>
 												<div></div>
 											</form>
 											<!--end::Form-->
@@ -6636,50 +6356,6 @@
 											</div>
 										</div>
 										<!--end::Item-->
-										<div class="separator separator-dashed my-5"></div>
-										<!--begin::Item-->
-										<div class="d-flex flex-stack">
-											<div class="d-flex">
-												<img src="assets/media/svg/brand-logos/github.svg" class="w-30px me-6"
-													alt="">
-												<div class="d-flex flex-column">
-													<a href="#"
-														class="fs-5 text-dark text-hover-primary fw-bolder">Github</a>
-													<div class="fs-6 fw-bold text-gray-400">Keep eye on on your
-														Repositories</div>
-												</div>
-											</div>
-											<div class="d-flex justify-content-end">
-												<div class="form-check form-check-solid form-switch">
-													<input class="form-check-input w-45px h-30px" type="checkbox"
-														id="githubswitch" checked="checked">
-													<label class="form-check-label" for="githubswitch"></label>
-												</div>
-											</div>
-										</div>
-										<!--end::Item-->
-										<div class="separator separator-dashed my-5"></div>
-										<!--begin::Item-->
-										<div class="d-flex flex-stack">
-											<div class="d-flex">
-												<img src="assets/media/svg/brand-logos/slack-icon.svg"
-													class="w-30px me-6" alt="">
-												<div class="d-flex flex-column">
-													<a href="#"
-														class="fs-5 text-dark text-hover-primary fw-bolder">Slack</a>
-													<div class="fs-6 fw-bold text-gray-400">Integrate Projects
-														Discussions</div>
-												</div>
-											</div>
-											<div class="d-flex justify-content-end">
-												<div class="form-check form-check-solid form-switch">
-													<input class="form-check-input w-45px h-30px" type="checkbox"
-														id="slackswitch">
-													<label class="form-check-label" for="slackswitch"></label>
-												</div>
-											</div>
-										</div>
-										<!--end::Item-->
 									</div>
 									<!--end::Items-->
 								</div>
@@ -6694,12 +6370,6 @@
 							<!--end::Content-->
 						</div>
 						<!--end::Connected Accounts-->
-						<!--begin::Notifications-->
-
-						<!--end::Notifications-->
-						<!--begin::Notifications-->
-
-						<!--end::Notifications-->
 						<!--begin::Deactivate Account-->
 						<div class="card">
 							<!--begin::Card header-->
@@ -6761,8 +6431,6 @@
 											<label class="form-check-label fw-bold ps-2 fs-6" for="deactivate">I confirm
 												my account deactivation</label>
 											<div class="fv-plugins-message-container invalid-feedback"></div>
-											<div class="fv-plugins-message-container invalid-feedback"></div>
-											<div class="fv-plugins-message-container invalid-feedback"></div>
 										</div>
 										<!--end::Form input row-->
 									</div>
@@ -6774,8 +6442,6 @@
 									</div>
 									<!--end::Card footer-->
 									<input type="hidden">
-									<div></div><input type="hidden">
-									<div></div><input type="hidden">
 									<div></div>
 								</form>
 								<!--end::Form-->
@@ -6953,8 +6619,6 @@
 														class="form-control form-control-lg form-control-solid"
 														placeholder="Enter authentication code" name="code">
 													<div class="fv-plugins-message-container invalid-feedback"></div>
-													<div class="fv-plugins-message-container invalid-feedback"></div>
-													<div class="fv-plugins-message-container invalid-feedback"></div>
 												</div>
 												<!--end::Input group-->
 												<!--begin::Actions-->
@@ -6970,8 +6634,6 @@
 													</button>
 												</div>
 												<!--end::Actions-->
-												<div></div>
-												<div></div>
 												<div></div>
 											</form>
 											<!--end::Form-->
@@ -6997,8 +6659,6 @@
 														class="form-control form-control-lg form-control-solid"
 														placeholder="Mobile number with country code..." name="mobile">
 													<div class="fv-plugins-message-container invalid-feedback"></div>
-													<div class="fv-plugins-message-container invalid-feedback"></div>
-													<div class="fv-plugins-message-container invalid-feedback"></div>
 												</div>
 												<!--end::Input group-->
 												<!--begin::Actions-->
@@ -7014,8 +6674,6 @@
 													</button>
 												</div>
 												<!--end::Actions-->
-												<div></div>
-												<div></div>
 												<div></div>
 											</form>
 											<!--end::Form-->
@@ -8709,7 +8367,21 @@
 											Owner</option>
 										<option value="3">Can Edit</option>
 									</select><span class="select2 select2-container select2-container--bootstrap5"
-										dir="ltr" data-select2-id="select2-data-7-o2ro" style="width: 100%;"><span
+										dir="ltr" data-select2-id="select2-data-7-1c2b" style="width: 100%;"><span
+											class="selection"><span
+												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
+												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
+												aria-disabled="false" aria-labelledby="select2-ze90-container"
+												aria-controls="select2-ze90-container"><span
+													class="select2-selection__rendered" id="select2-ze90-container"
+													role="textbox" aria-readonly="true" title="
+											Owner">
+													Owner</span><span class="select2-selection__arrow"
+													role="presentation"><b
+														role="presentation"></b></span></span></span><span
+											class="dropdown-wrapper" aria-hidden="true"></span></span><span
+										class="select2 select2-container select2-container--bootstrap5" dir="ltr"
+										data-select2-id="select2-data-7-o2ro" style="width: 100%;"><span
 											class="selection"><span
 												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
 												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
@@ -8777,7 +8449,21 @@
 										<option value="2">Owner</option>
 										<option value="3">Can Edit</option>
 									</select><span class="select2 select2-container select2-container--bootstrap5"
-										dir="ltr" data-select2-id="select2-data-8-by2o" style="width: 100%;"><span
+										dir="ltr" data-select2-id="select2-data-8-iqcx" style="width: 100%;"><span
+											class="selection"><span
+												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
+												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
+												aria-disabled="false" aria-labelledby="select2-kmsn-container"
+												aria-controls="select2-kmsn-container"><span
+													class="select2-selection__rendered" id="select2-kmsn-container"
+													role="textbox" aria-readonly="true" title="
+											Guest">
+													Guest</span><span class="select2-selection__arrow"
+													role="presentation"><b
+														role="presentation"></b></span></span></span><span
+											class="dropdown-wrapper" aria-hidden="true"></span></span><span
+										class="select2 select2-container select2-container--bootstrap5" dir="ltr"
+										data-select2-id="select2-data-8-by2o" style="width: 100%;"><span
 											class="selection"><span
 												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
 												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
@@ -8845,7 +8531,21 @@
 										<option value="3" selected="selected" data-select2-id="select2-data-23-mcwg">Can
 											Edit</option>
 									</select><span class="select2 select2-container select2-container--bootstrap5"
-										dir="ltr" data-select2-id="select2-data-9-1t6q" style="width: 100%;"><span
+										dir="ltr" data-select2-id="select2-data-9-lqk0" style="width: 100%;"><span
+											class="selection"><span
+												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
+												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
+												aria-disabled="false" aria-labelledby="select2-mano-container"
+												aria-controls="select2-mano-container"><span
+													class="select2-selection__rendered" id="select2-mano-container"
+													role="textbox" aria-readonly="true" title="Can
+											Edit">Can
+													Edit</span><span class="select2-selection__arrow"
+													role="presentation"><b
+														role="presentation"></b></span></span></span><span
+											class="dropdown-wrapper" aria-hidden="true"></span></span><span
+										class="select2 select2-container select2-container--bootstrap5" dir="ltr"
+										data-select2-id="select2-data-9-1t6q" style="width: 100%;"><span
 											class="selection"><span
 												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
 												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
@@ -8916,7 +8616,21 @@
 											Owner</option>
 										<option value="3">Can Edit</option>
 									</select><span class="select2 select2-container select2-container--bootstrap5"
-										dir="ltr" data-select2-id="select2-data-10-d9c8" style="width: 100%;"><span
+										dir="ltr" data-select2-id="select2-data-10-7dcp" style="width: 100%;"><span
+											class="selection"><span
+												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
+												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
+												aria-disabled="false" aria-labelledby="select2-0ya3-container"
+												aria-controls="select2-0ya3-container"><span
+													class="select2-selection__rendered" id="select2-0ya3-container"
+													role="textbox" aria-readonly="true" title="
+											Owner">
+													Owner</span><span class="select2-selection__arrow"
+													role="presentation"><b
+														role="presentation"></b></span></span></span><span
+											class="dropdown-wrapper" aria-hidden="true"></span></span><span
+										class="select2 select2-container select2-container--bootstrap5" dir="ltr"
+										data-select2-id="select2-data-10-d9c8" style="width: 100%;"><span
 											class="selection"><span
 												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
 												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
@@ -8984,7 +8698,21 @@
 										<option value="3" selected="selected" data-select2-id="select2-data-29-ee9x">Can
 											Edit</option>
 									</select><span class="select2 select2-container select2-container--bootstrap5"
-										dir="ltr" data-select2-id="select2-data-11-rzj3" style="width: 100%;"><span
+										dir="ltr" data-select2-id="select2-data-11-aoc6" style="width: 100%;"><span
+											class="selection"><span
+												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
+												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
+												aria-disabled="false" aria-labelledby="select2-x3op-container"
+												aria-controls="select2-x3op-container"><span
+													class="select2-selection__rendered" id="select2-x3op-container"
+													role="textbox" aria-readonly="true" title="Can
+											Edit">Can
+													Edit</span><span class="select2-selection__arrow"
+													role="presentation"><b
+														role="presentation"></b></span></span></span><span
+											class="dropdown-wrapper" aria-hidden="true"></span></span><span
+										class="select2 select2-container select2-container--bootstrap5" dir="ltr"
+										data-select2-id="select2-data-11-rzj3" style="width: 100%;"><span
 											class="selection"><span
 												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
 												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
@@ -9055,7 +8783,21 @@
 											Owner</option>
 										<option value="3">Can Edit</option>
 									</select><span class="select2 select2-container select2-container--bootstrap5"
-										dir="ltr" data-select2-id="select2-data-12-el7y" style="width: 100%;"><span
+										dir="ltr" data-select2-id="select2-data-12-9jsi" style="width: 100%;"><span
+											class="selection"><span
+												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
+												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
+												aria-disabled="false" aria-labelledby="select2-znk2-container"
+												aria-controls="select2-znk2-container"><span
+													class="select2-selection__rendered" id="select2-znk2-container"
+													role="textbox" aria-readonly="true" title="
+											Owner">
+													Owner</span><span class="select2-selection__arrow"
+													role="presentation"><b
+														role="presentation"></b></span></span></span><span
+											class="dropdown-wrapper" aria-hidden="true"></span></span><span
+										class="select2 select2-container select2-container--bootstrap5" dir="ltr"
+										data-select2-id="select2-data-12-el7y" style="width: 100%;"><span
 											class="selection"><span
 												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
 												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
@@ -9123,7 +8865,21 @@
 										<option value="3" selected="selected" data-select2-id="select2-data-35-k4lj">Can
 											Edit</option>
 									</select><span class="select2 select2-container select2-container--bootstrap5"
-										dir="ltr" data-select2-id="select2-data-13-huy8" style="width: 100%;"><span
+										dir="ltr" data-select2-id="select2-data-13-blde" style="width: 100%;"><span
+											class="selection"><span
+												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
+												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
+												aria-disabled="false" aria-labelledby="select2-5f0g-container"
+												aria-controls="select2-5f0g-container"><span
+													class="select2-selection__rendered" id="select2-5f0g-container"
+													role="textbox" aria-readonly="true" title="Can
+											Edit">Can
+													Edit</span><span class="select2-selection__arrow"
+													role="presentation"><b
+														role="presentation"></b></span></span></span><span
+											class="dropdown-wrapper" aria-hidden="true"></span></span><span
+										class="select2 select2-container select2-container--bootstrap5" dir="ltr"
+										data-select2-id="select2-data-13-huy8" style="width: 100%;"><span
 											class="selection"><span
 												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
 												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
@@ -9194,7 +8950,21 @@
 											Owner</option>
 										<option value="3">Can Edit</option>
 									</select><span class="select2 select2-container select2-container--bootstrap5"
-										dir="ltr" data-select2-id="select2-data-14-wc26" style="width: 100%;"><span
+										dir="ltr" data-select2-id="select2-data-14-2t7g" style="width: 100%;"><span
+											class="selection"><span
+												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
+												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
+												aria-disabled="false" aria-labelledby="select2-8iqr-container"
+												aria-controls="select2-8iqr-container"><span
+													class="select2-selection__rendered" id="select2-8iqr-container"
+													role="textbox" aria-readonly="true" title="
+											Owner">
+													Owner</span><span class="select2-selection__arrow"
+													role="presentation"><b
+														role="presentation"></b></span></span></span><span
+											class="dropdown-wrapper" aria-hidden="true"></span></span><span
+										class="select2 select2-container select2-container--bootstrap5" dir="ltr"
+										data-select2-id="select2-data-14-wc26" style="width: 100%;"><span
 											class="selection"><span
 												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
 												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
@@ -9262,7 +9032,21 @@
 										<option value="2">Owner</option>
 										<option value="3">Can Edit</option>
 									</select><span class="select2 select2-container select2-container--bootstrap5"
-										dir="ltr" data-select2-id="select2-data-15-g1hv" style="width: 100%;"><span
+										dir="ltr" data-select2-id="select2-data-15-p1ws" style="width: 100%;"><span
+											class="selection"><span
+												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
+												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
+												aria-disabled="false" aria-labelledby="select2-h5n1-container"
+												aria-controls="select2-h5n1-container"><span
+													class="select2-selection__rendered" id="select2-h5n1-container"
+													role="textbox" aria-readonly="true" title="
+											Guest">
+													Guest</span><span class="select2-selection__arrow"
+													role="presentation"><b
+														role="presentation"></b></span></span></span><span
+											class="dropdown-wrapper" aria-hidden="true"></span></span><span
+										class="select2 select2-container select2-container--bootstrap5" dir="ltr"
+										data-select2-id="select2-data-15-g1hv" style="width: 100%;"><span
 											class="selection"><span
 												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
 												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
@@ -9330,7 +9114,21 @@
 										<option value="3" selected="selected" data-select2-id="select2-data-44-k6hm">Can
 											Edit</option>
 									</select><span class="select2 select2-container select2-container--bootstrap5"
-										dir="ltr" data-select2-id="select2-data-16-p7sv" style="width: 100%;"><span
+										dir="ltr" data-select2-id="select2-data-16-kgfe" style="width: 100%;"><span
+											class="selection"><span
+												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
+												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
+												aria-disabled="false" aria-labelledby="select2-r5mf-container"
+												aria-controls="select2-r5mf-container"><span
+													class="select2-selection__rendered" id="select2-r5mf-container"
+													role="textbox" aria-readonly="true" title="Can
+											Edit">Can
+													Edit</span><span class="select2-selection__arrow"
+													role="presentation"><b
+														role="presentation"></b></span></span></span><span
+											class="dropdown-wrapper" aria-hidden="true"></span></span><span
+										class="select2 select2-container select2-container--bootstrap5" dir="ltr"
+										data-select2-id="select2-data-16-p7sv" style="width: 100%;"><span
 											class="selection"><span
 												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
 												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
@@ -9401,7 +9199,21 @@
 											Owner</option>
 										<option value="3">Can Edit</option>
 									</select><span class="select2 select2-container select2-container--bootstrap5"
-										dir="ltr" data-select2-id="select2-data-17-377f" style="width: 100%;"><span
+										dir="ltr" data-select2-id="select2-data-17-l4dk" style="width: 100%;"><span
+											class="selection"><span
+												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
+												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
+												aria-disabled="false" aria-labelledby="select2-vx9c-container"
+												aria-controls="select2-vx9c-container"><span
+													class="select2-selection__rendered" id="select2-vx9c-container"
+													role="textbox" aria-readonly="true" title="
+											Owner">
+													Owner</span><span class="select2-selection__arrow"
+													role="presentation"><b
+														role="presentation"></b></span></span></span><span
+											class="dropdown-wrapper" aria-hidden="true"></span></span><span
+										class="select2 select2-container select2-container--bootstrap5" dir="ltr"
+										data-select2-id="select2-data-17-377f" style="width: 100%;"><span
 											class="selection"><span
 												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
 												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
@@ -9469,7 +9281,21 @@
 										<option value="2">Owner</option>
 										<option value="3">Can Edit</option>
 									</select><span class="select2 select2-container select2-container--bootstrap5"
-										dir="ltr" data-select2-id="select2-data-18-j27c" style="width: 100%;"><span
+										dir="ltr" data-select2-id="select2-data-18-l2ss" style="width: 100%;"><span
+											class="selection"><span
+												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
+												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
+												aria-disabled="false" aria-labelledby="select2-gga4-container"
+												aria-controls="select2-gga4-container"><span
+													class="select2-selection__rendered" id="select2-gga4-container"
+													role="textbox" aria-readonly="true" title="
+											Guest">
+													Guest</span><span class="select2-selection__arrow"
+													role="presentation"><b
+														role="presentation"></b></span></span></span><span
+											class="dropdown-wrapper" aria-hidden="true"></span></span><span
+										class="select2 select2-container select2-container--bootstrap5" dir="ltr"
+										data-select2-id="select2-data-18-j27c" style="width: 100%;"><span
 											class="selection"><span
 												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
 												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
@@ -9537,7 +9363,21 @@
 										<option value="3" selected="selected" data-select2-id="select2-data-53-5vae">Can
 											Edit</option>
 									</select><span class="select2 select2-container select2-container--bootstrap5"
-										dir="ltr" data-select2-id="select2-data-19-0e9i" style="width: 100%;"><span
+										dir="ltr" data-select2-id="select2-data-19-rtk5" style="width: 100%;"><span
+											class="selection"><span
+												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
+												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
+												aria-disabled="false" aria-labelledby="select2-it8c-container"
+												aria-controls="select2-it8c-container"><span
+													class="select2-selection__rendered" id="select2-it8c-container"
+													role="textbox" aria-readonly="true" title="Can
+											Edit">Can
+													Edit</span><span class="select2-selection__arrow"
+													role="presentation"><b
+														role="presentation"></b></span></span></span><span
+											class="dropdown-wrapper" aria-hidden="true"></span></span><span
+										class="select2 select2-container select2-container--bootstrap5" dir="ltr"
+										data-select2-id="select2-data-19-0e9i" style="width: 100%;"><span
 											class="selection"><span
 												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
 												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
@@ -9608,7 +9448,21 @@
 										<option value="3" selected="selected" data-select2-id="select2-data-56-fwzn">Can
 											Edit</option>
 									</select><span class="select2 select2-container select2-container--bootstrap5"
-										dir="ltr" data-select2-id="select2-data-20-8qjx" style="width: 100%;"><span
+										dir="ltr" data-select2-id="select2-data-20-sb4z" style="width: 100%;"><span
+											class="selection"><span
+												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
+												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
+												aria-disabled="false" aria-labelledby="select2-mrkj-container"
+												aria-controls="select2-mrkj-container"><span
+													class="select2-selection__rendered" id="select2-mrkj-container"
+													role="textbox" aria-readonly="true" title="Can
+											Edit">Can
+													Edit</span><span class="select2-selection__arrow"
+													role="presentation"><b
+														role="presentation"></b></span></span></span><span
+											class="dropdown-wrapper" aria-hidden="true"></span></span><span
+										class="select2 select2-container select2-container--bootstrap5" dir="ltr"
+										data-select2-id="select2-data-20-8qjx" style="width: 100%;"><span
 											class="selection"><span
 												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
 												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
@@ -9679,7 +9533,21 @@
 											Owner</option>
 										<option value="3">Can Edit</option>
 									</select><span class="select2 select2-container select2-container--bootstrap5"
-										dir="ltr" data-select2-id="select2-data-21-bink" style="width: 100%;"><span
+										dir="ltr" data-select2-id="select2-data-21-3szp" style="width: 100%;"><span
+											class="selection"><span
+												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
+												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
+												aria-disabled="false" aria-labelledby="select2-r131-container"
+												aria-controls="select2-r131-container"><span
+													class="select2-selection__rendered" id="select2-r131-container"
+													role="textbox" aria-readonly="true" title="
+											Owner">
+													Owner</span><span class="select2-selection__arrow"
+													role="presentation"><b
+														role="presentation"></b></span></span></span><span
+											class="dropdown-wrapper" aria-hidden="true"></span></span><span
+										class="select2 select2-container select2-container--bootstrap5" dir="ltr"
+										data-select2-id="select2-data-21-bink" style="width: 100%;"><span
 											class="selection"><span
 												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
 												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
@@ -9747,7 +9615,21 @@
 										<option value="2">Owner</option>
 										<option value="3">Can Edit</option>
 									</select><span class="select2 select2-container select2-container--bootstrap5"
-										dir="ltr" data-select2-id="select2-data-22-n3te" style="width: 100%;"><span
+										dir="ltr" data-select2-id="select2-data-22-wbeh" style="width: 100%;"><span
+											class="selection"><span
+												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
+												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
+												aria-disabled="false" aria-labelledby="select2-auxj-container"
+												aria-controls="select2-auxj-container"><span
+													class="select2-selection__rendered" id="select2-auxj-container"
+													role="textbox" aria-readonly="true" title="
+											Guest">
+													Guest</span><span class="select2-selection__arrow"
+													role="presentation"><b
+														role="presentation"></b></span></span></span><span
+											class="dropdown-wrapper" aria-hidden="true"></span></span><span
+										class="select2 select2-container select2-container--bootstrap5" dir="ltr"
+										data-select2-id="select2-data-22-n3te" style="width: 100%;"><span
 											class="selection"><span
 												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
 												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
@@ -9815,7 +9697,21 @@
 										<option value="3" selected="selected" data-select2-id="select2-data-65-2i7c">Can
 											Edit</option>
 									</select><span class="select2 select2-container select2-container--bootstrap5"
-										dir="ltr" data-select2-id="select2-data-23-dzkl" style="width: 100%;"><span
+										dir="ltr" data-select2-id="select2-data-23-5qp3" style="width: 100%;"><span
+											class="selection"><span
+												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
+												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
+												aria-disabled="false" aria-labelledby="select2-qi0g-container"
+												aria-controls="select2-qi0g-container"><span
+													class="select2-selection__rendered" id="select2-qi0g-container"
+													role="textbox" aria-readonly="true" title="Can
+											Edit">Can
+													Edit</span><span class="select2-selection__arrow"
+													role="presentation"><b
+														role="presentation"></b></span></span></span><span
+											class="dropdown-wrapper" aria-hidden="true"></span></span><span
+										class="select2 select2-container select2-container--bootstrap5" dir="ltr"
+										data-select2-id="select2-data-23-dzkl" style="width: 100%;"><span
 											class="selection"><span
 												class="select2-selection select2-selection--single form-select form-select-solid form-select-sm"
 												role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
@@ -10047,6 +9943,7 @@
 											<div class="fv-plugins-message-container invalid-feedback"></div>
 											<div class="fv-plugins-message-container invalid-feedback"></div>
 											<div class="fv-plugins-message-container invalid-feedback"></div>
+											<div class="fv-plugins-message-container invalid-feedback"></div>
 										</div>
 										<!--end::Input group-->
 										<!--begin::Input group-->
@@ -10191,6 +10088,8 @@
 														</div>
 														<div class="fv-plugins-message-container invalid-feedback">
 														</div>
+														<div class="fv-plugins-message-container invalid-feedback">
+														</div>
 													</span>
 													<!--end:Input-->
 												</label>
@@ -10324,6 +10223,7 @@
 													<div class="fv-plugins-message-container invalid-feedback"></div>
 													<div class="fv-plugins-message-container invalid-feedback"></div>
 													<div class="fv-plugins-message-container invalid-feedback"></div>
+													<div class="fv-plugins-message-container invalid-feedback"></div>
 												</span>
 												<!--end:Input-->
 											</label>
@@ -10345,6 +10245,7 @@
 											<input type="text" class="form-control form-control-lg form-control-solid"
 												name="dbname" placeholder="" value="master_db">
 											<!--end::Input-->
+											<div class="fv-plugins-message-container invalid-feedback"></div>
 											<div class="fv-plugins-message-container invalid-feedback"></div>
 											<div class="fv-plugins-message-container invalid-feedback"></div>
 											<div class="fv-plugins-message-container invalid-feedback"></div>
@@ -10441,6 +10342,7 @@
 													<div class="fv-plugins-message-container invalid-feedback"></div>
 													<div class="fv-plugins-message-container invalid-feedback"></div>
 													<div class="fv-plugins-message-container invalid-feedback"></div>
+													<div class="fv-plugins-message-container invalid-feedback"></div>
 												</span>
 												<!--end::Input-->
 											</label>
@@ -10465,6 +10367,7 @@
 											<!--end::Label-->
 											<input type="text" class="form-control form-control-solid" placeholder=""
 												name="card_name" value="Max Doe">
+											<div class="fv-plugins-message-container invalid-feedback"></div>
 											<div class="fv-plugins-message-container invalid-feedback"></div>
 											<div class="fv-plugins-message-container invalid-feedback"></div>
 											<div class="fv-plugins-message-container invalid-feedback"></div>
@@ -10494,6 +10397,7 @@
 												<!--end::Card logos-->
 											</div>
 											<!--end::Input wrapper-->
+											<div class="fv-plugins-message-container invalid-feedback"></div>
 											<div class="fv-plugins-message-container invalid-feedback"></div>
 											<div class="fv-plugins-message-container invalid-feedback"></div>
 											<div class="fv-plugins-message-container invalid-feedback"></div>
@@ -10531,6 +10435,25 @@
 															<option value="11">11</option>
 															<option value="12">12</option>
 														</select><span
+															class="select2 select2-container select2-container--bootstrap5"
+															dir="ltr" data-select2-id="select2-data-24-jtvc"
+															style="width: 100%;"><span class="selection"><span
+																	class="select2-selection select2-selection--single form-select form-select-solid"
+																	role="combobox" aria-haspopup="true"
+																	aria-expanded="false" tabindex="-1"
+																	aria-disabled="false"
+																	aria-labelledby="select2-card_expiry_month-jb-container"
+																	aria-controls="select2-card_expiry_month-jb-container"><span
+																		class="select2-selection__rendered"
+																		id="select2-card_expiry_month-jb-container"
+																		role="textbox" aria-readonly="true"
+																		title="Month"><span
+																			class="select2-selection__placeholder">Month</span></span><span
+																		class="select2-selection__arrow"
+																		role="presentation"><b
+																			role="presentation"></b></span></span></span><span
+																class="dropdown-wrapper"
+																aria-hidden="true"></span></span><span
 															class="select2 select2-container select2-container--bootstrap5"
 															dir="ltr" data-select2-id="select2-data-24-ifep"
 															style="width: 100%;"><span class="selection"><span
@@ -10594,6 +10517,8 @@
 														</div>
 														<div class="fv-plugins-message-container invalid-feedback">
 														</div>
+														<div class="fv-plugins-message-container invalid-feedback">
+														</div>
 													</div>
 													<!--end::Col-->
 													<!--begin::Col-->
@@ -10617,6 +10542,25 @@
 															<option value="2030">2030</option>
 															<option value="2031">2031</option>
 														</select><span
+															class="select2 select2-container select2-container--bootstrap5"
+															dir="ltr" data-select2-id="select2-data-25-xgnb"
+															style="width: 100%;"><span class="selection"><span
+																	class="select2-selection select2-selection--single form-select form-select-solid"
+																	role="combobox" aria-haspopup="true"
+																	aria-expanded="false" tabindex="-1"
+																	aria-disabled="false"
+																	aria-labelledby="select2-card_expiry_year-h5-container"
+																	aria-controls="select2-card_expiry_year-h5-container"><span
+																		class="select2-selection__rendered"
+																		id="select2-card_expiry_year-h5-container"
+																		role="textbox" aria-readonly="true"
+																		title="Year"><span
+																			class="select2-selection__placeholder">Year</span></span><span
+																		class="select2-selection__arrow"
+																		role="presentation"><b
+																			role="presentation"></b></span></span></span><span
+																class="dropdown-wrapper"
+																aria-hidden="true"></span></span><span
 															class="select2 select2-container select2-container--bootstrap5"
 															dir="ltr" data-select2-id="select2-data-25-4dcx"
 															style="width: 100%;"><span class="selection"><span
@@ -10680,6 +10624,8 @@
 														</div>
 														<div class="fv-plugins-message-container invalid-feedback">
 														</div>
+														<div class="fv-plugins-message-container invalid-feedback">
+														</div>
 													</div>
 													<!--end::Col-->
 												</div>
@@ -10720,6 +10666,7 @@
 													<!--end::CVV icon-->
 												</div>
 												<!--end::Input wrapper-->
+												<div class="fv-plugins-message-container invalid-feedback"></div>
 												<div class="fv-plugins-message-container invalid-feedback"></div>
 												<div class="fv-plugins-message-container invalid-feedback"></div>
 												<div class="fv-plugins-message-container invalid-feedback"></div>
@@ -10827,6 +10774,10 @@
 									<!--end::Wrapper-->
 								</div>
 								<!--end::Actions-->
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
 								<div></div>
 								<div></div>
 								<div></div>
@@ -11536,6 +11487,15 @@
 		<polyline id="SvgjsPolyline1003" points="0,0"></polyline>
 		<path id="SvgjsPath1004" d="M0 0 "></path>
 	</svg><svg id="SvgjsSvg1001" width="2" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1"
+		xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs"
+		style="overflow: hidden; top: -100%; left: -100%; position: absolute; opacity: 0;">
+		<defs id="SvgjsDefs1002"></defs>
+		<polyline id="SvgjsPolyline1003" points="0,0"></polyline>
+		<path id="SvgjsPath1004" d="M0 0 "></path>
+	</svg>
+
+
+	<svg id="SvgjsSvg1001" width="2" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1"
 		xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs"
 		style="overflow: hidden; top: -100%; left: -100%; position: absolute; opacity: 0;">
 		<defs id="SvgjsDefs1002"></defs>
