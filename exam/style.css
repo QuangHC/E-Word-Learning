@@ -1,5 +1,9 @@
 * {}
 
+p.tag {
+    margin-top: 10px;
+}
+
 .sub-text a.btn {
     background: #23085A;
     color: white;
