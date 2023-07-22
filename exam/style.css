@@ -15,6 +15,11 @@ a {
     color: black;
 }
 
+a.test {
+    text-decoration: underline;
+    color: darkslateblue;
+}
+
 a:hover {
     color: #00953B;
     text-decoration: underline;
