@@ -1,5 +1,12 @@
 * {}
 
+glyphicon-move:before, span.glyphicon-hand-down:before {
+    position: absolute;
+    top: -25px;
+    right: -22px;
+    font-size: 13px;
+}
+
 .task-panel.panel.panel-default {
     margin: 40px 0px;
 }
