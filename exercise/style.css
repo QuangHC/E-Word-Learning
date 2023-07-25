@@ -3,6 +3,16 @@
 }
 
 /* task */
+ul.list-inline.pull-right {
+    margin-left: 90%;
+}
+
+li.list-inline-item.previous.disabled {
+    margin: 0px;
+}
+
+a#btn-prev, a#btn-next {background: #8080805e;padding: 2px 10px;border-radius: 10px;font-size: 18px;color: #555555; }
+
 
 .answer-panel {
     margin-bottom: 30px;
