@@ -1,8 +1,8 @@
 $(function () {
-    let selectedData = null;
+    // begin::Overview scripts
+    let overview_selectedData = null;
     let remainingItems = $('#main_list li').length;
     $('#remainingText').text(`${remainingItems} items remaining`);
-   
 
     // Function để lấy giá trị của data-question-index và nội dung của thẻ li khi được click
     function getQuestionIndexAndText(item) {
@@ -13,29 +13,27 @@ $(function () {
 
     // Lặp qua từng phần tử và thêm sự kiện click cho main_list
     $('#main_list li').on('click', function () {
-        // // Lấy giá trị của data-question-index và nội dung của thẻ li khi được click
-        // selectedData = getQuestionIndexAndText(this);
+        // Lấy giá trị của data-question-index và nội dung của thẻ li khi được click
+        // overview_selectedData = getQuestionIndexAndText(this);
         if ($(this).hasClass('selecting')) {
-            selectedData = null;
+            overview_selectedData = null;
             $(this).removeClass('selecting');
-            $('#questions .card').css('background-color', '#fff');
+            $('.answer-panel .card').css('background-color', '#fff');
         } else {
-            selectedData = getQuestionIndexAndText(this);
+            overview_selectedData = getQuestionIndexAndText(this);
             $('.selecting').removeClass('selecting');
             $(this).addClass('selecting');
             $('#questions .card').css('background-color', '#DEDEDE');
         }
-
     });
 
     // Lặp qua từng phần tử và thêm sự kiện click cho gapfield-list
     $('.gapfield-list li').on('click', function () {
         prevQuestionIndex = $(this).data('question-index');
         iconEle = $(this).next('i');
-        console.log(prevQuestionIndex);
         // Kiểm tra nếu đã có thông tin được chọn từ main_list
-        if (selectedData) {
-            const [questionIndex, listItemText] = selectedData;
+        if (overview_selectedData) {
+            const [questionIndex, listItemText] = overview_selectedData;
 
             if (prevQuestionIndex != '-1') {
                 $(`#main_list li[data-question-index="${prevQuestionIndex}"]`).removeClass('hidden');
@@ -60,8 +58,8 @@ $(function () {
                 iconEle.removeClass('fa-check').addClass('fa-solid fa-xmark');
             }
 
-            // Reset selectedData sau khi đã sử dụng
-            selectedData = null;
+            // Reset overview_selectedData sau khi đã sử dụng
+            overview_selectedData = null;
         } else {
             if (prevQuestionIndex != '-1') {
                 $(`#main_list li[data-question-index="${prevQuestionIndex}"]`).removeClass('hidden');
@@ -97,7 +95,7 @@ $(function () {
         $('.action .btn.btn-success').addClass('disabled');
         $('#questions li.list-group-item.btn.btn-light').addClass('disable');
         $('#close1').click();
-    }); 
+    });
 
     // Dem so luong item con lai trong main_list khong co thuoc tinh hidden
     function countRemainingItems() {
@@ -117,20 +115,19 @@ $(function () {
         if ($('span.answer').hasClass('hidden')) {
             $('span.answer').removeClass('hidden');
             $('#questions li.list-group-item.btn.btn-light').addClass('bg-info');
-            $('#questions li.list-group-item.btn.btn-light').addClass('text-info');
+            // $('#questions li.list-group-item.btn.btn-light').css('color', '#fff');
         } else {
             $('span.answer').addClass('hidden').removeClass('bg-info');
             $('#questions li.list-group-item.btn.btn-light').removeClass('bg-info');
-            $('#questions li.list-group-item.btn.btn-light').removeClass('text-info');
+            // $('#questions li.list-group-item.btn.btn-light').removeClass('text-info');
             $('.check-icon').removeClass('hidden');
         }
     });
 
     $('.action .btn.btn-danger').on('click', function () {
         reset();
-        if ($('span.answer').not('.hidden')) {
-            $('.action .btn.btn-info').click();
-        }
+        $('span.answer').addClass('hidden');
+        $('#questions li.list-group-item.btn.btn-light').removeClass('bg-info');
         $('#questions li.list-group-item.btn.btn-light').removeClass('disable');
         $('.action .btn.btn-danger').addClass('disabled');
         $('.action .btn.btn-info').addClass('hidden');
@@ -147,4 +144,127 @@ $(function () {
         $('.action .btn.btn-success').addClass('disabled');
         $('.check-icon').addClass('hidden');
     };
+
+    // end::Overview scripts
+    // begin:Task scripts
+    // begin: Task 1
+    let question_index_current = 0;
+    const total_questions = $('.question').length;
+    let task_selectedData = null;
+    changeRemainingQuestions();
+
+    $('#btn-next').on('click', function () {
+        filledAll(question_index_current);
+        question_index_current++;
+        console.log("qic: " + question_index_current);
+        $(`#question-${question_index_current - 1}.question`).addClass('hidden');
+        $(`#question-${question_index_current}.question`).removeClass('hidden');
+        ableButton(question_index_current);
+        task_selectedData = null;
+        $('.selecting').removeClass('selecting');
+        changeRemainingQuestions();
+    });
+
+
+    $('#btn-prev').addClass('disable');
+
+    $('#btn-prev').on('click', function () {
+        filledAll(question_index_current);
+        question_index_current--;
+        console.log("qic: " + question_index_current);
+        $(`#question-${question_index_current + 1}.question`).addClass('hidden');
+        $(`#question-${question_index_current}.question`).removeClass('hidden');
+        ableButton(question_index_current);
+        task_selectedData = null;
+        $('.selecting').removeClass('selecting');
+        changeRemainingQuestions();
+    });
+
+
+    $(`.task-panel li`).on('click', function () {
+        console.log(`#question-${question_index_current} .task-panel li: is clicked`);
+        // Lấy giá trị của data-question-index và nội dung của thẻ li khi được click
+        if ($(this).hasClass('selecting')) {
+            task_selectedData = null;
+            $(this).removeClass('selecting');
+            $('.answer-panel li.list-group-item.btn.btn-light').css('background-color', '#fff');
+        } else {
+            task_selectedData = $(this);
+            $('.selecting').removeClass('selecting');
+            $(this).addClass('selecting');
+            $('.answer-panel li.list-group-item.btn.btn-light').css('background-color', '#DEDEDE');
+        }
+    });
+    
+    // click gapfield in task
+    $('.gapfield-list-0 li').on('click', function () {
+        let prevQuestionIndex = $(this).attr('data-question-index');
+        console.log(`prevQuestionIndex: ${prevQuestionIndex}`);
+        iconEle = $(this).next('i');
+        // Kiểm tra nếu đã có thông tin được chọn từ main_list
+        if (task_selectedData) {
+            const [questionIndex, listItemText] = [task_selectedData.data('question-index'), task_selectedData.text()];
+            console.log(`questionIndex: ${questionIndex}, listItemText: ${listItemText}`);
+            if (prevQuestionIndex != '-1') {
+                $(`#question-${question_index_current} li[data-question-index="${prevQuestionIndex}"]`).removeClass('hidden');
+            }
+
+            // Gán nội dung của thẻ li đã chọn vào phần tử trong gapfield-list
+            $(this).text(listItemText).attr('data-question-index', questionIndex);
+
+            // Giảm số lượng phần tử còn lại
+            task_selectedData.addClass('hidden');
+            $('.answer-panel li.list-group-item.btn.btn-light').css('background-color', '#fff');
+            $('.selecting').removeClass('selecting');
+
+            if (listItemText === $(this).attr('data-answer-index')) {
+                // Nếu data-question-index của thẻ li trong main_list và gapfield-list giống nhau thì thêm class correct
+                $(this).addClass('correct').removeClass('incorrect not-filled');
+                iconEle.removeClass('fa-xmark').addClass('fa-solid fa-check');
+            } else {
+                // Nếu data-question-index của thẻ li trong main_list và gapfield-list khác nhau thì thêm class incorrect
+                $(this).addClass('incorrect').removeClass('correct not-filled');
+                iconEle.removeClass('fa-check').addClass('fa-solid fa-xmark');
+            }
+
+            // Reset overview_selectedData sau khi đã sử dụng
+            task_selectedData = null;
+        } else {
+            if (prevQuestionIndex != '-1') {
+                $(`#question-${question_index_current} li[data-question-index="${prevQuestionIndex}"]`).removeClass('hidden');
+                $(this).text('').attr('data-question-index', '-1').removeClass('correct incorrect');
+            }
+        }
+
+    });
+
+    function ableButton(index) {
+        if (index === 0) {
+            $('#btn-prev').addClass('disable');
+        } else if (index === total_questions - 1) {
+            $('#btn-next').addClass('disable');
+        } else {
+            $('#btn-prev').removeClass('disable');
+            $('#btn-next').removeClass('disable');
+        }
+    }
+
+    function filledAll(question_index_current) {
+        let l = $(`#question-${question_index_current} .task-panel li`).length;
+        // kiem tra so luong cau hoi con lai trong tung question
+        let h = $(`#question-${question_index_current} .task-panel li.hidden`).length;
+        console.log("l: " + l);
+        console.log("h: " + h);
+        if (l === h) {
+            $(`#question-${question_index_current}`).addClass('filled-all');
+        } else { 
+            $(`#question-${question_index_current}`).removeClass('filled-all');
+        }
+    }
+
+    function changeRemainingQuestions() {
+        let l = $(`.question.filled-all`).length;
+        $('#remainingText_0').text(`${total_questions - l} items remaining`);
+    }
+    // end:Task scripts
 });
