@@ -3,6 +3,10 @@
 }
 
 /*task 2-5*/
+.task-question {
+    font-size: 14px;
+}
+
 fa-move:before, span.fa-hand-point-down:before {
     position: absolute;
     top: 0px;
