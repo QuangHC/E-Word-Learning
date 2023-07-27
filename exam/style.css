@@ -8,11 +8,11 @@
 .ex-test a.btn{
     background: #23085A;
     color: white;
-    padding: 10px 37px;
     border-radius: 30px;
     margin: 10px 0px;
-
 }
+
+.ex-test .btn:not(.btn-outline):not(.btn-dashed):not(.border-hover):not(.border-active):not(.btn-flush):not(.btn-icon) {padding-left: 45px; padding-right: 45px}
 
 .ex-test h1 {
     margin-top: 40px;
