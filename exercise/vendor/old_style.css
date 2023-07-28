@@ -113,6 +113,10 @@ a#btn-next {
     margin-left: 40px;
 }
 
+li.list-group-item.btn {
+    font-weight: normal;
+}
+
 p#remainingText_0 {
     text-align: center;
     padding: 5px 0px;
