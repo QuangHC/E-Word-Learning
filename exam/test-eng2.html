@@ -73929,30 +73929,95 @@ data-kt-menu-placement="left-start" data-kt-menu-flip="bottom, top">
                                 <div id="time"></div>
                             </div>
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="30" style="width: 3.33333%;"></div>
+                                <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="30" style="width:;"></div>
                             </div>
-                            <div class="Quiz-inner">
-                                <div class="Quiz-nav">
-                                    <button disabled="" class="btn btn-link prev"><!-- react-text: 52 -->&lt; <!-- /react-text --><!-- react-text: 53 -->Previous<!-- /react-text --></button>
-                                    <button disabled="" class="btn btn-link next"><!-- react-text: 55 -->Next<!-- /react-text --><!-- react-text: 56 --> &gt;<!-- /react-text --></button>
-                                </div>
+
+                       
+                                        <div class="control float-end">
+                                            <a class="btn btn-light" id="btn-prev">
+                                                <p class="text-btn"><span
+                                                class="fas fa-angle-left"></span> Previous</p>
+                                            </a>
+                                            <a class="btn btn-light" id="btn-next">
+                                                <p  class="text-btn">Next <span
+                                                class="fas fa-angle-right"></span></p>
+
+                                            </a>
+                                        </div>
+
+                            <!-- Question 1 -->
+                            <div class="Quiz-inner" id="question-1" style="display: block;">
+                                
                                 <p>Question 1 of 30</p>
                                 <p><strong>A:</strong> Choose the best word or phrase to complete the sentence.</p>
                                 <div>
                                     <p class="rq-Question-instruction"></p>
                                     <p class="rq-Question-text well" style="margin: 0px;">The big book is ________.</p>
                                     <ul class="rq-Question-answerList">
-                                        <li class="answer"><button class="btn btn-default answer-button">mine</button></li>
-                                        <li class="answer"><button class="btn btn-default answer-button">for my</button></li>
-                                        <li class="answer"><button class="btn btn-default answer-button">me</button></li>
+                                        <li class="answer" data-question-index="0"><button class="btn btn-default answer-button">mine</button></li>
+                                        <li class="answer" data-question-index="1"><button class="btn btn-default answer-button">for my</button></li>
+                                        <li class="answer" data-question-index="2"><button class="btn btn-default answer-button">me</button></li>
                                     </ul>
                                 </div>
                                 <p><strong>B:</strong> How sure are you about the answer you have given?</p>
-                                <div>
-                                    <div class="Quiz-confidence-buttons text-center"><button disabled="" class="btn btn-default">Certain</button><button disabled="" class="btn btn-default">Fairly sure</button><button disabled="" class="btn btn-default">Not sure</button>
+                               
+                                    <div class="Quiz-confidence-buttons text-center">
+                                        <a class="btn btn-default">Certain</a>
+                                        <a class="btn btn-default">Fairly sure</a>
+                                        <a class="btn btn-default">Not sure</a>
                                     </div>
-                                </div>
+                               
                             </div>
+                            <!-- end Question 1 -->
+
+                            <!-- Question 2 -->
+                            <div class="Quiz-inner" id="question-2" style="display: none;">
+                                <p>Question 2 of 30</p>
+                                <p><strong>A:</strong> Choose the best word or phrase to complete the sentence.</p>
+                                <div>
+                                    <p class="rq-Question-instruction"></p>
+                                    <p class="rq-Question-text well" style="margin: 0px;">The big book is ________.</p>
+                                    <ul class="rq-Question-answerList">
+                                        <li class="answer" data-question-index="0"><button class="btn btn-default answer-button">mine</button></li>
+                                        <li class="answer" data-question-index="1"><button class="btn btn-default answer-button">for my</button></li>
+                                        <li class="answer" data-question-index="2"><button class="btn btn-default answer-button">me</button></li>
+                                    </ul>
+                                </div>
+                                <p><strong>B:</strong> How sure are you about the answer you have given?</p>
+                            
+                                    <div class="Quiz-confidence-buttons text-center">
+                                        <a class="btn btn-default">Certain</a>
+                                        <a class="btn btn-default">Fairly sure</a>
+                                        <a class="btn btn-default">Not sure</a>
+                                    </div>
+                                
+                            </div>
+                            <!-- end Question 2 -->
+
+                            <!-- Question 3 -->
+                            <div class="Quiz-inner" id="question-3" style="display: none;">
+                                
+                                <p>Question 3 of 30</p>
+                                <p><strong>A:</strong> Choose the best word or phrase to complete the sentence.</p>
+                                <div>
+                                    <p class="rq-Question-instruction"></p>
+                                    <p class="rq-Question-text well" style="margin: 0px;">The big book is ________.</p>
+                                    <ul class="rq-Question-answerList">
+                                        <li class="answer" data-question-index="0"><button class="btn btn-default answer-button">mine</button></li>
+                                        <li class="answer" data-question-index="1"><button class="btn btn-default answer-button">for my</button></li>
+                                        <li class="answer" data-question-index="2"><button class="btn btn-default answer-button">me</button></li>
+                                    </ul>
+                                </div>
+                                <p><strong>B:</strong> How sure are you about the answer you have given?</p>
+                                
+                                    <div class="Quiz-confidence-buttons text-center">
+                                        <a class="btn btn-default">Certain</a>
+                                        <a class="btn btn-default">Fairly sure</a>
+                                        <a class="btn btn-default">Not sure</a>
+                                    </div>
+                              
+                            </div>
+                            <!-- end Question 3 -->
                         </div>
                     </div>
                 </div>

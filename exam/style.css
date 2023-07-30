@@ -1,17 +1,37 @@
 * {}
+a#btn-prev, a#btn-next {
+    background: #EBEFF0;
+}
 
-button.btn.btn-default.answer-button {
+.control.float-end {
+    width: 98%;
+    position: relative;
+    margin: 20px 10px;
+}
+
+p.text-btn {
+    margin: 0px;
+    font-size: 14px !important;
+    color: gray !important;
+}
+
+a#btn-next {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+a.btn.btn-default.answer-button {
     width: 100%;
     text-align: left;
 }
 
-.Quiz-confidence-buttons button.btn.btn-default {
-background-color: #fff!important;
+.Quiz-confidence-buttons a.btn.btn-default {
+    background-color: white;
     margin: 10px 15px;
     border-radius: 30px;
-    padding: 14px 50px !important;
+    padding: 13px 50px !important;
     font-size: 16px;
-    border: 2px solid #808080e6 !important;
     color: black;
     }
 
@@ -35,9 +55,6 @@ div#time {
     margin: 15px 0px;
 }
 
-.Quiz-nav {
-    position: relative;
-}
 
 p.rq-Question-text.well {
     background: white;
@@ -64,13 +81,6 @@ li.answer {
     margin-top: 20px;
     padding: 15px 35px;
 }
-
-.Quiz-nav button.btn.btn-link.next {
-    position: absolute;
-    right: 0;
-    top: 0;
-}
-
 
 
 .ex-test p {font-size: 18px; margin: 10px 0px; }
