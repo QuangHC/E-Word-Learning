@@ -1,5 +1,78 @@
 * {}
 
+button.btn.btn-default.answer-button {
+    width: 100%;
+    text-align: left;
+}
+
+.Quiz-confidence-buttons button.btn.btn-default {
+background-color: #fff!important;
+    margin: 10px 15px;
+    border-radius: 30px;
+    padding: 14px 50px !important;
+    font-size: 16px;
+    border: 2px solid #808080e6 !important;
+    color: black;
+    }
+
+
+.TimerContainer {
+   padding: 10px 0px;
+   position: relative;
+}
+
+div#time {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: black;
+}
+
+
+.progress {
+    margin: 15px 0px;
+}
+
+.Quiz-nav {
+    position: relative;
+}
+
+p.rq-Question-text.well {
+    background: white;
+    padding: 20px 15px;
+    margin: 10px 0px;
+    font-size: 18px !important;
+}
+
+li.answer {
+    background: white;
+    padding: 10px 0px;
+    margin: 15px 0px;
+    font-size: 16px !important;
+    border: 2px !important;
+}
+
+.Quiz p {
+    font-size: 18px;
+    color: black;
+}
+
+.Quiz-inner {
+    background-color: #EBEFF0;
+    margin-top: 20px;
+    padding: 15px 35px;
+}
+
+.Quiz-nav button.btn.btn-link.next {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+
+
 .ex-test p {font-size: 18px; margin: 10px 0px; }
 
 .ex-test{
