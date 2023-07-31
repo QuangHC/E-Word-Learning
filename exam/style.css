@@ -1,4 +1,21 @@
 * {}
+.radio {
+    margin: 15px 25px;
+}
+
+.radio input {
+    height: 25px;
+    width: 25px;
+}
+
+label {
+    font-size: 18px;
+    padding: 15px 24px;
+    background: white;
+    width: 94%;
+    margin-left: 15px;
+}
+
 a#btn-prev, a#btn-next {
     background: #EBEFF0;
 }
