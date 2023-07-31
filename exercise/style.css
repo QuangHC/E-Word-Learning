@@ -184,6 +184,15 @@ span.answer.text-center {
 .answer-panel span.answer.text-center {
     top: 39px;
     left: 40px;
+    color: black;
+}
+
+.bg-correct {
+    background-color: #B7E9BF !important;
+}
+
+.bg-wrong {
+    background-color: #FAC8C1 !important;
 }
 
 .bg-info {
@@ -201,7 +210,7 @@ span.answer.text-center {
 .answer-panel .check-icon {
     top: 44px;
     font-size: 16px;
-    right: 21px;
+    right: 9px;
 }
 
 i.fa-solid.fa-check.check-icon {
@@ -335,7 +344,7 @@ span.glyphicon.pull-right.glyphicon-hand-down {
     }
 
     .answer-panel .check-icon {
-        left: 57px;
-        top: 23px;
+        left: 54px;
+        top: 22px;
     }
 }

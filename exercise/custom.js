@@ -69,33 +69,18 @@ $(function () {
 
         $('#remainingText').text(`${countRemainingItems()} items remaining`);
         if (countRemainingItems() < remainingItems) {
-            $('.action .btn.btn-success').removeClass('disabled');
+            $('.overview .action .btn.btn-success').removeClass('disabled');
         } else {
-            $('.action .btn.btn-success').addClass('disabled');
+            $('.overview .action .btn.btn-success').addClass('disabled');
         }
         if (countRemainingItems() === 0) {
             $('#remainingText').text('All items have been filled');
         }
     });
 
-    $('[data-bs-target="#modal1"]').on('click', function () {
-        $('#modal1 .modal-body p').text(`Answered questions: ${remainingItems - countRemainingItems()} out of ${remainingItems}. Do you want to finish?`);
-        $('ul#main_list li').addClass('disable');
-    });
-
-    $('[data-bs-target="#modal2"]').on('click', function () {
-        const totalCorrectAnswers = countCorrectAnswers();
-        const percentage = (totalCorrectAnswers / remainingItems * 100).toFixed(2); // Lấy 2 chữ số sau dấu thập phân
-        $('#modal2 .modal-body p').text(`Total score: ${totalCorrectAnswers} out of ${remainingItems} (${percentage}%)`);
-        $('li.list-group-item.btn.btn-light.incorrect').css('background-color', '#FAC8C1    ');
-        $('li.list-group-item.btn.btn-light.correct').css('background-color', '#B7E9BF');
-        $('i.hidden').removeClass('hidden');
-        $('.action .btn.btn-info').removeClass('hidden');
-        $('.action .btn.btn-danger').removeClass('disabled');
-        $('.action .btn.btn-success').addClass('disabled');
-        $('#questions li.list-group-item.btn.btn-light').addClass('disable');
-        $('#close1').click();
-    });
+    changeTextModalFinish('.overview');
+    clickTryAgain('.overview');
+    clickShowAnswer('.overview');
 
     // Dem so luong item con lai trong main_list khong co thuoc tinh hidden
     function countRemainingItems() {
@@ -105,56 +90,22 @@ $(function () {
     }
 
     // Count number of correct answers
-    function countCorrectAnswers() {
+    function countCorrectAnswers(part) {
         const correctAnswers = $('.gapfield-list li.correct').length;
         return correctAnswers;
     }
 
-    $('.action .btn.btn-info').on('click', function () {
-        reset();
-        if ($('span.answer').hasClass('hidden')) {
-            $('span.answer').removeClass('hidden');
-            $('#questions li.list-group-item.btn.btn-light').addClass('bg-info');
-            // $('#questions li.list-group-item.btn.btn-light').css('color', '#fff');
-        } else {
-            $('span.answer').addClass('hidden').removeClass('bg-info');
-            $('#questions li.list-group-item.btn.btn-light').removeClass('bg-info');
-            // $('#questions li.list-group-item.btn.btn-light').removeClass('text-info');
-            $('.check-icon').removeClass('hidden');
-        }
-    });
-
-    $('.action .btn.btn-danger').on('click', function () {
-        reset();
-        $('span.answer').addClass('hidden');
-        $('#questions li.list-group-item.btn.btn-light').removeClass('bg-info');
-        $('#questions li.list-group-item.btn.btn-light').removeClass('disable');
-        $('.action .btn.btn-danger').addClass('disabled');
-        $('.action .btn.btn-info').addClass('hidden');
-        $('.gapfield-list li').text('').data('question-index', '-1').removeClass('correct incorrect');
-        $('#questions li.list-group-item.btn.btn-light').css('background-color', '#fff');
-        $('ul#main_list li').removeClass('disable');
-        $('.check-icon').removeClass('fa-check fa-xmark');
-    });
-
-    function reset() {
-        $('#main_list li').removeClass('hidden');
-        $('#remainingText').text(`${remainingItems} items remaining`);
-        $('i.hidden').removeClass('hidden');
-        $('.action .btn.btn-success').addClass('disabled');
-        $('.check-icon').addClass('hidden');
-    };
-
+   
     // end::Overview scripts
     // begin:Task scripts
     // begin: Task 1
     let question_index_current = 0;
     const total_questions = $('.question').length;
     let task_selectedData = null;
+    let count_filled_all = 0;
+    let correct_answers = 0;
     changeRemainingQuestions();
-
     $('#btn-next').on('click', function () {
-        filledAll(question_index_current);
         question_index_current++;
         console.log("qic: " + question_index_current);
         $(`#question-${question_index_current - 1}.question`).addClass('hidden');
@@ -162,27 +113,21 @@ $(function () {
         ableButton(question_index_current);
         task_selectedData = null;
         $('.selecting').removeClass('selecting');
-        changeRemainingQuestions();
     });
 
 
     $('#btn-prev').addClass('disable');
 
     $('#btn-prev').on('click', function () {
-        filledAll(question_index_current);
         question_index_current--;
-        console.log("qic: " + question_index_current);
         $(`#question-${question_index_current + 1}.question`).addClass('hidden');
         $(`#question-${question_index_current}.question`).removeClass('hidden');
         ableButton(question_index_current);
         task_selectedData = null;
         $('.selecting').removeClass('selecting');
-        changeRemainingQuestions();
     });
 
-
     $(`.task-panel li`).on('click', function () {
-        console.log(`#question-${question_index_current} .task-panel li: is clicked`);
         // Lấy giá trị của data-question-index và nội dung của thẻ li khi được click
         if ($(this).hasClass('selecting')) {
             task_selectedData = null;
@@ -195,7 +140,7 @@ $(function () {
             $('.answer-panel li.list-group-item.btn.btn-light').css('background-color', '#DEDEDE');
         }
     });
-    
+
     // click gapfield in task
     $('.gapfield-list-0 li').on('click', function () {
         let prevQuestionIndex = $(this).attr('data-question-index');
@@ -204,7 +149,6 @@ $(function () {
         // Kiểm tra nếu đã có thông tin được chọn từ main_list
         if (task_selectedData) {
             const [questionIndex, listItemText] = [task_selectedData.data('question-index'), task_selectedData.text()];
-            console.log(`questionIndex: ${questionIndex}, listItemText: ${listItemText}`);
             if (prevQuestionIndex != '-1') {
                 $(`#question-${question_index_current} li[data-question-index="${prevQuestionIndex}"]`).removeClass('hidden');
             }
@@ -216,8 +160,7 @@ $(function () {
             task_selectedData.addClass('hidden');
             $('.answer-panel li.list-group-item.btn.btn-light').css('background-color', '#fff');
             $('.selecting').removeClass('selecting');
-
-            if (listItemText === $(this).attr('data-answer-index')) {
+            if (listItemText.trim() === $(this).attr('data-answer-index')) {
                 // Nếu data-question-index của thẻ li trong main_list và gapfield-list giống nhau thì thêm class correct
                 $(this).addClass('correct').removeClass('incorrect not-filled');
                 iconEle.removeClass('fa-xmark').addClass('fa-solid fa-check');
@@ -235,8 +178,15 @@ $(function () {
                 $(this).text('').attr('data-question-index', '-1').removeClass('correct incorrect');
             }
         }
-
+        filledAllAndCorrect(question_index_current);
+        countfilledAllAndCorrect();
+        changeRemainingQuestions();
+        changeDisabledFinishButton();
     });
+
+    changeTextModalFinish('.task1');
+    clickTryAgain('.task1');
+    clickShowAnswer('.task1');
 
     function ableButton(index) {
         if (index === 0) {
@@ -249,22 +199,128 @@ $(function () {
         }
     }
 
-    function filledAll(question_index_current) {
+    function filledAllAndCorrect(question_index_current) {
         let l = $(`#question-${question_index_current} .task-panel li`).length;
         // kiem tra so luong cau hoi con lai trong tung question
         let h = $(`#question-${question_index_current} .task-panel li.hidden`).length;
-        console.log("l: " + l);
-        console.log("h: " + h);
+        let c = $(`#question-${question_index_current} .answer-panel li.correct`).length;
+        console.log(`l: ${l}`);
+        console.log(`h: ${h}`);
+        console.log(`c: ${c}`);
         if (l === h) {
             $(`#question-${question_index_current}`).addClass('filled-all');
-        } else { 
+        } else {
             $(`#question-${question_index_current}`).removeClass('filled-all');
         }
+        if (l === c) {
+            $(`#question-${question_index_current}`).addClass('correct-all');
+        } else {
+            $(`#question-${question_index_current}`).removeClass('correct-all');
+        }
+    }
+
+    function countfilledAllAndCorrect() {
+        count_filled_all = $(`.question.filled-all`).length;
+        correct_answers = $(`.question.correct-all`).length;
     }
 
     function changeRemainingQuestions() {
         let l = $(`.question.filled-all`).length;
         $('#remainingText_0').text(`${total_questions - l} items remaining`);
     }
+
+    function changeDisabledFinishButton() {
+        if (count_filled_all > 0) {
+            $('.task1 button.btn.btn-success').removeClass('disabled');
+        } else {
+            $('.task1 button.btn.btn-success').addClass('disabled');
+        }
+    }
+
+    function changeTextModalFinish(namePart) {
+        $(`${namePart} [data-bs-target="#modal1"]`).on('click', function () {
+            changeTextModalOK(namePart);
+            if (namePart === '.overview') {
+                $('#modal1 .modal-body p').text(`Answered questions: ${remainingItems - countRemainingItems()} out of ${remainingItems}. Do you want to finish?`);
+            } else if (namePart === '.task1') {
+                $('#modal1 .modal-body p').text(`Answered questions: ${count_filled_all} out of ${total_questions}. Do you want to finish?`);
+            }
+        });
+    }
+
+    function changeTextModalOK(namePart) {
+        $(`[data-bs-target="#modal2"]`).on('click', function () {
+            $(`${namePart} .incorrect`).addClass('bg-wrong');
+            $(`${namePart} .correct`).addClass('bg-correct');
+            $(`${namePart} i.hidden`).removeClass('hidden');
+            $(`${namePart} .action .btn.btn-info`).removeClass('hidden');
+            $(`${namePart} .action .btn.btn-danger`).removeClass('disabled');
+            $(`${namePart} .action .btn.btn-success`).addClass('disabled');
+            $(`${namePart} li`).addClass('disable');
+
+            $('#close1').click();
+            if (namePart === '.overview') {
+                const totalCorrectAnswers = countCorrectAnswers();
+                const percentage = (totalCorrectAnswers / remainingItems * 100).toFixed(2); // Lấy 2 chữ số sau dấu thập phân
+                $('#modal2 .modal-body p').text(`Total score: ${totalCorrectAnswers} out of ${remainingItems} (${percentage}%)`);
+            } else if (namePart === '.task1') {
+                const percentage = (correct_answers / total_questions * 100).toFixed(2); // Lấy 2 chữ số sau dấu thập phân
+                $('#modal2 .modal-body p').text(`Total score: ${correct_answers} out of ${total_questions} (${percentage}%)`);
+            }
+        });
+    }
+
+    function clickTryAgain(namePart) {
+        $(`${namePart} .action .btn.btn-danger`).on('click', function () {
+            reset(namePart);
+            $(`${namePart} span.answer`).addClass('hidden');
+            $(`${namePart} li`).removeClass('bg-info bg-correct bg-wrong disable hidden');
+            $(`${namePart} .action .btn.btn-danger`).addClass('disabled');
+            $(`${namePart} .action .btn.btn-info`).addClass('hidden');
+            $(`${namePart} .check-icon`).removeClass('fa-check fa-xmark');
+            if (namePart === '.overview') {
+                $(`${namePart} .gapfield-list li`).text('').data('question-index', '-1').removeClass('correct incorrect');
+            } else if (namePart === '.task1') {
+                $(`${namePart} .gapfield-list-0 li`).text('').attr('data-question-index', '-1').removeClass('correct incorrect');
+            }
+        });
+    }
+
+    function clickShowAnswer(namePart) {
+        $(`${namePart} .action .btn.btn-info`).on('click', function () {
+            reset(namePart);
+          
+            if ($(`${namePart} span.answer`).hasClass('hidden')) {
+                $(`${namePart} span.answer`).removeClass('hidden');
+                if (namePart === '.overview') {
+                    $(`#questions li.list-group-item.btn.btn-light`).addClass('bg-info');
+                } else if (namePart === '.task1') {
+                    $(`${namePart} .answer-panel li.list-group-item.btn.btn-light`).addClass('bg-info');
+                }
+            } else {
+                $(`${namePart} span.answer`).addClass('hidden').removeClass('bg-info');
+                if (namePart === '.overview') {
+                    $(`#questions li.list-group-item.btn.btn-light`).removeClass('bg-info');
+                } else if (namePart === '.task1') {
+                    $(`${namePart} .answer-panel li.list-group-item.btn.btn-light`).removeClass('bg-info');
+                }
+                $(`${namePart} .check-icon`).removeClass('hidden');
+            }
+        });
+    }
+
+    function reset(namePart) {
+        $(`${namePart} .check-icon`).addClass('hidden');
+        // $(`${namePart} i.hidden`).removeClass('hidden');
+        $(`${namePart} .action .btn.btn-success`).addClass('disabled');
+        if (namePart === '.overview') {
+            $('#main_list li').removeClass('hidden');
+            $('#remainingText').text(`${remainingItems} items remaining`);
+        } else if (namePart === '.task1') {
+            $('#main_list_0 li').removeClass('hidden');
+            $('#remainingText_0').text(`${total_questions} items remaining`);
+        }
+    };
     // end:Task scripts
 });
+
