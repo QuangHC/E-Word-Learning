@@ -7,8 +7,7 @@ $(function () {
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
         $("#time").text("Time remaining: " + minutes + ":" + seconds);
         if (distance < 0) {
-          clearInterval(x);
-          $("#time").text("End Time");
+          $("#test-form").submit();
       }
   }, 1000);
 
@@ -77,10 +76,7 @@ $(function () {
             $('#btn-prev').addClass('disabled');
         } else if (index === total_questions) {
             $('#btn-next').addClass('disabled');
-        } else {
-            $('#btn-prev').removeClass('disabled');
-            $('#btn-next').removeClass('disabled');
-        }
+        } 
     }
 
     function filledAll(question_index_current) {
@@ -92,11 +88,22 @@ $(function () {
         if (l === 1 && h === 1) {
             $(`#question-${question_index_current}`).addClass('filled-all');
             $('#btn-next').removeClass('disabled');
+            setTimeout(function() {
+                if (question_index_current < total_questions){
+                    $('#btn-next').click();
+                } else {
+                    var confirmSubmit = confirm('Bạn có muốn submit không?');
+                    if (confirmSubmit) {
+                      $('#test-form').submit();
+                    }
+                }      
+              }, 1000);
         } else { 
             $(`#question-${question_index_current}`).removeClass('filled-all');
             $('#btn-next').addClass('disabled');
 
         }
+        ableButton(question_index_current);
     }
 
     function changeRemainingQuestions() {
