@@ -30,9 +30,6 @@ $(function () {
     });
 
 
-    $('#btn-prev').addClass('disabled');
-    $('#btn-next').addClass('disabled');
-
     $('#btn-prev').on('click', function () {
         question_index_current--;
         console.log("qic: " + question_index_current);
