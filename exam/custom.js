@@ -7,7 +7,7 @@ $(function () {
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
         $("#time").text("Time remaining: " + minutes + ":" + seconds);
         if (distance < 0) {
-          $("#test-form").submit();
+          $('#submit-btn').click();
       }
   }, 1000);
 
@@ -91,7 +91,7 @@ $(function () {
                 } else {
                     var confirmSubmit = confirm('Bạn có muốn submit không?');
                     if (confirmSubmit) {
-                      $('#test-form').submit();
+                      $('#submit-btn').click();
                     }
                 }      
               }, 1000);
