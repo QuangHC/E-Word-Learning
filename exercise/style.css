@@ -1,10 +1,47 @@
 * {}
 
+ul#main_list_4 {
+    display: block;
+}
+
+ul.gapfield-list-5.list-group.ui-select-and-drop {
+    position: relative;
+}
+
+.task4 .answer p {
+    padding: 10px 25px;
+    border-radius: 5px;
+    background: #3adeff;
+    margin-bottom: 0px;
+    font-weight: 500;
+}
+
+.task5 .question5 li {
+    padding: 20px !important;
+    margin: 12px 0px;
+    background: #e4e2e2 !important;
+    color: black !important;
+    border: 3px solid white !important;
+}
+
+.task5 li.list-group-item.btn.btn-light.incorrect, .task5 li.list-group-item.btn.btn-light.correct {
+    padding: 9px !important;
+}
+
+.task5 li.list-group-item.btn.btn-light {
+    text-align: left;
+}
+
 .task-panel li.list-group-item.btn {
     border-radius: 5px;
     padding: 12px 32px 12px 14px !important;
     margin: 5px;
     border: 3px solid white !important;
+}
+
+.task5 .task-panel li.list-group-item.btn {
+    padding: 8px 20px !important;
+    float: left !important;
 }
 
 .control .btn {
@@ -44,7 +81,7 @@ a#btn-next {
     margin-bottom: 30px;
 }
 
-p#remainingText_0 {
+p.remainingText {
     text-align: center;
     padding: 5px 0px;
     background: #D8ECF2;
@@ -174,28 +211,32 @@ a.btn-sm.mini-audio {
     padding-bottom: 25px;
 }
 
-span.answer.text-center {
+span.answer {
     position: absolute;
     top: 13px;
     left: 20px;
-    font-size: 16px;
 }
 
-.answer-panel span.answer.text-center {
+.task5 span.answer {
+    top: 24px;
+    font-weight: 500;
+}
+
+.answer-panel span.answer {
     top: 39px;
     left: 40px;
     color: black;
 }
 
-.bg-correct {
-    background-color: #B7E9BF !important;
+li.list-group-item.btn.bg-correct, input.form-control.gapfield.single-line.texted.correct.bg-correct {
+    background-color: #6ed77f !important
 }
 
-.bg-wrong {
-    background-color: #FAC8C1 !important;
+li.list-group-item.btn.bg-wrong, input.form-control.gapfield.single-line.texted.incorrect.bg-wrong {
+    background-color: #ff7561 !important;
 }
 
-.bg-info {
+li.list-group-item.btn.bg-info {
     background: #6DCFE7 !important;
     color: #6DCFE7 !important;
 }
@@ -205,6 +246,7 @@ span.answer.text-center {
     right: 15px;
     top: 14px;
     font-size: 25px;
+    z-index: 3;
 }
 
 .answer-panel .check-icon {
@@ -215,6 +257,12 @@ span.answer.text-center {
 
 i.fa-solid.fa-check.check-icon {
     color: #086E18;
+}
+
+.task5 i.check-icon {
+    top: 22px;
+    right: 7px;
+    font-size: 22px;
 }
 
 i.hidden {
@@ -297,9 +345,8 @@ ul#main_list li {
 }
 
 li.list-group-item.btn.selecting {
-    border: 3px solid black !important;
-    background: #8A8A8A;
-    color: white;
+    border: 3px solid #9f9f9f !important;
+    background: #c6c6c6;
 }
 
 li.list-group-item.btn.hidden {

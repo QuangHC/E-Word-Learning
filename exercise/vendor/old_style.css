@@ -4,11 +4,11 @@
 }
 
 /*task 2-5*/
-li.list-group-item.btn.selecting {
+/* li.list-group-item.btn.selecting {
     border: 3px solid black !important;
     background: #8A8A8A;
     color: black;
-} 
+}  */
 
 .panel.panel-default.list-inline.model-wrapper.hidden {
     vertical-align: middle;
