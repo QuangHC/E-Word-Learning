@@ -94,7 +94,7 @@ li.answer {
 
 .Quiz p {
     font-size: 18px;
-    color: black;
+    color: black !important;
 }
 
 .Quiz-inner {
