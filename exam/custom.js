@@ -51,13 +51,14 @@ $(function () {
 
 
     $(`.Quiz-confidence-buttons a`).click(function () {
+        let data_topic = $(`#question-${question_index_current}`).attr('data-topic') + "_";
         let data_degree = "_" + $(this).attr('data-degree');
         let data_answer = $(`#question-${question_index_current} .selecting-answer`).val();
         $(`#question-${question_index_current} .Quiz-confidence-buttons .selecting-btn`).removeClass('selecting-btn');
         $(this).addClass('selecting-btn');
         $(this).css('background-color', '#DEDEDE');
         // }
-        $(`#question-${question_index_current} .selecting-answer`).val(data_answer[0] + data_degree);
+        $(`#question-${question_index_current} .selecting-answer`).val(data_topic + data_answer[0] + data_degree);
         changeRemainingQuestions();
         confirmSubmit();
     });
