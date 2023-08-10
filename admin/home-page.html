@@ -11,73 +11,66 @@
 		<!--begin::Global Stylesheets Bundle(used by all pages)-->
 		<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 		<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="assets/style.css" rel="stylesheet" type="text/css">
 		<!--end::Global Stylesheets Bundle-->
 	</head>
 	<!--end::Head-->
 	<!--begin::Body-->
-	<body id="kt_body" class="bg-body">
+	<body id="kt_body" class="bg-body" >
 		<!--begin::Main-->
-		<div class="d-flex flex-column flex-root">
+		<div class="d-flex flex-column flex-root" style="background-image: url(assets/images_home/BackGr.png)">
 			<!--begin::Authentication - Sign-in -->
-			<div class="d-flex flex-column flex-lg-row flex-column-fluid" style="background-image: url();">
+			<div class="d-center flex-column flex-lg-row flex-column-fluid py-10">
 				<!--begin::Body-->
+				<div class="text-center mb-10">
+					<a class="py-10 mb-6">
+						<img alt="Logo" src="assets/media/logos/logo-4.png" class="h-100px" />
+					</a>
+				</div>
 				<div class="d-flex flex-column flex-lg-row-fluid py-10">
 					<!--begin::Content-->
 					<div class="d-flex flex-center flex-column flex-column-fluid">
 						<!--begin::Wrapper-->
-						<div class="w-lg-500px p-10 p-lg-15 mx-auto">
-							<!--begin::Form-->
-							<form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" action="#">
-								<!--begin::Heading-->
-								<div class="text-center mb-10">
-									<a class="py-9 mb-5">
-										<img alt="Logo" src="assets/media/logos/logo-4.png" class="h-70px" />
-									</a>
-								</div>
-								<!--begin::Heading-->
-								<!--begin::Input group-->
-								<div class="fv-row mb-10">
-									<!--begin::Label-->
-									<label class="form-label fs-6 fw-bolder text-dark">Admin</label>
-									<!--end::Label-->
-									<!--begin::Input-->
-									<input class="form-control form-control-lg form-control-solid" type="text" name="username" autocomplete="off" />
-									<!--end::Input-->
-								</div>
-								<!--end::Input group-->
-								<!--begin::Input group-->
-								<div class="fv-row mb-10">
-									<!--begin::Wrapper-->
-									<div class="d-flex flex-stack mb-2">
-										<!--begin::Label-->
-										<label class="form-label fw-bolder text-dark fs-6 mb-0">Password</label>
-										<!--end::Label-->
+					<!-- begin popular-courses -->
+					<div class="choice">
+						<div class="container text-center">
+							<div class="row">
+								<div class="col-xs-24 col-sm-24 col-md-12 col-lg-6">
+									<div class="ele-choice">
+										<a href="C:/Users/Acer/Documents/GitHub/E-Word-Learning/admin/topic-page.html">
+											<i class="fa-solid fa-shield-halved"></i>
+											<h2>Create new topic</h2>
+										</a>
 									</div>
-									<!--end::Wrapper-->
-									<!--begin::Input-->
-									<input class="form-control form-control-lg form-control-solid" type="password" name="password" autocomplete="off" />
-									<!--end::Input-->
 								</div>
-								<!--end::Input group-->
-								<!--begin::Actions-->
-								<div class="text-center">
-									<!--begin::Submit button-->
-									<button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5">
-										<span class="indicator-label">Log in</span>
-										<span class="indicator-progress">Please wait...
-										<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-									</button>
-									<!--end::Submit button-->
+								<div class="col-xs-24 col-sm-24 col-md-12 col-lg-6">
+									<div class="ele-choice">
+										<a href="">
+											<i class="fa-solid fa-shield-halved"></i>
+											<h2>History</h2>
+										</a>
+									</div>
 								</div>
-								<!--end::Actions-->
-							</form>
-							<!--end::Form-->
+							</div>
 						</div>
+					</div> <!-- end popular-courses -->
+					<div class="w-lg-500px">
+						<div class="text-center">
+							<a href="C:/Users/Acer/Documents/GitHub/E-Word-Learning/admin/login-admin.html" class="btn btn-lg btn-back w-50 mb-5">Logout</a>
+						</div>
+					</div>					
 						<!--end::Wrapper-->
+					
 					</div>
 					<!--end::Content-->
+					
 				</div>
 				<!--end::Body-->
+			
+				<!-- <div class="d-flex flex-column flex-lg-row-fluid py-10">
+					
+				</div> -->
+				
 			</div>
 			<!--end::Authentication - Sign-in-->
 		</div>
