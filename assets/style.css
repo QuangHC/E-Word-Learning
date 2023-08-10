@@ -33,9 +33,12 @@ div#kt_toolbar {
 .popular_courses a, .popular_courses a h3, .popular_courses a i {
 }
 
-.popular_courses {
-    background: #23085a;
+.choice {
     padding: 75px 0px;
+}
+.popular_courses {
+    padding: 75px 0px;
+    background-color:indigo;
 }
 
 .popular_courses .col-xs-12 {
@@ -45,10 +48,20 @@ div#kt_toolbar {
 .popular_courses .col-lg-3 {
     padding: 0px 20px;
     margin: 0;
+    color: darkblue;
 }
-
+.ele-choice{
+    border: 1px solid white;
+    border-top-left-radius: 35px;
+    border-top-right-radius: 35px;
+    border-bottom-right-radius: 35px;
+    border-bottom-left-radius: 35px;
+    background: white;
+    padding: 100px 80px;
+    margin: 20px 0px;
+}
 .ele {
-    border: 1px solid black;
+    border: 1px solid white;
     border-top-left-radius: 55px;
     border-bottom-right-radius: 55px;
     background: white;
@@ -115,3 +128,22 @@ nav.navbar.navbar-expand-lg.bg-body-tertiary.sticky-top {
     margin: 80px 0px 15px 0px;
     padding: 0px 60px;
 }
+
+.btn-back {
+    color: #ffffff;
+    background-color:rgb(47, 195, 47);
+    border-color: #120101;
+  }
+
+.original-div {
+    width: 700px;
+    height: 500px;
+    display: inline-block;
+    vertical-align: top;
+  }
+.new-div {
+    width: 700px;
+    height: 500px;
+    display: inline-block;
+    vertical-align: top;
+  }
