@@ -20,27 +20,14 @@ var KTAccountSettingsProfileDetails = function () {
             form,
             {
                 fields: {
-                    fname: {
+                    fullname: {
                         validators: {
                             notEmpty: {
-                                message: 'First name is required'
+                                message: 'Full name is required'
                             }
                         }
                     },
-                    lname: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Last name is required'
-                            }
-                        }
-                    },
-                    company: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Company name is required'
-                            }
-                        }
-                    },
+                    
                     phone: {
                         validators: {
                             notEmpty: {
@@ -48,34 +35,14 @@ var KTAccountSettingsProfileDetails = function () {
                             }
                         }
                     },
-                    country: {
+                    address: {
                         validators: {
                             notEmpty: {
                                 message: 'Please select a country'
                             }
                         }
                     },
-                    timezone: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Please select a timezone'
-                            }
-                        }
-                    },
-                    'communication[]': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Please select at least one communication method'
-                            }
-                        }
-                    },
-                    language: {
-                        validators: {
-                            notEmpty: {
-                                message: 'Please select a language'
-                            }
-                        }
-                    },
+                    
                 },
                 plugins: {
                     trigger: new FormValidation.plugins.Trigger(),
@@ -89,22 +56,6 @@ var KTAccountSettingsProfileDetails = function () {
                 }
             }
         );
-
-        // Select2 validation integration
-        $(form.querySelector('[name="country"]')).on('change', function() {
-            // Revalidate the color field when an option is chosen
-            validation.revalidateField('country');
-        });
-
-        $(form.querySelector('[name="language"]')).on('change', function() {
-            // Revalidate the color field when an option is chosen
-            validation.revalidateField('language');
-        });
-
-        $(form.querySelector('[name="timezone"]')).on('change', function() {
-            // Revalidate the color field when an option is chosen
-            validation.revalidateField('timezone');
-        });
     }
 
     var handleForm = function () {
@@ -146,6 +97,7 @@ var KTAccountSettingsProfileDetails = function () {
             submitButton = form.querySelector('#kt_account_profile_details_submit');
 
             initValidation();
+            handleForm();
         }
     }
 }();
