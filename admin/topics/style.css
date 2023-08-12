@@ -1,0 +1,40 @@
+* {}
+
+.card-toolbar.topic-head h5 {
+    color: #ffffff;
+    padding-top: 6px !important;
+}
+
+.card-toolbar.topic-head {
+    padding: 0px 80px;
+    border-radius: 8px;
+    background: #60b961;
+}
+
+
+@media screen and (max-width: 800px) {
+    * {}
+
+    table#kt_customers_table {
+        display: block;
+        overflow: auto !important;
+        white-space: nowrap;
+    }
+}
+
+
+@media screen and (max-width: 580px) {
+    * {}
+
+    .card-toolbar.topic-head {
+        padding: 0px 30px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    * {}
+
+    .card-toolbar.topic-head {
+        padding: 0px 20px;
+    }
+}
