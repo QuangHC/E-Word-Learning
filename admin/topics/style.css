@@ -11,6 +11,18 @@
     background: #60b961;
 }
 
+
+@media screen and (max-width: 800px) {
+    * {}
+
+    table#kt_customers_table {
+        display: block;
+        overflow: auto !important;
+        white-space: nowrap;
+    }
+}
+
+
 @media screen and (max-width: 580px) {
     * {}
 
