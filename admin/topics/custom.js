@@ -1,13 +1,50 @@
 $(function () {
-    console.log('topics custom js');
+    // Define variables
+    const table = document.querySelector('#kt_topics_table');
+
+    // Private functions
+    var initTopicList = function () {
+        // Set date data order
+        const tableRows = table.querySelectorAll('tbody tr');
+
+        tableRows.forEach(row => {
+            const dateRow = row.querySelectorAll('td');
+            const realDate = moment(dateRow[3].innerHTML, "DD MMM YYYY, LT").format(); // select date from 5th column in table
+            dateRow[5].setAttribute('data-order', realDate);
+        });
+
+        // Init datatable --- more info on datatables: https://datatables.net/manual/
+        datatable = $(table).DataTable({
+            "info": false,
+            'order': [],
+            'columnDefs': [
+                { orderable: false, targets: 0 }, // Disable ordering on column 0 (checkbox)
+                { orderable: false, targets: 4 }, // Disable ordering on column 6 (actions)
+            ]
+        });
+
+        // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw
+        datatable.on('draw', function () {
+            initToggleToolbar();
+            handleDeleteRows();
+            toggleToolbars();
+        });
+    }
+
+    // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
+    var handleSearchDatatable = () => {
+        const filterSearch = document.querySelector('[data-kt-customer-table-filter="search"]');
+        filterSearch.addEventListener('keyup', function (e) {
+            datatable.search(e.target.value).draw();
+        });
+    }
+
     // Delete topics
     var handleDeleteRows = () => {
         // Select all delete buttons
         const deleteButtons = $('[data-kt-customer-table-filter="delete_row"]');
-        console.log(deleteButtons.length);
         deleteButtons.each(function (index, d) {
             // Delete button on click
-            console.log(d);
             d.addEventListener('click', function (e) {
                 e.preventDefault();
 
@@ -16,8 +53,6 @@ $(function () {
 
                 // Get topic name
                 const topicName = parent.querySelectorAll('td')[2].innerText;
-
-
                 // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
                 Swal.fire({
                     text: "Are you sure you want to delete " + topicName + "?",
@@ -64,7 +99,6 @@ $(function () {
         });
     }
 
-    handleDeleteRows();
     // Init toggle toolbar
     var initToggleToolbar = () => {
         // Toggle selected action toolbar
@@ -86,7 +120,6 @@ $(function () {
 
         // Deleted selected rows
         deleteSelected.addEventListener('click', function () {
-            console.log('delete selected');
             // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
             Swal.fire({
                 text: "Are you sure you want to delete selected topics?",
@@ -180,5 +213,8 @@ $(function () {
         }
     }
 
+    initTopicList();
+    handleSearchDatatable();
+    handleDeleteRows();
     initToggleToolbar();
 });
