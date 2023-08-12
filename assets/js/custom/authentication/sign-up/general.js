@@ -66,6 +66,14 @@ var KTSignupGeneral = function() {
                             notEmpty: {
                                 message: 'Phone number is required'
                             },
+                            callback: {
+                            message: 'Please enter a valid phone number',
+                            callback: function(input) {
+                                if (input.value.length > 0) {
+                                    return isValidPhoneNumber(input.value);
+                                }
+                            }
+                        }
                         }
                     },
                     'password': {
