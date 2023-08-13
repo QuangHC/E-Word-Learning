@@ -1,0 +1,56 @@
+* {}
+
+.card-toolbar.topic-head h5 {
+    color: #ffffff;
+    padding-top: 6px !important;
+}
+
+.card-toolbar.topic-head {
+    padding: 0px 80px;
+    border-radius: 8px;
+    background: #60b961;
+}
+
+.fs-4 {
+    position: relative;
+}
+
+.fs-4 span[data-bs-original-title="Edit word details"] {
+    position: absolute;
+    right: 80px;
+    top: 4px;
+}
+
+.fs-4 span[data-bs-original-title="Delete word"] {
+    position: absolute;
+    right: 0;
+    top: 4px;
+
+}
+
+@media screen and (max-width: 800px) {
+    * {}
+
+    table#kt_customers_table {
+        display: block;
+        overflow: auto !important;
+        white-space: nowrap;
+    }
+}
+
+
+@media screen and (max-width: 580px) {
+    * {}
+
+    .card-toolbar.topic-head {
+        padding: 0px 30px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    * {}
+
+    .card-toolbar.topic-head {
+        padding: 0px 20px;
+    }
+}
