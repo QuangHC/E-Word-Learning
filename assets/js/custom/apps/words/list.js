@@ -9,8 +9,8 @@ $(function () {
 
         tableRows.forEach(row => {
             const dateRow = row.querySelectorAll('td');
-            const realDate = moment(dateRow[3].innerHTML, "DD MMM YYYY, LT").format(); // select date from 5th column in table
-            dateRow[3].setAttribute('data-order', realDate);
+            const realDate = moment(dateRow[5].innerHTML, "DD MMM YYYY, LT").format(); // select date from 5th column in table
+            dateRow[5].setAttribute('data-order', realDate);
         });
 
         // Init datatable --- more info on datatables: https://datatables.net/manual/
@@ -19,7 +19,7 @@ $(function () {
             'order': [],
             'columnDefs': [
                 { orderable: false, targets: 0 }, // Disable ordering on column 0 (checkbox)
-                { orderable: false, targets: 4 }, // Disable ordering on column 6 (actions)
+                { orderable: false, targets: 6 }, // Disable ordering on column 6 (actions)
             ]
         });
 
@@ -52,10 +52,10 @@ $(function () {
                 const parent = e.target.closest('tr');
 
                 // Get topic name
-                const topicName = parent.querySelectorAll('td')[1].innerText;
+                const eleName = parent.querySelectorAll('td')[1].innerText;
                 // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
                 Swal.fire({
-                    text: "Are you sure you want to delete " + topicName + "?",
+                    text: "Are you sure you want to delete " + eleName + "?",
                     icon: "warning",
                     showCancelButton: true,
                     buttonsStyling: false,
@@ -68,7 +68,7 @@ $(function () {
                 }).then(function (result) {
                     if (result.value) {
                         Swal.fire({
-                            text: "You have deleted " + topicName + "!.",
+                            text: "You have deleted " + eleName + "!.",
                             icon: "success",
                             buttonsStyling: false,
                             confirmButtonText: "Ok, got it!",
@@ -138,7 +138,7 @@ $(function () {
         deleteSelected.addEventListener('click', function () {
             // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
             Swal.fire({
-                text: "Are you sure you want to delete selected topics?",
+                text: "Are you sure you want to delete selected words?",
                 icon: "warning",
                 showCancelButton: true,
                 buttonsStyling: false,
@@ -151,7 +151,7 @@ $(function () {
             }).then(function (result) {
                 if (result.value) {
                     Swal.fire({
-                        text: "You have deleted all selected topics!.",
+                        text: "You have deleted all selected words!.",
                         icon: "success",
                         buttonsStyling: false,
                         confirmButtonText: "Ok, got it!",
