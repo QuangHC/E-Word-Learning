@@ -1680,7 +1680,9 @@ License: For each use you must have a valid license purchased only from above li
 													data-kt-customer-table-select="selected_count"></span>Selected
 											</div>
 											<input type="text" class="form-control d-none" name="list_topic_deleted"
-												value="1">
+												value="0">
+											<input type="text" class="form-control d-none" name="topic_deleted"
+												value="0">
 											<button type="button" class="btn btn-danger"
 												data-kt-customer-table-select="delete_selected">Delete Selected</button>
 										</div>
@@ -1698,7 +1700,6 @@ License: For each use you must have a valid license purchased only from above li
 									<thead>
 										<!--begin::Table row-->
 										<tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-											<th class="d-none"></th>
 											<th class="w-10px pe-2">
 												<div
 													class="form-check form-check-sm form-check-custom form-check-solid me-3">
@@ -1707,6 +1708,7 @@ License: For each use you must have a valid license purchased only from above li
 														value="1" />
 												</div>
 											</th>
+											<!-- <th class="d-none"></th> -->
 											<th class="min-w-200px">Topic Name</th>
 											<!-- <th class="min-w-125px">Email</th> -->
 											<th class="min-w-200px">Description</th>
@@ -1719,10 +1721,6 @@ License: For each use you must have a valid license purchased only from above li
 									<!--end::Table head-->
 									<!--begin::Table body-->
 									<tbody class="fw-bold text-gray-600">
-										<form action="">
-											<input type="text" class="form-control d-none" name="topic_deleted"
-												value="0">
-										</form>
 										<tr>
 											<!--begin::Checkbox-->
 											<td>
@@ -1733,7 +1731,7 @@ License: For each use you must have a valid license purchased only from above li
 											</td>
 											<!--end::Checkbox-->
 											<!--begin::Id-->
-											<td class="d-none id">9</td>
+											<!-- <td class="d-none id">9</td> -->
 											<!--end::ID-->
 											<!--begin::Name=-->
 											<td>
@@ -1767,7 +1765,7 @@ License: For each use you must have a valid license purchased only from above li
 													data-kt-menu="true">
 													<!--begin::Menu item-->
 													<div class="menu-item px-3">
-														<a href="admin/topics/view.html" class="menu-link px-3">View</a>
+														<a href="admin/topics/view.html" class="menu-link px-3">Edit</a>
 													</div>
 													<!--end::Menu item-->
 													<!--begin::Menu item-->
@@ -1791,7 +1789,7 @@ License: For each use you must have a valid license purchased only from above li
 											</td>
 											<!--end::Checkbox-->
 											<!--begin::Id-->
-											<td class="d-none">12</td>
+											<!-- <td class="d-none">12</td> -->
 											<!--end::ID-->
 											<!--begin::Name=-->
 											<td>
@@ -1826,7 +1824,7 @@ License: For each use you must have a valid license purchased only from above li
 													data-kt-menu="true">
 													<!--begin::Menu item-->
 													<div class="menu-item px-3">
-														<a href="admin/topics/view.html" class="menu-link px-3">View</a>
+														<a href="admin/topics/view.html" class="menu-link px-3">Edit</a>
 													</div>
 													<!--end::Menu item-->
 													<!--begin::Menu item-->
@@ -1850,7 +1848,7 @@ License: For each use you must have a valid license purchased only from above li
 											</td>
 											<!--end::Checkbox-->
 											<!--begin::Id-->
-											<td class="d-none">12</td>
+											<!-- <td class="d-none">12</td> -->
 											<!--end::ID-->
 											<!--begin::Name=-->
 											<td>
@@ -1885,7 +1883,7 @@ License: For each use you must have a valid license purchased only from above li
 													data-kt-menu="true">
 													<!--begin::Menu item-->
 													<div class="menu-item px-3">
-														<a href="admin/topics/view.html" class="menu-link px-3">View</a>
+														<a href="admin/topics/view.html" class="menu-link px-3">Edit</a>
 													</div>
 													<!--end::Menu item-->
 													<!--begin::Menu item-->
@@ -1909,7 +1907,7 @@ License: For each use you must have a valid license purchased only from above li
 											</td>
 											<!--end::Checkbox-->
 											<!--begin::Id-->
-											<td class="d-none">12</td>
+											<!-- <td class="d-none">12</td> -->
 											<!--end::ID-->
 											<!--begin::Name=-->
 											<td>
@@ -1944,7 +1942,7 @@ License: For each use you must have a valid license purchased only from above li
 													data-kt-menu="true">
 													<!--begin::Menu item-->
 													<div class="menu-item px-3">
-														<a href="admin/topics/view.html" class="menu-link px-3">View</a>
+														<a href="admin/topics/view.html" class="menu-link px-3">Edit</a>
 													</div>
 													<!--end::Menu item-->
 													<!--begin::Menu item-->
@@ -1968,7 +1966,7 @@ License: For each use you must have a valid license purchased only from above li
 											</td>
 											<!--end::Checkbox-->
 											<!--begin::Id-->
-											<td class="d-none">12</td>
+											<!-- <td class="d-none">12</td> -->
 											<!--end::ID-->
 											<!--begin::Name=-->
 											<td>
@@ -2003,7 +2001,7 @@ License: For each use you must have a valid license purchased only from above li
 													data-kt-menu="true">
 													<!--begin::Menu item-->
 													<div class="menu-item px-3">
-														<a href="admin/topics/view.html" class="menu-link px-3">View</a>
+														<a href="admin/topics/view.html" class="menu-link px-3">Edit</a>
 													</div>
 													<!--end::Menu item-->
 													<!--begin::Menu item-->
@@ -2027,7 +2025,7 @@ License: For each use you must have a valid license purchased only from above li
 											</td>
 											<!--end::Checkbox-->
 											<!--begin::Id-->
-											<td class="d-none">12</td>
+											<!-- <td class="d-none">12</td> -->
 											<!--end::ID-->
 											<!--begin::Name=-->
 											<td>
@@ -2062,7 +2060,7 @@ License: For each use you must have a valid license purchased only from above li
 													data-kt-menu="true">
 													<!--begin::Menu item-->
 													<div class="menu-item px-3">
-														<a href="admin/topics/view.html" class="menu-link px-3">View</a>
+														<a href="admin/topics/view.html" class="menu-link px-3">Edit</a>
 													</div>
 													<!--end::Menu item-->
 													<!--begin::Menu item-->
@@ -2086,7 +2084,7 @@ License: For each use you must have a valid license purchased only from above li
 											</td>
 											<!--end::Checkbox-->
 											<!--begin::Id-->
-											<td class="d-none">12</td>
+											<!-- <td class="d-none">12</td> -->
 											<!--end::ID-->
 											<!--begin::Name=-->
 											<td>
@@ -2121,7 +2119,7 @@ License: For each use you must have a valid license purchased only from above li
 													data-kt-menu="true">
 													<!--begin::Menu item-->
 													<div class="menu-item px-3">
-														<a href="admin/topics/view.html" class="menu-link px-3">View</a>
+														<a href="admin/topics/view.html" class="menu-link px-3">Edit</a>
 													</div>
 													<!--end::Menu item-->
 													<!--begin::Menu item-->
@@ -2145,7 +2143,7 @@ License: For each use you must have a valid license purchased only from above li
 											</td>
 											<!--end::Checkbox-->
 											<!--begin::Id-->
-											<td class="d-none">12</td>
+											<!-- <td class="d-none">12</td> -->
 											<!--end::ID-->
 											<!--begin::Name=-->
 											<td>
@@ -2180,7 +2178,7 @@ License: For each use you must have a valid license purchased only from above li
 													data-kt-menu="true">
 													<!--begin::Menu item-->
 													<div class="menu-item px-3">
-														<a href="admin/topics/view.html" class="menu-link px-3">View</a>
+														<a href="admin/topics/view.html" class="menu-link px-3">Edit</a>
 													</div>
 													<!--end::Menu item-->
 													<!--begin::Menu item-->
@@ -2204,7 +2202,7 @@ License: For each use you must have a valid license purchased only from above li
 											</td>
 											<!--end::Checkbox-->
 											<!--begin::Id-->
-											<td class="d-none">12</td>
+											<!-- <td class="d-none">12</td> -->
 											<!--end::ID-->
 											<!--begin::Name=-->
 											<td>
@@ -2239,7 +2237,7 @@ License: For each use you must have a valid license purchased only from above li
 													data-kt-menu="true">
 													<!--begin::Menu item-->
 													<div class="menu-item px-3">
-														<a href="admin/topics/view.html" class="menu-link px-3">View</a>
+														<a href="admin/topics/view.html" class="menu-link px-3">Edit</a>
 													</div>
 													<!--end::Menu item-->
 													<!--begin::Menu item-->
@@ -2263,7 +2261,7 @@ License: For each use you must have a valid license purchased only from above li
 											</td>
 											<!--end::Checkbox-->
 											<!--begin::Id-->
-											<td class="d-none">12</td>
+											<!-- <td class="d-none">12</td> -->
 											<!--end::ID-->
 											<!--begin::Name=-->
 											<td>
@@ -2298,7 +2296,7 @@ License: For each use you must have a valid license purchased only from above li
 													data-kt-menu="true">
 													<!--begin::Menu item-->
 													<div class="menu-item px-3">
-														<a href="admin/topics/view.html" class="menu-link px-3">View</a>
+														<a href="admin/topics/view.html" class="menu-link px-3">Edit</a>
 													</div>
 													<!--end::Menu item-->
 													<!--begin::Menu item-->
@@ -2322,7 +2320,7 @@ License: For each use you must have a valid license purchased only from above li
 											</td>
 											<!--end::Checkbox-->
 											<!--begin::Id-->
-											<td class="d-none">12</td>
+											<!-- <td class="d-none">12</td> -->
 											<!--end::ID-->
 											<!--begin::Name=-->
 											<td>
@@ -2357,7 +2355,7 @@ License: For each use you must have a valid license purchased only from above li
 													data-kt-menu="true">
 													<!--begin::Menu item-->
 													<div class="menu-item px-3">
-														<a href="admin/topics/view.html" class="menu-link px-3">View</a>
+														<a href="admin/topics/view.html" class="menu-link px-3">Edit</a>
 													</div>
 													<!--end::Menu item-->
 													<!--begin::Menu item-->
@@ -2381,7 +2379,7 @@ License: For each use you must have a valid license purchased only from above li
 											</td>
 											<!--end::Checkbox-->
 											<!--begin::Id-->
-											<td class="d-none">12</td>
+											<!-- <td class="d-none">12</td> -->
 											<!--end::ID-->
 											<!--begin::Name=-->
 											<td>
@@ -2416,7 +2414,7 @@ License: For each use you must have a valid license purchased only from above li
 													data-kt-menu="true">
 													<!--begin::Menu item-->
 													<div class="menu-item px-3">
-														<a href="admin/topics/view.html" class="menu-link px-3">View</a>
+														<a href="admin/topics/view.html" class="menu-link px-3">Edit</a>
 													</div>
 													<!--end::Menu item-->
 													<!--begin::Menu item-->
@@ -2440,7 +2438,7 @@ License: For each use you must have a valid license purchased only from above li
 											</td>
 											<!--end::Checkbox-->
 											<!--begin::Id-->
-											<td class="d-none">12</td>
+											<!-- <td class="d-none">12</td> -->
 											<!--end::ID-->
 											<!--begin::Name=-->
 											<td>
@@ -2475,7 +2473,7 @@ License: For each use you must have a valid license purchased only from above li
 													data-kt-menu="true">
 													<!--begin::Menu item-->
 													<div class="menu-item px-3">
-														<a href="admin/topics/view.html" class="menu-link px-3">View</a>
+														<a href="admin/topics/view.html" class="menu-link px-3">Edit</a>
 													</div>
 													<!--end::Menu item-->
 													<!--begin::Menu item-->

@@ -10,7 +10,7 @@ $(function () {
         tableRows.forEach(row => {
             const dateRow = row.querySelectorAll('td');
             const realDate = moment(dateRow[3].innerHTML, "DD MMM YYYY, LT").format(); // select date from 5th column in table
-            dateRow[5].setAttribute('data-order', realDate);
+            dateRow[3].setAttribute('data-order', realDate);
         });
 
         // Init datatable --- more info on datatables: https://datatables.net/manual/
@@ -52,7 +52,7 @@ $(function () {
                 const parent = e.target.closest('tr');
 
                 // Get topic name
-                const topicName = parent.querySelectorAll('td')[2].innerText;
+                const topicName = parent.querySelectorAll('td')[1].innerText;
                 // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
                 Swal.fire({
                     text: "Are you sure you want to delete " + topicName + "?",
@@ -77,9 +77,12 @@ $(function () {
                             }
                         }).then(function () {
                             // Change input value to delete
-                            var formElement = $('tbody form')
+                            // var formElement = $('table tbody')
+                            var formElement = $('.card-toolbar form')
+
+                            console.log(formElement); 
                             var inputElement = $('input[name="topic_deleted"]');
-                            inputElement.val(parent.querySelectorAll('td')[1].innerText + "");
+                            inputElement.val(parent.querySelectorAll('td input[type="checkbox"]')[0].value + "");
                             // Submit form
                             formElement.submit();
                         });
@@ -98,6 +101,19 @@ $(function () {
             });
         });
     }
+
+    // Header checkbox on click event
+    const headerCheckbox = $('table [type="checkbox"]')[0]; 
+    headerCheckbox.addEventListener('click', function () {
+        // Select all checkboxes
+        const checkboxes = $('table tbody [type="checkbox"]');
+        checkboxes.each(function (index, c) {
+            // Check only checkboxes that are not disabled
+            if (!c.disabled) {
+                c.checked = headerCheckbox.checked;
+            }
+        });
+    });
 
     // Init toggle toolbar
     var initToggleToolbar = () => {
@@ -154,7 +170,8 @@ $(function () {
                                 // datatable.row($(c.closest('tbody tr'))).remove().draw();
                                 parent = c.closest('tr');
                                 // val += parent.querySelectorAll('td')[1].innerText + "_";
-                                value_check.push(parent.querySelectorAll('td')[1].innerText);
+
+                                value_check.push(parent.querySelectorAll('td input[type="checkbox"]')[0].value);
                                 // inputElement.val(val);
                             }
                         });
@@ -201,7 +218,7 @@ $(function () {
                 count++;
             }
         });
-
+        console.log(count);
         // Toggle toolbars
         if (checkedState) {
             selectedCount.innerHTML = count;
