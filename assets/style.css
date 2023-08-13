@@ -2,6 +2,14 @@
     
 }
 
+body:not([data-kt-sticky-header=on]) #kt_toolbar_nav .header-menu .menu > .menu-item.menu-link {
+    color: #fff;
+}
+
+#kt_toolbar_nav .menu-title-gray-700 .menu-item.menu-link {
+    color: #5E6278;
+}
+
 
 div#kt_toolbar {
     padding: 5px !important;
