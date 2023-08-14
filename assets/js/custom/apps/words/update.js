@@ -6,6 +6,25 @@ $(function () {
     var form;
     var modal;
 
+    // Set word id
+    var id = $('.word_id').text();
+    $('.fv-row.mb-7 input[name="id"]').val(id);
+
+    var data = $('#kt_word_view_details .text-gray-600');
+    data.each(function (index, d) {
+        console.log(index + " " + $(this).text());
+    });
+    
+    // Set value for form
+    var setValueForm = function () {
+        $('[name="id"]').val($(data[0]).text());
+        $('[name="name"]').val($('.word-name').text());
+        $('[name="attributes"]').val($(data[1]).text());
+        $('[name="pronounce"]').val($(data[2]).text());
+        $('[name="mean"]').val($(data[3]).text());
+        $('[name="example"]').val($(data[4]).text());
+    }
+
     // Init form inputs
     var handleForm = function () {
         // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
@@ -171,7 +190,8 @@ $(function () {
             });
         })
     }
-    
+
+    setValueForm();
     element = document.querySelector('#kt_modal_update_word');
     modal = new bootstrap.Modal(element);
 

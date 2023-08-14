@@ -28,7 +28,7 @@
   <!--end::Page Vendor Stylesheets-->
   <!--begin::Global Stylesheets Bundle(used by all pages)-->
   <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="admin/words/style.css">
+  <link rel="stylesheet" href="admin/questions/style.css">
   <link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css">
   <!--end::Global Stylesheets Bundle-->
   <style type="text/css">
@@ -2738,7 +2738,7 @@
             <!--begin::Page title-->
             <div class="page-title d-flex flex-column me-3">
               <!--begin::Title-->
-              <h1 class="d-flex text-white fw-bolder my-1 fs-3">Customer Details</h1>
+              <h1 class="d-flex text-white fw-bolder my-1 fs-3">Question Details</h1>
               <!--end::Title-->
               <!--begin::Breadcrumb-->
               <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
@@ -2761,7 +2761,7 @@
                 </li>
                 <!--end::Item-->
                 <!--begin::Item-->
-                <li class="breadcrumb-item text-white opacity-75">Words</li>
+                <li class="breadcrumb-item text-white opacity-75">Questions</li>
                 <!--end::Item-->
                 <!--begin::Item-->
                 <li class="breadcrumb-item">
@@ -2769,7 +2769,7 @@
                 </li>
                 <!--end::Item-->
                 <!--begin::Item-->
-                <li class="breadcrumb-item text-white opacity-75">Word Details</li>
+                <li class="breadcrumb-item text-white opacity-75">Question Details</li>
                 <!--end::Item-->
               </ul>
               <!--end::Breadcrumb-->
@@ -2794,28 +2794,14 @@
                 <div class="card mb-5 mb-xl-8">
                   <!--begin::Card body-->
                   <div class="card-body pt-15">
-                    <!--begin::Summary-->
-                    <div class="d-flex flex-center flex-column mb-5">
-                      <!--begin::Avatar-->
-                      <div class="symbol symbol-100px symbol-circle mb-7">
-                        <img src="assets/media/avatars/150-26.jpg" alt="image" />
-                      </div>
-                      <!--end::Avatar-->
-                      <!--begin::Name-->
-                      <a href="#" class="word-name fs-3 text-gray-800 text-hover-primary fw-bolder mb-1">association</a>
-                      <!--end::Name-->
-                      <!--begin::Topic-->
-                      <div class="fs-5 fw-bold text-muted mb-6">Topic Association</div>
-                      <!--end::Topic-->
-                    </div>
-                    <!--end::Summary-->
                     <!--begin::Details toggle-->
                     <div class="d-flex fs-4 py-3">
-                      <form action="admin/words/list.html">
-                        <input type="hidden" name="word_deleted" value="0">
+                      <form action="admin/questions/list.html">
+                        <input type="hidden" name="question_deleted" value="0">
                       </form>
-                      <div class="fw-bolder rotate collapsible" data-bs-toggle="collapse" href="#kt_word_view_details"
-                        role="button" aria-expanded="false" aria-controls="kt_word_view_details">Details
+                      <div class="fw-bolder rotate collapsible" data-bs-toggle="collapse"
+                        href="#kt_question_view_details" role="button" aria-expanded="false"
+                        aria-controls="kt_question_view_details">Details
                         <span class="ms-2 rotate-180">
                           <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                           <span class="svg-icon svg-icon-3">
@@ -2829,38 +2815,68 @@
                           <!--end::Svg Icon-->
                         </span>
                       </div>
-                      <span data-bs-toggle="tooltip" data-bs-trigger="hover" title="Edit word details">
+                      <span data-bs-toggle="tooltip" data-bs-trigger="hover" title="Edit question details">
                         <a href="#" class="btn btn-sm btn-light-primary" data-bs-toggle="modal"
-                          data-bs-target="#kt_modal_update_word">Edit</a>
+                          data-bs-target="#kt_modal_update_question">Edit</a>
                       </span>
-                      <span data-bs-toggle="tooltip" data-bs-trigger="hover" title="Delete word">
+                      <span data-bs-toggle="tooltip" data-bs-trigger="hover" title="Delete question">
                         <a href="#" class="btn btn-sm btn-light-danger" data-kt-delete="delete_row">Delete</a>
                       </span>
                     </div>
                     <!--end::Details toggle-->
                     <div class="separator separator-dashed my-3"></div>
                     <!--begin::Details content-->
-                    <div id="kt_word_view_details" class="collapse show">
+                    <div id="kt_question_view_details" class="collapse show">
                       <div class="py-5 fs-6">
                         <!--begin::Details item-->
-                        <div class="fw-bolder mt-5">Word ID</div>
-                        <div class="text-gray-600 word_id">45453423</div>
+                        <div class="fw-bolder mt-5">Question ID</div>
+                        <div class="text-gray-600 question_id">45453422</div>
                         <!--end::Details item-->
                         <!--begin::Details item-->
-                        <div class="fw-bolder mt-5">Attributes</div>
-                        <div class="text-gray-600">noun</div>
+                        <div class="fw-bolder mt-5">Question Content</div>
+                        <div class="">
+                          <a href="#" class="text-gray-600 text-hover-primary question-content">This __ a book</a>
+                        </div>
                         <!--end::Details item-->
                         <!--begin::Details item-->
-                        <div class="fw-bolder mt-5">Pronounce</div>
-                        <div class="text-gray-600">/əˌsoʊ.siˈeɪ.ʃən/</div>
+                        <div class="fw-bolder mt-5">Answer</div>
+                        <div class="text-gray-600">is</div>
                         <!--end::Details item-->
                         <!--begin::Details item-->
-                        <div class="fw-bolder mt-5">Meaning</div>
-                        <div class="text-gray-600">Công ty</div>
+                        <div class="fw-bolder mt-5">Explanation</div>
+                        <div class="text-gray-600">Some explanation...</div>
                         <!--end::Details item-->
                         <!--begin::Details item-->
-                        <div class="fw-bolder mt-5">Example</div>
-                        <div class="text-gray-600">I'm working at International association</div>
+                        <div class="fw-bolder rotate collapsible mt-5" data-bs-toggle="collapse"
+                          href="#kt_option_view_details" role="button" aria-expanded="false"
+                          aria-controls="kt_option_view_details">Options
+                          <span class="ms-2 rotate-180">
+                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
+                            <span class="svg-icon svg-icon-3">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none">
+                                <path
+                                  d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z"
+                                  fill="black" />
+                              </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                          </span>
+                        </div>
+                        <div class="collapse show row" id="kt_option_view_details">
+                          <div class="fw-bolder mt-5">Option 1
+                            <span class="text-gray-600 ms-5">is</span>
+                          </div>
+                          <div class="fw-bolder mt-5 ">Option 2
+                            <span class="text-gray-600 ms-5">are</span>
+                          </div>
+                          <div class="fw-bolder mt-5">Option 3
+                            <span class="text-gray-600 ms-5">am</span>
+                          </div>
+                          <div class="fw-bolder mt-5">Option 4
+                            <span class="text-gray-600 ms-5">be</span>
+                          </div>
+                        </div>
                         <!--end::Details item-->
                         <!--begin::Details item-->
                         <div class="fw-bolder mt-5">Created Date</div>
@@ -2878,21 +2894,21 @@
             </div>
             <!--end::Layout-->
             <!--begin::Modals-->
-            <!--begin::Modal - Update Word-->
-            <div class="modal fade" id="kt_modal_update_word" tabindex="-1" aria-hidden="true">
+            <!--begin::Modal - Update Question-->
+            <div class="modal fade" id="kt_modal_update_question" tabindex="-1" aria-hidden="true">
               <!--begin::Modal dialog-->
               <div class="modal-dialog modal-dialog-centered mw-650px">
                 <!--begin::Modal content-->
                 <div class="modal-content">
                   <!--begin::Form-->
-                  <form class="form" action="#" id="kt_modal_update_word_form">
+                  <form class="form" action="#" id="kt_modal_update_question_form">
                     <!--begin::Modal header-->
-                    <div class="modal-header" id="kt_modal_update_word_header">
+                    <div class="modal-header" id="kt_modal_update_question_header">
                       <!--begin::Modal title-->
-                      <h2 class="fw-bolder">Update Word</h2>
+                      <h2 class="fw-bolder">Update Question</h2>
                       <!--end::Modal title-->
                       <!--begin::Close-->
-                      <div id="kt_modal_update_word_close" class="btn btn-icon btn-sm btn-active-icon-primary">
+                      <div id="kt_modal_update_question_close" class="btn btn-icon btn-sm btn-active-icon-primary">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                         <span class="svg-icon svg-icon-1">
                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -2911,14 +2927,14 @@
                     <!--begin::Modal body-->
                     <div class="modal-body py-10 px-lg-17">
                       <!--begin::Scroll-->
-                      <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_update_word_scroll"
+                      <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_update_question_scroll"
                         data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}"
-                        data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_update_word_header"
-                        data-kt-scroll-wrappers="#kt_modal_update_word_scroll" data-kt-scroll-offset="300px">
+                        data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_update_question_header"
+                        data-kt-scroll-wrappers="#kt_modal_update_question_scroll" data-kt-scroll-offset="300px">
                         <!--begin::User toggle-->
                         <div class="fw-bolder fs-3 rotate collapsible mb-7" data-bs-toggle="collapse"
-                          href="#kt_modal_update_word_user_info" role="button" aria-expanded="false"
-                          aria-controls="kt_modal_update_word_user_info">Word Information
+                          href="#kt_modal_update_question_user_info" role="button" aria-expanded="false"
+                          aria-controls="kt_modal_update_question_user_info">Question Information
                           <span class="ms-2 rotate-180">
                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                             <span class="svg-icon svg-icon-3">
@@ -2933,62 +2949,12 @@
                           </span>
                         </div>
                         <!--end::User toggle-->
-                        <!--begin:Word form-->
-                        <div id="kt_modal_update_word_user_info" class="collapse show">
-                          <!--begin::Input group-->
-                          <div class="mb-7">
-                            <!--begin::Label-->
-                            <label class="fs-6 fw-bold mb-2">
-                              <span>Update Image</span>
-                              <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
-                                title="Allowed file types: png, jpg, jpeg."></i>
-                            </label>
-                            <!--end::Label-->
-                            <!--begin::Image input wrapper-->
-                            <div class="mt-1">
-                              <!--begin::Image input-->
-                              <div class="image-input image-input-outline" data-kt-image-input="true"
-                                style="background-image: url(assets/media/avatars/blank.png)">
-                                <!--begin::Preview existing avatar-->
-                                <div class="image-input-wrapper w-125px h-125px"
-                                  style="background-image: url(assets/media/avatars/150-2.jpg)">
-                                </div>
-                                <!--end::Preview existing avatar-->
-                                <!--begin::Edit-->
-                                <label
-                                  class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                  data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
-                                  <i class="bi bi-pencil-fill fs-7"></i>
-                                  <!--begin::Inputs-->
-                                  <input type="file" name="image_url" accept=".png, .jpg, .jpeg" />
-                                  <input type="hidden" name="image_url_remove" />
-                                  <!--end::Inputs-->
-                                </label>
-                                <!--end::Edit-->
-                                <!--begin::Cancel-->
-                                <span
-                                  class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                  data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
-                                  <i class="bi bi-x fs-2"></i>
-                                </span>
-                                <!--end::Cancel-->
-                                <!--begin::Remove-->
-                                <span
-                                  class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                  data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
-                                  <i class="bi bi-x fs-2"></i>
-                                </span>
-                                <!--end::Remove-->
-                              </div>
-                              <!--end::Image input-->
-                            </div>
-                            <!--end::Image input wrapper-->
-                          </div>
-                          <!--end::Input group-->
+                        <!--begin:Question form-->
+                        <div id="kt_modal_update_question_user_info" class="collapse show">
                           <!--begin::Input group-->
                           <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="fs-6 fw-bold mb-2">Word ID</label>
+                            <label class="fs-6 fw-bold mb-2">Question ID</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="" name="id" value=""
@@ -2996,15 +2962,13 @@
                             <!--end::Input-->
                           </div>
                           <!--end::Input group-->
-
                           <!--begin::Input group-->
                           <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">Word</label>
+                            <label class="required fs-6 fw-bold mb-2">Content</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="name"
-                              value="" />
+                            <textarea class="form-control form-control-solid" name="content" rows="2" value=""></textarea>
                             <!--end::Input-->
                           </div>
                           <!--end::Input group-->
@@ -3012,50 +2976,96 @@
                           <div class="fv-row mb-7">
                             <!--begin::Label-->
                             <label class="fs-6 fw-bold mb-2">
-                              <span class="required">Type</span>
-                              <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
-                                title="Type must be filled"></i>
+                              <span class="required">Answer</span>
                             </label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="attributes"
+                            <input type="text" class="form-control form-control-solid" placeholder="" name="answer"
                               value="" />
-                            <!--end::Input-->
-                          </div>
-                          <!--end::Input group-->
-                          <!--begin::Input group-->
-                          <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="fs-6 fw-bold mb-2">Pronounce</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder=""
-                              name="pronounce" />
-                            <!--end::Input-->
-                          </div>
-                          <!--end::Input group-->
-                          <!--begin::Input group-->
-                          <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="fs-6 fw-bold mb-2">Meaning</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="mean" />
                             <!--end::Input-->
                           </div>
                           <!--end::Input group-->
                           <!--begin::Input group-->
                           <div class="fv-row mb-15">
                             <!--begin::Label-->
-                            <label class="fs-6 fw-bold mb-2">Example</label>
+                            <label class="fs-6 fw-bold mb-2">Explanation</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <textarea class="form-control form-control-solid" name="example" rows="3"></textarea>
+                            <textarea type="text" class="form-control form-control-solid" rows="2" value=""
+                              name="explanation"></textarea>
                             <!--end::Input-->
                           </div>
                           <!--end::Input group-->
+                          <!--begin::Option toggle-->
+                          <div class="fw-bolder fs-3 rotate collapsible mb-7" data-bs-toggle="collapse"
+                            href="#kt_modal_add_question_options" role="button" aria-expanded="false"
+                            aria-controls="kt_question_view_details">Options
+                            <span class="ms-2 rotate-180">
+                              <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
+                              <span class="svg-icon svg-icon-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                  fill="none">
+                                  <path
+                                    d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z"
+                                    fill="black" />
+                                </svg>
+                              </span>
+                              <!--end::Svg Icon-->
+                            </span>
+                          </div>
+                          <!--end::Option toggle-->
+                          <!--begin::Option form-->
+                          <div id="kt_modal_add_question_options" class="collapse show">
+                            <!--begin::Input group-->
+                            <div class="row g-9 mb-7">
+                              <!--begin::Col-->
+                              <div class="col-md-6 fv-row">
+                                <!--begin::Label-->
+                                <label class="required fs-6 fw-bold mb-2">Option 1</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input class="form-control form-control-solid" placeholder="" name="option1" value="" />
+                                <!--end::Input-->
+                              </div>
+                              <!--end::Col-->
+                              <!--begin::Col-->
+                              <div class="col-md-6 fv-row">
+                                <!--begin::Label-->
+                                <label class="required fs-6 fw-bold mb-2">Option 2</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input class="form-control form-control-solid" placeholder="" name="option2" value="" />
+                                <!--end::Input-->
+                              </div>
+                              <!--end::Col-->
+                            </div>
+                            <!--end::Input group-->
+                            <div class="row g-9 mb-7">
+                              <!--begin::Col-->
+                              <div class="col-md-6 fv-row">
+                                <!--begin::Label-->
+                                <label class="required fs-6 fw-bold mb-2">Option 3</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input class="form-control form-control-solid" placeholder="" name="option3" value="" />
+                                <!--end::Input-->
+                              </div>
+                              <!--end::Col-->
+                              <!--begin::Col-->
+                              <div class="col-md-6 fv-row">
+                                <!--begin::Label-->
+                                <label class="required fs-6 fw-bold mb-2">Option 4</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input class="form-control form-control-solid" placeholder="" name="option4" value="" />
+                                <!--end::Input-->
+                              </div>
+                              <!--end::Col-->
+                            </div>
+                          </div>
+                          <!--end::Option form-->
                         </div>
-                        <!-- end:Word form -->
+                        <!-- end:Question form -->
                       </div>
                       <!--end::Scroll-->
                     </div>
@@ -3063,10 +3073,11 @@
                     <!--begin::Modal footer-->
                     <div class="modal-footer flex-center">
                       <!--begin::Button-->
-                      <button type="reset" id="kt_modal_update_word_cancel" class="btn btn-light me-3">Discard</button>
+                      <button type="reset" id="kt_modal_update_question_cancel"
+                        class="btn btn-light me-3">Discard</button>
                       <!--end::Button-->
                       <!--begin::Button-->
-                      <button type="submit" id="kt_modal_update_word_submit" class="btn btn-primary">
+                      <button type="submit" id="kt_modal_update_question_submit" class="btn btn-primary">
                         <span class="indicator-label">Submit</span>
                         <span class="indicator-progress">Please wait...
                           <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -3142,8 +3153,8 @@
   <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
   <!--end::Page Vendors Javascript-->
   <!--begin::Page Custom Javascript(used by this page)-->
-  <script src="assets/js/custom/apps/words/update.js"></script>
-  <script src="assets/js/custom/apps/words/delete.js"></script>
+  <script src="assets/js/custom/apps/questions/update.js"></script>
+  <script src="assets/js/custom/apps/questions/delete.js"></script>
   <!--end::Page Custom Javascript-->
   <!--end::Javascript-->
 </body>
