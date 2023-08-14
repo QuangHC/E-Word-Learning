@@ -1,10 +1,23 @@
 $(function () {
+    var element;
     var submitButton;
     var cancelButton;
     var closeButton;
-    var validator;
     var form;
     var modal;
+
+    // Set value for form
+    var setValueForm = function () {
+        var data = $('#kt_question_view_details .text-gray-600');
+        $('[name="id"]').val($(data[0]).text());
+        $('[name="content"]').val($(data[1]).text());
+        $('[name="answer"]').val($(data[2]).text());
+        $('[name="explanation"]').val($(data[3]).text());
+        $('[name="option1"]').val($(data[4]).text());
+        $('[name="option2"]').val($(data[5]).text());
+        $('[name="option3"]').val($(data[6]).text());
+        $('[name="option4"]').val($(data[7]).text());
+    }
 
     // Init form inputs
     var handleForm = function () {
@@ -13,31 +26,45 @@ $(function () {
             form,
             {
                 fields: {
-                    'name': {
+                    'content': {
                         validators: {
                             notEmpty: {
-                                message: 'Word is required'
+                                message: 'Content is required'
                             }
                         }
                     },
-                    'attributes': {
+                    'answer': {
                         validators: {
                             notEmpty: {
-                                message: 'Type is required'
+                                message: 'Answer is required'
                             }
                         }
                     },
-                    'pronounce': {
+                    'option1': {
                         validators: {
                             notEmpty: {
-                                message: 'Pronounce is required'
+                                message: 'Option 1 is required'
                             }
                         }
                     },
-                    'mean': {
+                    'option2': {
                         validators: {
                             notEmpty: {
-                                message: 'Meaning is required'
+                                message: 'Option 2 is required'
+                            }
+                        }
+                    },
+                    'option3': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Option 3 is required'
+                            }
+                        }
+                    },
+                    'option4': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Option 4 is required'
                             }
                         }
                     },
@@ -87,9 +114,9 @@ $(function () {
                                     // Enable submit button after loading
                                     submitButton.disabled = false;
 
-                                    // Redirect to words list page
-                                    form.submit();
-                                    // window.location = form.getAttribute("data-kt-redirect");
+                                    form.submit(); // Submit form
+
+                                    //form.reset(); // Reset form
                                 }
                             });
                         }, 2000);
@@ -142,7 +169,6 @@ $(function () {
 
         closeButton.addEventListener('click', function (e) {
             e.preventDefault();
-
             Swal.fire({
                 text: "Are you sure you would like to cancel?",
                 icon: "warning",
@@ -172,14 +198,16 @@ $(function () {
             });
         })
     }
-    // Elements
-    modal = new bootstrap.Modal(document.querySelector('#kt_modal_add_word'));
 
-    form = document.querySelector('#kt_modal_add_word_form');
-    submitButton = form.querySelector('#kt_modal_add_word_submit');
-    cancelButton = form.querySelector('#kt_modal_add_word_cancel');
-    closeButton = form.querySelector('#kt_modal_add_word_close');
+    setValueForm();
+
+    element = document.querySelector('#kt_modal_update_question');
+    modal = new bootstrap.Modal(element);
+
+    form = element.querySelector('#kt_modal_update_question_form');
+    submitButton = form.querySelector('#kt_modal_update_question_submit');
+    cancelButton = form.querySelector('#kt_modal_update_question_cancel');
+    closeButton = element.querySelector('#kt_modal_update_question_close');
 
     handleForm();
 });
-

@@ -28,8 +28,8 @@
   <!--end::Page Vendor Stylesheets-->
   <!--begin::Global Stylesheets Bundle(used by all pages)-->
   <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="admin/words/style.css">
   <link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="admin/questions/style.css">
   <!--end::Global Stylesheets Bundle-->
   <style type="text/css">
     .apexcharts-canvas {
@@ -1422,7 +1422,6 @@
     }
   </style>
 </head>
-
 <!--end::Head-->
 <!--begin::Body-->
 
@@ -1618,6 +1617,108 @@
                             </div>
                           </div>
                         </div>
+                        <!-- <div data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item menu-lg-down-accordion">
+                          <span class="menu-link py-3">
+                            <span class="menu-icon">
+                              <span class="svg-icon svg-icon-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                  <path d="M13 5.91517C15.8 6.41517 18 8.81519 18 11.8152C18 12.5152 17.9 13.2152 17.6 13.9152L20.1 15.3152C20.6 15.6152 21.4 15.4152 21.6 14.8152C21.9 13.9152 22.1 12.9152 22.1 11.8152C22.1 7.01519 18.8 3.11521 14.3 2.01521C13.7 1.91521 13.1 2.31521 13.1 3.01521V5.91517H13Z" fill="black" />
+                                  <path opacity="0.3" d="M19.1 17.0152C19.7 17.3152 19.8 18.1152 19.3 18.5152C17.5 20.5152 14.9 21.7152 12 21.7152C9.1 21.7152 6.50001 20.5152 4.70001 18.5152C4.30001 18.0152 4.39999 17.3152 4.89999 17.0152L7.39999 15.6152C8.49999 16.9152 10.2 17.8152 12 17.8152C13.8 17.8152 15.5 17.0152 16.6 15.6152L19.1 17.0152ZM6.39999 13.9151C6.19999 13.2151 6 12.5152 6 11.8152C6 8.81517 8.2 6.41515 11 5.91515V3.01519C11 2.41519 10.4 1.91519 9.79999 2.01519C5.29999 3.01519 2 7.01517 2 11.8152C2 12.8152 2.2 13.8152 2.5 14.8152C2.7 15.4152 3.4 15.7152 4 15.3152L6.39999 13.9151Z" fill="black" />
+                                </svg>
+                              </span>
+                            </span>
+                            <span class="menu-title">Support Center</span>
+                            <span class="menu-arrow"></span>
+                          </span>
+                          <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-active-bg py-lg-4 w-lg-225px">
+                            <div class="menu-item">
+                              <a class="menu-link py-3" href="admin/support-center/overview.html">
+                                <span class="menu-bullet">
+                                  <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Overview</span>
+                              </a>
+                            </div>
+                            <div data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item menu-lg-down-accordion">
+                              <span class="menu-link py-3">
+                                <span class="menu-bullet">
+                                  <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Tickets</span>
+                                <span class="menu-arrow"></span>
+                              </span>
+                              <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-active-bg py-lg-4 w-lg-225px">
+                                <div class="menu-item">
+                                  <a class="menu-link py-3" href="admin/support-center/tickets/list.html">
+                                    <span class="menu-bullet">
+                                      <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Ticket List</span>
+                                  </a>
+                                </div>
+                                <div class="menu-item">
+                                  <a class="menu-link py-3" href="admin/support-center/tickets/view.html">
+                                    <span class="menu-bullet">
+                                      <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Ticket View</span>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                            <div data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-placement="right-start" class="menu-item menu-lg-down-accordion">
+                              <span class="menu-link py-3">
+                                <span class="menu-bullet">
+                                  <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Tutorials</span>
+                                <span class="menu-arrow"></span>
+                              </span>
+                              <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-active-bg py-lg-4 w-lg-225px">
+                                <div class="menu-item">
+                                  <a class="menu-link py-3" href="admin/support-center/tutorials/list.html">
+                                    <span class="menu-bullet">
+                                      <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Tutorials List</span>
+                                  </a>
+                                </div>
+                                <div class="menu-item">
+                                  <a class="menu-link py-3" href="admin/support-center/tutorials/post.html">
+                                    <span class="menu-bullet">
+                                      <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Tutorials Post</span>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="menu-item">
+                              <a class="menu-link py-3" href="admin/support-center/faq.html">
+                                <span class="menu-bullet">
+                                  <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">FAQ</span>
+                              </a>
+                            </div>
+                            <div class="menu-item">
+                              <a class="menu-link py-3" href="admin/support-center/licenses.html">
+                                <span class="menu-bullet">
+                                  <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Licenses</span>
+                              </a>
+                            </div>
+                            <div class="menu-item">
+                              <a class="menu-link py-3" href="admin/support-center/contact.html">
+                                <span class="menu-bullet">
+                                  <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Contact Us</span>
+                              </a>
+                            </div>
+                          </div>
+                        </div> -->
                         <div data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-placement="right-start"
                           class="menu-item menu-lg-down-accordion">
                           <span class="menu-link py-3">
@@ -1669,7 +1770,7 @@
                           </div>
                         </div>
                         <div data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-placement="right-start"
-                          class="here menu-item menu-lg-down-accordion">
+                          class="menu-item menu-lg-down-accordion">
                           <span class="menu-link py-3">
                             <span class="menu-icon">
                               <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm002.svg-->
@@ -1711,8 +1812,9 @@
                                 <span class="menu-title">Word List</span>
                               </a>
                             </div>
+
                             <div class="menu-item">
-                              <a class="menu-link py-3 active" href="admin/words/view.html">
+                              <a class="menu-link py-3" href="admin/words/view.html">
                                 <span class="menu-bullet">
                                   <span class="bullet bullet-dot"></span>
                                 </span>
@@ -1722,7 +1824,7 @@
                           </div>
                         </div>
                         <div data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-placement="right-start"
-                          class="menu-item menu-lg-down-accordion">
+                          class="here menu-item menu-lg-down-accordion">
                           <span class="menu-link py-3">
                             <span class="menu-icon">
                               <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm002.svg-->
@@ -1760,7 +1862,7 @@
                             class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-active-bg py-lg-4 w-lg-225px"
                             style="">
                             <div class="menu-item">
-                              <a class="menu-link py-3" href="admin/questions/getting-started.html">
+                              <a class="menu-link py-3 active" href="admin/questions/getting-started.html">
                                 <span class="menu-bullet">
                                   <span class="bullet bullet-dot"></span>
                                 </span>
@@ -2738,7 +2840,7 @@
             <!--begin::Page title-->
             <div class="page-title d-flex flex-column me-3">
               <!--begin::Title-->
-              <h1 class="d-flex text-white fw-bolder my-1 fs-3">Customer Details</h1>
+              <h1 class="d-flex text-white fw-bolder my-1 fs-3">Getting Started</h1>
               <!--end::Title-->
               <!--begin::Breadcrumb-->
               <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
@@ -2761,7 +2863,7 @@
                 </li>
                 <!--end::Item-->
                 <!--begin::Item-->
-                <li class="breadcrumb-item text-white opacity-75">Words</li>
+                <li class="breadcrumb-item text-white opacity-75">Questions</li>
                 <!--end::Item-->
                 <!--begin::Item-->
                 <li class="breadcrumb-item">
@@ -2769,7 +2871,7 @@
                 </li>
                 <!--end::Item-->
                 <!--begin::Item-->
-                <li class="breadcrumb-item text-white opacity-75">Word Details</li>
+                <li class="breadcrumb-item text-white opacity-75">Getting Started</li>
                 <!--end::Item-->
               </ul>
               <!--end::Breadcrumb-->
@@ -2786,113 +2888,52 @@
         <div id="kt_content_container" class="d-flex flex-column-fluid align-items-start container-xxl">
           <!--begin::Post-->
           <div class="content flex-row-fluid" id="kt_content">
-            <!--begin::Layout-->
-            <div class="d-flex flex-column flex-xl-row">
-              <!--begin::Sidebar-->
-              <div class="flex-column flex-lg-row-auto w-100 w-xl-600px mb-10">
-                <!--begin::Card-->
-                <div class="card mb-5 mb-xl-8">
-                  <!--begin::Card body-->
-                  <div class="card-body pt-15">
-                    <!--begin::Summary-->
-                    <div class="d-flex flex-center flex-column mb-5">
-                      <!--begin::Avatar-->
-                      <div class="symbol symbol-100px symbol-circle mb-7">
-                        <img src="assets/media/avatars/150-26.jpg" alt="image" />
-                      </div>
-                      <!--end::Avatar-->
-                      <!--begin::Name-->
-                      <a href="#" class="word-name fs-3 text-gray-800 text-hover-primary fw-bolder mb-1">association</a>
-                      <!--end::Name-->
-                      <!--begin::Topic-->
-                      <div class="fs-5 fw-bold text-muted mb-6">Topic Association</div>
-                      <!--end::Topic-->
-                    </div>
-                    <!--end::Summary-->
-                    <!--begin::Details toggle-->
-                    <div class="d-flex fs-4 py-3">
-                      <form action="admin/words/list.html">
-                        <input type="hidden" name="word_deleted" value="0">
-                      </form>
-                      <div class="fw-bolder rotate collapsible" data-bs-toggle="collapse" href="#kt_word_view_details"
-                        role="button" aria-expanded="false" aria-controls="kt_word_view_details">Details
-                        <span class="ms-2 rotate-180">
-                          <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-                          <span class="svg-icon svg-icon-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                              fill="none">
-                              <path
-                                d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z"
-                                fill="black" />
-                            </svg>
-                          </span>
-                          <!--end::Svg Icon-->
-                        </span>
-                      </div>
-                      <span data-bs-toggle="tooltip" data-bs-trigger="hover" title="Edit word details">
-                        <a href="#" class="btn btn-sm btn-light-primary" data-bs-toggle="modal"
-                          data-bs-target="#kt_modal_update_word">Edit</a>
-                      </span>
-                      <span data-bs-toggle="tooltip" data-bs-trigger="hover" title="Delete word">
-                        <a href="#" class="btn btn-sm btn-light-danger" data-kt-delete="delete_row">Delete</a>
-                      </span>
-                    </div>
-                    <!--end::Details toggle-->
-                    <div class="separator separator-dashed my-3"></div>
-                    <!--begin::Details content-->
-                    <div id="kt_word_view_details" class="collapse show">
-                      <div class="py-5 fs-6">
-                        <!--begin::Details item-->
-                        <div class="fw-bolder mt-5">Word ID</div>
-                        <div class="text-gray-600 word_id">45453423</div>
-                        <!--end::Details item-->
-                        <!--begin::Details item-->
-                        <div class="fw-bolder mt-5">Attributes</div>
-                        <div class="text-gray-600">noun</div>
-                        <!--end::Details item-->
-                        <!--begin::Details item-->
-                        <div class="fw-bolder mt-5">Pronounce</div>
-                        <div class="text-gray-600">/əˌsoʊ.siˈeɪ.ʃən/</div>
-                        <!--end::Details item-->
-                        <!--begin::Details item-->
-                        <div class="fw-bolder mt-5">Meaning</div>
-                        <div class="text-gray-600">Công ty</div>
-                        <!--end::Details item-->
-                        <!--begin::Details item-->
-                        <div class="fw-bolder mt-5">Example</div>
-                        <div class="text-gray-600">I'm working at International association</div>
-                        <!--end::Details item-->
-                        <!--begin::Details item-->
-                        <div class="fw-bolder mt-5">Created Date</div>
-                        <div class="text-gray-600">14:34 pm, 20/10/2021</div>
-                        <!--end::Details item-->
-                      </div>
-                    </div>
-                    <!--end::Details content-->
-                  </div>
-                  <!--end::Card body-->
+            <!--begin::Card-->
+            <div class="card">
+              <!--begin::Card body-->
+              <div class="card-body p-0">
+                <!--begin::Wrapper-->
+                <div class="card-px text-center py-20 my-10">
+                  <!--begin::Title-->
+                  <h2 class="fs-2x fw-bolder mb-10">Welcome!</h2>
+                  <!--end::Title-->
+                  <!--begin::Description-->
+                  <p class="text-gray-400 fs-4 fw-bold mb-10">There are no questions added yet.
+                    <br />Kickstart your CRM by adding a your first question
+                  </p>
+                  <!--end::Description-->
+                  <!--begin::Action-->
+                  <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_question">Add
+                    Question</a>
+                  <!--end::Action-->
                 </div>
-                <!--end::Card-->
+                <!--end::Wrapper-->
+                <!--begin::Illustration-->
+                <div class="text-center px-4">
+                  <img class="mw-100 mh-300px" alt="" src="assets/media/illustrations/sigma-1/2.png" />
+                </div>
+                <!--end::Illustration-->
               </div>
-              <!--end::Sidebar-->
+              <!--end::Card body-->
             </div>
-            <!--end::Layout-->
+            <!--end::Card-->
             <!--begin::Modals-->
-            <!--begin::Modal - Update Word-->
-            <div class="modal fade" id="kt_modal_update_word" tabindex="-1" aria-hidden="true">
+            <!--begin::Modal - Questions - Add-->
+            <div class="modal fade" id="kt_modal_add_question" tabindex="-1" aria-hidden="true">
               <!--begin::Modal dialog-->
               <div class="modal-dialog modal-dialog-centered mw-650px">
                 <!--begin::Modal content-->
                 <div class="modal-content">
                   <!--begin::Form-->
-                  <form class="form" action="#" id="kt_modal_update_word_form">
+                  <form class="form" action="#" id="kt_modal_add_question_form"
+                    data-kt-redirect="admin/customers/list.html">
                     <!--begin::Modal header-->
-                    <div class="modal-header" id="kt_modal_update_word_header">
+                    <div class="modal-header" id="kt_modal_add_question_header">
                       <!--begin::Modal title-->
-                      <h2 class="fw-bolder">Update Word</h2>
+                      <h2 class="fw-bolder">Add a Questions</h2>
                       <!--end::Modal title-->
                       <!--begin::Close-->
-                      <div id="kt_modal_update_word_close" class="btn btn-icon btn-sm btn-active-icon-primary">
+                      <div id="kt_modal_add_question_close" class="btn btn-icon btn-sm btn-active-icon-primary">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                         <span class="svg-icon svg-icon-1">
                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -2911,14 +2952,50 @@
                     <!--begin::Modal body-->
                     <div class="modal-body py-10 px-lg-17">
                       <!--begin::Scroll-->
-                      <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_update_word_scroll"
-                        data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}"
-                        data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_update_word_header"
-                        data-kt-scroll-wrappers="#kt_modal_update_word_scroll" data-kt-scroll-offset="300px">
-                        <!--begin::User toggle-->
+                      <div class="scroll-y me-n7 pe-7" id="kt_modal_add_question_scroll" data-kt-scroll="true"
+                        data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto"
+                        data-kt-scroll-dependencies="#kt_modal_add_question_header"
+                        data-kt-scroll-wrappers="#kt_modal_add_question_scroll" data-kt-scroll-offset="300px">
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                          <!--begin::Label-->
+                          <label class="required fs-6 fw-bold mb-2">Content</label>
+                          <!--end::Label-->
+                          <!--begin::Input-->
+                          <!-- <input type="text" class="form-control form-control-solid"
+														placeholder="" name="content" value="Sean Bean" /> -->
+                          <textarea class="form-control form-control-solid" name="content" rows="2" value=""></textarea>
+                          <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                          <!--begin::Label-->
+                          <label class="fs-6 fw-bold mb-2">
+                            <span class="required">Answer</span>
+                          </label>
+                          <!--end::Label-->
+                          <!--begin::Input-->
+                          <input type="text" class="form-control form-control-solid" placeholder="" name="answer"
+                            value="" />
+                          <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-15">
+                          <!--begin::Label-->
+                          <label class="fs-6 fw-bold mb-2">Explanation</label>
+                          <!--end::Label-->
+                          <!--begin::Input-->
+                          <textarea type="text" class="form-control form-control-solid" rows="2" value=""
+                            name="explanation"></textarea>
+                          <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Option toggle-->
                         <div class="fw-bolder fs-3 rotate collapsible mb-7" data-bs-toggle="collapse"
-                          href="#kt_modal_update_word_user_info" role="button" aria-expanded="false"
-                          aria-controls="kt_modal_update_word_user_info">Word Information
+                          href="#kt_modal_add_question_options" role="button" aria-expanded="false"
+                          aria-controls="kt_question_view_details">Options
                           <span class="ms-2 rotate-180">
                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                             <span class="svg-icon svg-icon-3">
@@ -2932,130 +3009,57 @@
                             <!--end::Svg Icon-->
                           </span>
                         </div>
-                        <!--end::User toggle-->
-                        <!--begin:Word form-->
-                        <div id="kt_modal_update_word_user_info" class="collapse show">
+                        <!--end::Option toggle-->
+                        <!--begin::Option form-->
+                        <div id="kt_modal_add_question_options" class="collapse show">
                           <!--begin::Input group-->
-                          <div class="mb-7">
-                            <!--begin::Label-->
-                            <label class="fs-6 fw-bold mb-2">
-                              <span>Update Image</span>
-                              <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
-                                title="Allowed file types: png, jpg, jpeg."></i>
-                            </label>
-                            <!--end::Label-->
-                            <!--begin::Image input wrapper-->
-                            <div class="mt-1">
-                              <!--begin::Image input-->
-                              <div class="image-input image-input-outline" data-kt-image-input="true"
-                                style="background-image: url(assets/media/avatars/blank.png)">
-                                <!--begin::Preview existing avatar-->
-                                <div class="image-input-wrapper w-125px h-125px"
-                                  style="background-image: url(assets/media/avatars/150-2.jpg)">
-                                </div>
-                                <!--end::Preview existing avatar-->
-                                <!--begin::Edit-->
-                                <label
-                                  class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                  data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
-                                  <i class="bi bi-pencil-fill fs-7"></i>
-                                  <!--begin::Inputs-->
-                                  <input type="file" name="image_url" accept=".png, .jpg, .jpeg" />
-                                  <input type="hidden" name="image_url_remove" />
-                                  <!--end::Inputs-->
-                                </label>
-                                <!--end::Edit-->
-                                <!--begin::Cancel-->
-                                <span
-                                  class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                  data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
-                                  <i class="bi bi-x fs-2"></i>
-                                </span>
-                                <!--end::Cancel-->
-                                <!--begin::Remove-->
-                                <span
-                                  class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                  data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
-                                  <i class="bi bi-x fs-2"></i>
-                                </span>
-                                <!--end::Remove-->
-                              </div>
-                              <!--end::Image input-->
+                          <div class="row g-9 mb-7">
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                              <!--begin::Label-->
+                              <label class="required fs-6 fw-bold mb-2">Option 1</label>
+                              <!--end::Label-->
+                              <!--begin::Input-->
+                              <input class="form-control form-control-solid" placeholder="" name="option1" value="" />
+                              <!--end::Input-->
                             </div>
-                            <!--end::Image input wrapper-->
+                            <!--end::Col-->
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                              <!--begin::Label-->
+                              <label class="required fs-6 fw-bold mb-2">Option 2</label>
+                              <!--end::Label-->
+                              <!--begin::Input-->
+                              <input class="form-control form-control-solid" placeholder="" name="option2" value="" />
+                              <!--end::Input-->
+                            </div>
+                            <!--end::Col-->
                           </div>
                           <!--end::Input group-->
-                          <!--begin::Input group-->
-                          <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="fs-6 fw-bold mb-2">Word ID</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="id" value=""
-                              disabled />
-                            <!--end::Input-->
+                          <div class="row g-9 mb-7">
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                              <!--begin::Label-->
+                              <label class="required fs-6 fw-bold mb-2">Option 3</label>
+                              <!--end::Label-->
+                              <!--begin::Input-->
+                              <input class="form-control form-control-solid" placeholder="" name="option3" value="" />
+                              <!--end::Input-->
+                            </div>
+                            <!--end::Col-->
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                              <!--begin::Label-->
+                              <label class="required fs-6 fw-bold mb-2">Option 4</label>
+                              <!--end::Label-->
+                              <!--begin::Input-->
+                              <input class="form-control form-control-solid" placeholder="" name="option4" value="" />
+                              <!--end::Input-->
+                            </div>
+                            <!--end::Col-->
                           </div>
-                          <!--end::Input group-->
-
-                          <!--begin::Input group-->
-                          <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">Word</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="name"
-                              value="" />
-                            <!--end::Input-->
-                          </div>
-                          <!--end::Input group-->
-                          <!--begin::Input group-->
-                          <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="fs-6 fw-bold mb-2">
-                              <span class="required">Type</span>
-                              <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
-                                title="Type must be filled"></i>
-                            </label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="attributes"
-                              value="" />
-                            <!--end::Input-->
-                          </div>
-                          <!--end::Input group-->
-                          <!--begin::Input group-->
-                          <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="fs-6 fw-bold mb-2">Pronounce</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder=""
-                              name="pronounce" />
-                            <!--end::Input-->
-                          </div>
-                          <!--end::Input group-->
-                          <!--begin::Input group-->
-                          <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="fs-6 fw-bold mb-2">Meaning</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="mean" />
-                            <!--end::Input-->
-                          </div>
-                          <!--end::Input group-->
-                          <!--begin::Input group-->
-                          <div class="fv-row mb-15">
-                            <!--begin::Label-->
-                            <label class="fs-6 fw-bold mb-2">Example</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <textarea class="form-control form-control-solid" name="example" rows="3"></textarea>
-                            <!--end::Input-->
-                          </div>
-                          <!--end::Input group-->
                         </div>
-                        <!-- end:Word form -->
+                        <!--end::Option form-->
                       </div>
                       <!--end::Scroll-->
                     </div>
@@ -3063,10 +3067,10 @@
                     <!--begin::Modal footer-->
                     <div class="modal-footer flex-center">
                       <!--begin::Button-->
-                      <button type="reset" id="kt_modal_update_word_cancel" class="btn btn-light me-3">Discard</button>
+                      <button type="reset" id="kt_modal_add_question_cancel" class="btn btn-light me-3">Discard</button>
                       <!--end::Button-->
                       <!--begin::Button-->
-                      <button type="submit" id="kt_modal_update_word_submit" class="btn btn-primary">
+                      <button type="submit" id="kt_modal_add_question_submit" class="btn btn-primary">
                         <span class="indicator-label">Submit</span>
                         <span class="indicator-progress">Please wait...
                           <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -3079,7 +3083,7 @@
                 </div>
               </div>
             </div>
-            <!--end::Modal -->
+            <!--end::Modal - Questions - Add-->
             <!--end::Modals-->
           </div>
           <!--end::Post-->
@@ -3118,6 +3122,7 @@
     <!--end::Page-->
   </div>
   <!--end::Root-->
+  <!--begin::Modals-->
   <!--begin::Scrolltop-->
   <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
     <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
@@ -3131,6 +3136,7 @@
     </span>
     <!--end::Svg Icon-->
   </div>
+  <!-- end::Modals -->
   <!--end::Scrolltop-->
   <!--end::Main-->
   <!--begin::Javascript-->
@@ -3138,12 +3144,12 @@
   <script src="assets/plugins/global/plugins.bundle.js"></script>
   <script src="assets/js/scripts.bundle.js"></script>
   <!--end::Global Javascript Bundle-->
-  <!--begin::Page Vendors Javascript(used by this page)-->
-  <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
-  <!--end::Page Vendors Javascript-->
   <!--begin::Page Custom Javascript(used by this page)-->
-  <script src="assets/js/custom/apps/words/update.js"></script>
-  <script src="assets/js/custom/apps/words/delete.js"></script>
+  <script src="assets/js/custom/apps/questions/add.js"></script>
+  <!-- <script src="assets/js/custom/widgets.js"></script>
+	<script src="assets/js/custom/apps/chat/chat.js"></script>
+	<script src="assets/js/custom/modals/create-app.js"></script>
+	<script src="assets/js/custom/modals/upgrade-plan.js"></script> -->
   <!--end::Page Custom Javascript-->
   <!--end::Javascript-->
 </body>

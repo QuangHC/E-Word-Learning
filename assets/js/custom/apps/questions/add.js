@@ -13,31 +13,45 @@ $(function () {
             form,
             {
                 fields: {
-                    'name': {
+                    'content': {
                         validators: {
                             notEmpty: {
-                                message: 'Word is required'
+                                message: 'Content is required'
                             }
                         }
                     },
-                    'attributes': {
+                    'answer': {
                         validators: {
                             notEmpty: {
-                                message: 'Type is required'
+                                message: 'Answer is required'
                             }
                         }
                     },
-                    'pronounce': {
+                    'option1': {
                         validators: {
                             notEmpty: {
-                                message: 'Pronounce is required'
+                                message: 'Option 1 is required'
                             }
                         }
                     },
-                    'mean': {
+                    'option2': {
                         validators: {
                             notEmpty: {
-                                message: 'Meaning is required'
+                                message: 'Option 2 is required'
+                            }
+                        }
+                    },
+                    'option3': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Option 3 is required'
+                            }
+                        }
+                    },
+                    'option4': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Option 4 is required'
                             }
                         }
                     },
@@ -87,7 +101,7 @@ $(function () {
                                     // Enable submit button after loading
                                     submitButton.disabled = false;
 
-                                    // Redirect to words list page
+                                    // Redirect to customers list page
                                     form.submit();
                                     // window.location = form.getAttribute("data-kt-redirect");
                                 }
@@ -173,12 +187,12 @@ $(function () {
         })
     }
     // Elements
-    modal = new bootstrap.Modal(document.querySelector('#kt_modal_add_word'));
+    modal = new bootstrap.Modal(document.querySelector('#kt_modal_add_question'));
 
-    form = document.querySelector('#kt_modal_add_word_form');
-    submitButton = form.querySelector('#kt_modal_add_word_submit');
-    cancelButton = form.querySelector('#kt_modal_add_word_cancel');
-    closeButton = form.querySelector('#kt_modal_add_word_close');
+    form = document.querySelector('#kt_modal_add_question_form');
+    submitButton = form.querySelector('#kt_modal_add_question_submit');
+    cancelButton = form.querySelector('#kt_modal_add_question_cancel');
+    closeButton = form.querySelector('#kt_modal_add_question_close');
 
     handleForm();
 });
