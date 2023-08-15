@@ -1,94 +1,66 @@
-/******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
-var __webpack_exports__ = {};
-/*!************************************************************************************************!*\
-  !*** ../../../themes/metronic/html/demo2/src/js/custom/apps/user-management/users/list/add.js ***!
-  \************************************************************************************************/
+$(function () {
+    var element;
+    var submitButton;
+    var cancelButton;
+    var closeButton;
+    var form;
+    var modal;
 
+    // Set word id
+    var id = $('.word_id').text();
+    $('.fv-row.mb-7 input[name="id"]').val(id);
 
-// Class definition
-var KTUsersAddUser = function () {
-    // Shared variables
-    const element = document.getElementById('kt_modal_add_user');
-    const form = element.querySelector('#kt_modal_add_user_form');
-    const modal = new bootstrap.Modal(element);
-    var passwordMeter;
-
-    function isValidPhoneNumber(phoneNumber) {
-        // Biểu thức chính quy để kiểm tra định dạng số điện thoại
-        var phoneRegex = /^[0-9]{10}$/;
-
-        // Kiểm tra giá trị với biểu thức chính quy
-        return phoneRegex.test(phoneNumber);
+    var data = $('#kt_word_view_details .text-gray-600');
+    data.each(function (index, d) {
+        console.log(index + " " + $(this).text());
+    });
+    
+    // Set value for form
+    var setValueForm = function () {
+        $('[name="id"]').val($(data[0]).text());
+        $('[name="name"]').val($('.word-name').text());
+        $('[name="attributes"]').val($(data[1]).text());
+        $('[name="pronounce"]').val($(data[2]).text());
+        $('[name="mean"]').val($(data[3]).text());
+        $('[name="example"]').val($(data[4]).text());
     }
 
-    // Password input validation
-    var validatePassword = function () {
-        return (passwordMeter.getScore() === 100);
-    }
-
-    // Init add schedule modal
-    var initAddUser = () => {
-
+    // Init form inputs
+    var handleForm = function () {
         // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-        var validator = FormValidation.formValidation(
+        validator = FormValidation.formValidation(
             form,
             {
                 fields: {
-                    'user_name': {
+                    'name': {
                         validators: {
                             notEmpty: {
-                                message: 'Full name is required'
+                                message: 'Word is required'
                             }
                         }
                     },
-                    'email': {
+                    'attributes': {
                         validators: {
                             notEmpty: {
-                                message: 'Valid email address is required'
+                                message: 'Type is required'
                             }
                         }
                     },
-                    'password': {
+                    'pronounce': {
                         validators: {
                             notEmpty: {
-                                message: 'The password is required'
-                            },
-                            callback: {
-                                message: 'Please enter valid password',
-                                callback: function (input) {
-                                    if (input.value.length > 0) {
-                                        return validatePassword();
-                                    }
-                                }
+                                message: 'Pronounce is required'
                             }
                         }
                     },
-                    'full_name': {
+                    'mean': {
                         validators: {
                             notEmpty: {
-                                message: 'Full name is required'
-                            }
-                        }
-                    },
-
-                    'phone': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Phone number is required'
-                            },
-                            callback: {
-                                message: 'Please enter a valid phone number',
-                                callback: function (input) {
-                                    if (input.value.length > 0) {
-                                        return isValidPhoneNumber(input.value);
-                                    }
-                                }
+                                message: 'Meaning is required'
                             }
                         }
                     },
                 },
-
                 plugins: {
                     trigger: new FormValidation.plugins.Trigger(),
                     bootstrap: new FormValidation.plugins.Bootstrap5({
@@ -100,9 +72,8 @@ var KTUsersAddUser = function () {
             }
         );
 
-        // Submit button handler
-        const submitButton = element.querySelector('[data-kt-users-modal-action="submit"]');
-        submitButton.addEventListener('click', e => {
+        // Action buttons
+        submitButton.addEventListener('click', function (e) {
             e.preventDefault();
 
             // Validate form before submit
@@ -111,21 +82,14 @@ var KTUsersAddUser = function () {
                     console.log('validated!');
 
                     if (status == 'Valid') {
-                        // Show loading indication
                         submitButton.setAttribute('data-kt-indicator', 'on');
 
-                        // Disable button to avoid multiple click 
+                        // Disable submit button whilst loading
                         submitButton.disabled = true;
 
-                        // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         setTimeout(function () {
-                            // Remove loading indication
                             submitButton.removeAttribute('data-kt-indicator');
 
-                            // Enable button
-                            submitButton.disabled = false;
-
-                            // Show popup confirmation 
                             Swal.fire({
                                 text: "Form has been successfully submitted!",
                                 icon: "success",
@@ -136,14 +100,19 @@ var KTUsersAddUser = function () {
                                 }
                             }).then(function (result) {
                                 if (result.isConfirmed) {
+                                    // Hide modal
                                     modal.hide();
+
+                                    // Enable submit button after loading
+                                    submitButton.disabled = false;
+
+                                    form.submit(); // Submit form
+
+                                    //form.reset(); // Reset form
                                 }
                             });
-
-                            form.submit(); // Submit form
                         }, 2000);
                     } else {
-                        // Show popup warning. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         Swal.fire({
                             text: "Sorry, looks like there are some errors detected, please try again.",
                             icon: "error",
@@ -158,9 +127,7 @@ var KTUsersAddUser = function () {
             }
         });
 
-        // Cancel button handler
-        const cancelButton = element.querySelector('[data-kt-users-modal-action="cancel"]');
-        cancelButton.addEventListener('click', e => {
+        cancelButton.addEventListener('click', function (e) {
             e.preventDefault();
 
             Swal.fire({
@@ -176,8 +143,8 @@ var KTUsersAddUser = function () {
                 }
             }).then(function (result) {
                 if (result.value) {
-                    form.reset(); // Reset form			
-                    modal.hide();	
+                    form.reset(); // Reset form	
+                    modal.hide(); // Hide modal				
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
                         text: "Your form has not been cancelled!.",
@@ -192,11 +159,8 @@ var KTUsersAddUser = function () {
             });
         });
 
-        // Close button handler
-        const closeButton = element.querySelector('[data-kt-users-modal-action="close"]');
-        closeButton.addEventListener('click', e => {
+        closeButton.addEventListener('click', function (e) {
             e.preventDefault();
-
             Swal.fire({
                 text: "Are you sure you would like to cancel?",
                 icon: "warning",
@@ -210,8 +174,8 @@ var KTUsersAddUser = function () {
                 }
             }).then(function (result) {
                 if (result.value) {
-                    form.reset(); // Reset form			
-                    modal.hide();	
+                    form.reset(); // Reset form	
+                    modal.hide(); // Hide modal				
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
                         text: "Your form has not been cancelled!.",
@@ -224,23 +188,17 @@ var KTUsersAddUser = function () {
                     });
                 }
             });
-        });
+        })
     }
 
-    return {
-        // Public functions
-        init: function () {
-            initAddUser();
-            passwordMeter = KTPasswordMeter.getInstance(form.querySelector('[data-kt-password-meter="true"]'));
+    setValueForm();
+    element = document.querySelector('#kt_modal_update_word');
+    modal = new bootstrap.Modal(element);
 
-        }
-    };
-}();
+    form = element.querySelector('#kt_modal_update_word_form');
+    submitButton = form.querySelector('#kt_modal_update_word_submit');
+    cancelButton = form.querySelector('#kt_modal_update_word_cancel');
+    closeButton = element.querySelector('#kt_modal_update_word_close');
 
-// On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTUsersAddUser.init();
+    handleForm();
 });
-/******/ })()
-;
-//# sourceMappingURL=add.js.map
