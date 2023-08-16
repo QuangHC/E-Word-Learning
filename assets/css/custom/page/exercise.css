@@ -194,7 +194,6 @@ button.task.btn.btn-lg.collapsed {
     margin-left: 15px;
 }
 
-/* Icon when the collapsible content is hidden */
 .task.collapsed:after {
     content: "\f077";
 }
@@ -395,3 +394,4 @@ span.glyphicon.pull-right.glyphicon-hand-down {
         top: 22px;
     }
 }
+

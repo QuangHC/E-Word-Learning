@@ -3,13 +3,6 @@
     padding-right: 0px;
 }
 
-/*task 2-5*/
-/* li.list-group-item.btn.selecting {
-    border: 3px solid black !important;
-    background: #8A8A8A;
-    color: black;
-}  */
-
 .panel.panel-default.list-inline.model-wrapper.hidden {
     vertical-align: middle;
     margin-bottom: 20px;
@@ -89,9 +82,6 @@ span.fa-hand-point-down:before {
     margin: 0px 5px 0px 0px;
 }
 
-/*task 2-5*/
-
-/* task */
 ul.list-inline.pull-right {
     margin-left: 90%;
 }
@@ -192,6 +182,4 @@ button.task.btn.btn-lg.collapsed {
     border-radius: 0px;
     font-weight: 600;
 }
-
-/*end task*/
 
