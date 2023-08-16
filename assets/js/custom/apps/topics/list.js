@@ -9,7 +9,7 @@ $(function () {
 
         tableRows.forEach(row => {
             const dateRow = row.querySelectorAll('td');
-            const realDate = moment(dateRow[3].innerHTML, "DD MMM YYYY, LT").format(); // select date from 5th column in table
+            const realDate = moment(dateRow[3].innerHTML, "DD MMM YYYY, LT").format(); // select date from 3th column in table
             dateRow[3].setAttribute('data-order', realDate);
         });
 
@@ -19,7 +19,7 @@ $(function () {
             'order': [],
             'columnDefs': [
                 { orderable: false, targets: 0 }, // Disable ordering on column 0 (checkbox)
-                { orderable: false, targets: 4 }, // Disable ordering on column 6 (actions)
+                { orderable: false, targets: 4 }, // Disable ordering on column 4 (actions)
             ]
         });
 
@@ -33,7 +33,7 @@ $(function () {
 
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
     var handleSearchDatatable = () => {
-        const filterSearch = document.querySelector('[data-kt-customer-table-filter="search"]');
+        const filterSearch = document.querySelector('[data-kt-topic-table-filter="search"]');
         filterSearch.addEventListener('keyup', function (e) {
             datatable.search(e.target.value).draw();
         });
@@ -42,7 +42,7 @@ $(function () {
     // Delete topics
     var handleDeleteRows = () => {
         // Select all delete buttons
-        const deleteButtons = $('[data-kt-customer-table-filter="delete_row"]');
+        const deleteButtons = $('[data-kt-topic-table-filter="delete_row"]');
         deleteButtons.each(function (index, d) {
             // Delete button on click
             d.addEventListener('click', function (e) {
@@ -52,10 +52,10 @@ $(function () {
                 const parent = e.target.closest('tr');
 
                 // Get topic name
-                const topicName = parent.querySelectorAll('td')[1].innerText;
+                const eleName = parent.querySelectorAll('td')[1].innerText;
                 // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
                 Swal.fire({
-                    text: "Are you sure you want to delete " + topicName + "?",
+                    text: "Are you sure you want to delete " + eleName + "?",
                     icon: "warning",
                     showCancelButton: true,
                     buttonsStyling: false,
@@ -68,7 +68,7 @@ $(function () {
                 }).then(function (result) {
                     if (result.value) {
                         Swal.fire({
-                            text: "You have deleted " + topicName + "!.",
+                            text: "You have deleted " + eleName + "!.",
                             icon: "success",
                             buttonsStyling: false,
                             confirmButtonText: "Ok, got it!",
@@ -79,8 +79,8 @@ $(function () {
                             // Change input value to delete
                             // var formElement = $('table tbody')
                             var formElement = $('.card-toolbar form')
-
-                            console.log(formElement); 
+                            // console.log(formElement); 
+                            // console.log("value: " + parent.querySelectorAll('td input[type="checkbox"]')[0].value + "");
                             var inputElement = $('input[name="topic_deleted"]');
                             inputElement.val(parent.querySelectorAll('td input[type="checkbox"]')[0].value + "");
                             // Submit form
@@ -88,7 +88,7 @@ $(function () {
                         });
                     } else if (result.dismiss === 'cancel') {
                         Swal.fire({
-                            text: topicName + " was not deleted.",
+                            text: eleName + " was not deleted.",
                             icon: "error",
                             buttonsStyling: false,
                             confirmButtonText: "Ok, got it!",
@@ -122,7 +122,7 @@ $(function () {
         const checkboxes = $('table [type="checkbox"]');
 
         // Select elements
-        const deleteSelected = document.querySelector('[data-kt-customer-table-select="delete_selected"]');
+        const deleteSelected = document.querySelector('[data-kt-topic-table-select="delete_selected"]');
 
         // Toggle delete selected toolbar
         checkboxes.each(function (index, c) {
@@ -200,9 +200,9 @@ $(function () {
     // Toggle toolbars
     const toggleToolbars = () => {
         // Define variables
-        const toolbarBase = document.querySelector('[data-kt-customer-table-toolbar="base"]');
-        const toolbarSelected = document.querySelector('[data-kt-customer-table-toolbar="selected"]');
-        const selectedCount = document.querySelector('[data-kt-customer-table-select="selected_count"]');
+        const toolbarBase = document.querySelector('[data-kt-topic-table-toolbar="base"]');
+        const toolbarSelected = document.querySelector('[data-kt-topic-table-toolbar="selected"]');
+        const selectedCount = document.querySelector('[data-kt-topic-table-select="selected_count"]');
 
         // Select refreshed checkbox DOM elements 
         const allCheckboxes = $('table tbody [type="checkbox"]');
