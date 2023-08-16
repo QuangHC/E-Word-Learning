@@ -116,10 +116,11 @@ var KTUsersUpdateDetails = function () {
                 }).then(function (result) {
                     if (result.isConfirmed) {
                         modal.hide();
+                        
                     }
                 });
 
-                //form.submit(); // Submit form
+                form.submit(); // Submit form
             }, 2000);
         });
     }
