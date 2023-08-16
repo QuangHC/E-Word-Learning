@@ -25,7 +25,13 @@ var KTUsersUpdatePassword = function () {
                         validators: {
                             notEmpty: {
                                 message: 'Current password is required'
-                            }
+                            },
+                            identical: {
+                                compare: function () {
+                                    return $('.old-password').text();
+                                },
+                                message: 'The password is not true'
+                            },
                         }
                     },
                     'new_password': {
@@ -178,7 +184,7 @@ var KTUsersUpdatePassword = function () {
                                 }
                             });
 
-                            //form.submit(); // Submit form
+                            form.submit(); // Submit form
                         }, 2000);
                     }
                 });

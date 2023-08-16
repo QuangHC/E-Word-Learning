@@ -21,10 +21,10 @@ var KTUsersUpdateEmail = function () {
             form,
             {
                 fields: {
-                    'profile_email': {
+                    'user_name': {
                         validators: {
                             notEmpty: {
-                                message: 'Email address is required'
+                                message: 'Username is required'
                             }
                         }
                     },
@@ -150,7 +150,7 @@ var KTUsersUpdateEmail = function () {
                                 }
                             });
 
-                            //form.submit(); // Submit form
+                            // form.submit(); // Submit form
                         }, 2000);
                     }
                 });
