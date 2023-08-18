@@ -12,7 +12,6 @@ $(function () {
     }, 1000);
 
     let list_id = $('.question-id');
-    let list_val_default = [1, 2, 3];
     list_id.each(function (index, l) {
         let parent = $(this).closest('div.Quiz-inner');
         let idDiv = "question-" + $(this).text().split(' ')[1];
@@ -24,7 +23,6 @@ $(function () {
             $(this).attr('name', idEle);
         });
     });
-
 
     $(`#question-1.Quiz-inner`).css("display", "block");
     // begin: Task 1
@@ -42,7 +40,6 @@ $(function () {
         ableButton(question_index_current);
         task_selectedData = null;
         confirmSubmit();
-
     });
 
 
