@@ -2541,7 +2541,7 @@ var KTPasswordMeter = function(element, options) {
     }
 
     var _checkChar = function() {
-        return /[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(the.inputElement.value);  // 20 score
+        return /[_~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(the.inputElement.value);  // 20 score
     }    
 
     var _getCheckScore = function() {

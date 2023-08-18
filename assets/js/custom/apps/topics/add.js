@@ -16,28 +16,7 @@ $(function () {
                     'name': {
                         validators: {
                             notEmpty: {
-                                message: 'Word is required'
-                            }
-                        }
-                    },
-                    'attributes': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Type is required'
-                            }
-                        }
-                    },
-                    'pronounce': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Pronounce is required'
-                            }
-                        }
-                    },
-                    'mean': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Meaning is required'
+                                message: 'Name topic is required'
                             }
                         }
                     },
@@ -87,7 +66,7 @@ $(function () {
                                     // Enable submit button after loading
                                     submitButton.disabled = false;
 
-                                    // Redirect to words list page
+                                    // Redirect to topics list page
                                     form.submit();
                                     // window.location = form.getAttribute("data-kt-redirect");
                                 }
@@ -173,12 +152,12 @@ $(function () {
         })
     }
     // Elements
-    modal = new bootstrap.Modal(document.querySelector('#kt_modal_add_word'));
+    modal = new bootstrap.Modal(document.querySelector('#kt_modal_add_topic'));
 
-    form = document.querySelector('#kt_modal_add_word_form');
-    submitButton = form.querySelector('#kt_modal_add_word_submit');
-    cancelButton = form.querySelector('#kt_modal_add_word_cancel');
-    closeButton = form.querySelector('#kt_modal_add_word_close');
+    form = document.querySelector('#kt_modal_add_topic_form');
+    submitButton = form.querySelector('#kt_modal_add_topic_submit');
+    cancelButton = form.querySelector('#kt_modal_add_topic_cancel');
+    closeButton = form.querySelector('#kt_modal_add_topic_close');
 
     handleForm();
 });

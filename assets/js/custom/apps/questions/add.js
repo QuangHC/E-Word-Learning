@@ -1,94 +1,61 @@
-/******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
-var __webpack_exports__ = {};
-/*!************************************************************************************************!*\
-  !*** ../../../themes/metronic/html/demo2/src/js/custom/apps/user-management/users/list/add.js ***!
-  \************************************************************************************************/
+$(function () {
+    var submitButton;
+    var cancelButton;
+    var closeButton;
+    var validator;
+    var form;
+    var modal;
 
-
-// Class definition
-var KTUsersAddUser = function () {
-    // Shared variables
-    const element = document.getElementById('kt_modal_add_user');
-    const form = element.querySelector('#kt_modal_add_user_form');
-    const modal = new bootstrap.Modal(element);
-    var passwordMeter;
-
-    function isValidPhoneNumber(phoneNumber) {
-        // Biểu thức chính quy để kiểm tra định dạng số điện thoại
-        var phoneRegex = /^[0-9]{10}$/;
-
-        // Kiểm tra giá trị với biểu thức chính quy
-        return phoneRegex.test(phoneNumber);
-    }
-
-    // Password input validation
-    var validatePassword = function () {
-        return (passwordMeter.getScore() === 100);
-    }
-
-    // Init add schedule modal
-    var initAddUser = () => {
-
+    // Init form inputs
+    var handleForm = function () {
         // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-        var validator = FormValidation.formValidation(
+        validator = FormValidation.formValidation(
             form,
             {
                 fields: {
-                    'user_name': {
+                    'content': {
                         validators: {
                             notEmpty: {
-                                message: 'Full name is required'
+                                message: 'Content is required'
                             }
                         }
                     },
-                    'email': {
+                    'answer': {
                         validators: {
                             notEmpty: {
-                                message: 'Valid email address is required'
+                                message: 'Answer is required'
                             }
                         }
                     },
-                    'password': {
+                    'option1': {
                         validators: {
                             notEmpty: {
-                                message: 'The password is required'
-                            },
-                            callback: {
-                                message: 'Please enter valid password',
-                                callback: function (input) {
-                                    if (input.value.length > 0) {
-                                        return validatePassword();
-                                    }
-                                }
+                                message: 'Option 1 is required'
                             }
                         }
                     },
-                    'full_name': {
+                    'option2': {
                         validators: {
                             notEmpty: {
-                                message: 'Full name is required'
+                                message: 'Option 2 is required'
                             }
                         }
                     },
-
-                    'phone': {
+                    'option3': {
                         validators: {
                             notEmpty: {
-                                message: 'Phone number is required'
-                            },
-                            callback: {
-                                message: 'Please enter a valid phone number',
-                                callback: function (input) {
-                                    if (input.value.length > 0) {
-                                        return isValidPhoneNumber(input.value);
-                                    }
-                                }
+                                message: 'Option 3 is required'
+                            }
+                        }
+                    },
+                    'option4': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Option 4 is required'
                             }
                         }
                     },
                 },
-
                 plugins: {
                     trigger: new FormValidation.plugins.Trigger(),
                     bootstrap: new FormValidation.plugins.Bootstrap5({
@@ -100,9 +67,8 @@ var KTUsersAddUser = function () {
             }
         );
 
-        // Submit button handler
-        const submitButton = element.querySelector('[data-kt-users-modal-action="submit"]');
-        submitButton.addEventListener('click', e => {
+        // Action buttons
+        submitButton.addEventListener('click', function (e) {
             e.preventDefault();
 
             // Validate form before submit
@@ -111,21 +77,14 @@ var KTUsersAddUser = function () {
                     console.log('validated!');
 
                     if (status == 'Valid') {
-                        // Show loading indication
                         submitButton.setAttribute('data-kt-indicator', 'on');
 
-                        // Disable button to avoid multiple click 
+                        // Disable submit button whilst loading
                         submitButton.disabled = true;
 
-                        // Simulate form submission. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         setTimeout(function () {
-                            // Remove loading indication
                             submitButton.removeAttribute('data-kt-indicator');
 
-                            // Enable button
-                            submitButton.disabled = false;
-
-                            // Show popup confirmation 
                             Swal.fire({
                                 text: "Form has been successfully submitted!",
                                 icon: "success",
@@ -136,14 +95,19 @@ var KTUsersAddUser = function () {
                                 }
                             }).then(function (result) {
                                 if (result.isConfirmed) {
+                                    // Hide modal
                                     modal.hide();
+
+                                    // Enable submit button after loading
+                                    submitButton.disabled = false;
+
+                                    // Redirect to customers list page
+                                    form.submit();
+                                    // window.location = form.getAttribute("data-kt-redirect");
                                 }
                             });
-
-                            form.submit(); // Submit form
                         }, 2000);
                     } else {
-                        // Show popup warning. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         Swal.fire({
                             text: "Sorry, looks like there are some errors detected, please try again.",
                             icon: "error",
@@ -158,9 +122,7 @@ var KTUsersAddUser = function () {
             }
         });
 
-        // Cancel button handler
-        const cancelButton = element.querySelector('[data-kt-users-modal-action="cancel"]');
-        cancelButton.addEventListener('click', e => {
+        cancelButton.addEventListener('click', function (e) {
             e.preventDefault();
 
             Swal.fire({
@@ -176,8 +138,8 @@ var KTUsersAddUser = function () {
                 }
             }).then(function (result) {
                 if (result.value) {
-                    form.reset(); // Reset form			
-                    modal.hide();	
+                    form.reset(); // Reset form	
+                    modal.hide(); // Hide modal				
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
                         text: "Your form has not been cancelled!.",
@@ -192,9 +154,7 @@ var KTUsersAddUser = function () {
             });
         });
 
-        // Close button handler
-        const closeButton = element.querySelector('[data-kt-users-modal-action="close"]');
-        closeButton.addEventListener('click', e => {
+        closeButton.addEventListener('click', function (e) {
             e.preventDefault();
 
             Swal.fire({
@@ -210,8 +170,8 @@ var KTUsersAddUser = function () {
                 }
             }).then(function (result) {
                 if (result.value) {
-                    form.reset(); // Reset form			
-                    modal.hide();	
+                    form.reset(); // Reset form	
+                    modal.hide(); // Hide modal				
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
                         text: "Your form has not been cancelled!.",
@@ -224,23 +184,16 @@ var KTUsersAddUser = function () {
                     });
                 }
             });
-        });
+        })
     }
+    // Elements
+    modal = new bootstrap.Modal(document.querySelector('#kt_modal_add_question'));
 
-    return {
-        // Public functions
-        init: function () {
-            initAddUser();
-            passwordMeter = KTPasswordMeter.getInstance(form.querySelector('[data-kt-password-meter="true"]'));
+    form = document.querySelector('#kt_modal_add_question_form');
+    submitButton = form.querySelector('#kt_modal_add_question_submit');
+    cancelButton = form.querySelector('#kt_modal_add_question_cancel');
+    closeButton = form.querySelector('#kt_modal_add_question_close');
 
-        }
-    };
-}();
-
-// On document ready
-KTUtil.onDOMContentLoaded(function () {
-    KTUsersAddUser.init();
+    handleForm();
 });
-/******/ })()
-;
-//# sourceMappingURL=add.js.map
+

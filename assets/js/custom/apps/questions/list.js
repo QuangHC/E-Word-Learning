@@ -1,16 +1,16 @@
 $(function () {
     // Define variables
-    const table = document.querySelector('#kt_words_table');
+    const table = document.querySelector('#kt_questions_table');
 
     // Private functions
-    var initTopicList = function () {
+    var initQuestionList = function () {
         // Set date data order
         const tableRows = table.querySelectorAll('tbody tr');
 
         tableRows.forEach(row => {
             const dateRow = row.querySelectorAll('td');
-            const realDate = moment(dateRow[5].innerHTML, "DD MMM YYYY, LT").format(); // select date from 5th column in table
-            dateRow[5].setAttribute('data-order', realDate);
+            const realDate = moment(dateRow[4].innerHTML, "DD MMM YYYY, LT").format(); // select date from 5th column in table
+            dateRow[4].setAttribute('data-order', realDate);
         });
 
         // Init datatable --- more info on datatables: https://datatables.net/manual/
@@ -19,7 +19,7 @@ $(function () {
             'order': [],
             'columnDefs': [
                 { orderable: false, targets: 0 }, // Disable ordering on column 0 (checkbox)
-                { orderable: false, targets: 6 }, // Disable ordering on column 6 (actions)
+                { orderable: false, targets: 5 }, // Disable ordering on column 6 (actions)
             ]
         });
 
@@ -33,16 +33,16 @@ $(function () {
 
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
     var handleSearchDatatable = () => {
-        const filterSearch = document.querySelector('[data-kt-word-table-filter="search"]');
+        const filterSearch = document.querySelector('[data-kt-question-table-filter="search"]');
         filterSearch.addEventListener('keyup', function (e) {
             datatable.search(e.target.value).draw();
         });
     }
 
-    // Delete words
+    // Delete questions
     var handleDeleteRows = () => {
         // Select all delete buttons
-        const deleteButtons = $('[data-kt-word-table-filter="delete_row"]');
+        const deleteButtons = $('[data-kt-question-table-filter="delete_row"]');
         deleteButtons.each(function (index, d) {
             // Delete button on click
             d.addEventListener('click', function (e) {
@@ -51,7 +51,7 @@ $(function () {
                 // Select parent row
                 const parent = e.target.closest('tr');
 
-                // Get word name
+                // Get question name
                 const eleName = parent.querySelectorAll('td')[1].innerText;
                 // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
                 Swal.fire({
@@ -79,9 +79,9 @@ $(function () {
                             // Change input value to delete
                             // var formElement = $('table tbody')
                             var formElement = $('.card-toolbar form')
-                            // console.log(formElement); 
-                            // console.log("value: " + parent.querySelectorAll('td input[type="checkbox"]')[0].value + "");
-                            var inputElement = $('input[name="word_deleted"]');
+
+                            console.log(formElement); 
+                            var inputElement = $('input[name="question_deleted"]');
                             inputElement.val(parent.querySelectorAll('td input[type="checkbox"]')[0].value + "");
                             // Submit form
                             formElement.submit();
@@ -122,7 +122,7 @@ $(function () {
         const checkboxes = $('table [type="checkbox"]');
 
         // Select elements
-        const deleteSelected = document.querySelector('[data-kt-word-table-select="delete_selected"]');
+        const deleteSelected = document.querySelector('[data-kt-question-table-select="delete_selected"]');
 
         // Toggle delete selected toolbar
         checkboxes.each(function (index, c) {
@@ -159,10 +159,10 @@ $(function () {
                             confirmButton: "btn fw-bold btn-primary",
                         }
                     }).then(function () {
-                        // Remove all selected customers
+                        // Remove all selected questions
                         // Change input value to delete
                         var formElement = $('.card-toolbar form')
-                        var inputElement = $('input[name="list_word_deleted"]');
+                        var inputElement = $('input[name="list_question_deleted"]');
                         var val = "";
                         var value_check = [];
                         checkboxes.each(function (index, c) {
@@ -184,7 +184,7 @@ $(function () {
                     });
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
-                        text: "Selected words was not deleted.",
+                        text: "Selected questions was not deleted.",
                         icon: "error",
                         buttonsStyling: false,
                         confirmButtonText: "Ok, got it!",
@@ -200,9 +200,9 @@ $(function () {
     // Toggle toolbars
     const toggleToolbars = () => {
         // Define variables
-        const toolbarBase = document.querySelector('[data-kt-word-table-toolbar="base"]');
-        const toolbarSelected = document.querySelector('[data-kt-word-table-toolbar="selected"]');
-        const selectedCount = document.querySelector('[data-kt-word-table-select="selected_count"]');
+        const toolbarBase = document.querySelector('[data-kt-question-table-toolbar="base"]');
+        const toolbarSelected = document.querySelector('[data-kt-question-table-toolbar="selected"]');
+        const selectedCount = document.querySelector('[data-kt-question-table-select="selected_count"]');
 
         // Select refreshed checkbox DOM elements 
         const allCheckboxes = $('table tbody [type="checkbox"]');
@@ -230,7 +230,7 @@ $(function () {
         }
     }
 
-    initTopicList();
+    initQuestionList();
     handleSearchDatatable();
     handleDeleteRows();
     initToggleToolbar();

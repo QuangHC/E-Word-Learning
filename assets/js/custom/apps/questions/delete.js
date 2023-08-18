@@ -8,7 +8,7 @@ $(function () {
             d.addEventListener('click', function (e) {
                 e.preventDefault();
                 // Get word name
-                const eleName = $('.word-name').text();
+                const eleName = $('.question-content').text();
                 // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
                 Swal.fire({
                     text: "Are you sure you want to delete " + eleName + "?",
@@ -33,15 +33,15 @@ $(function () {
                             }
                         }).then(function () {
                             var form = $('.d-flex.fs-4.py-3 form');
-                            var inputElement = $('input[name="word_deleted"]');
-                            var word_id = $('.py-5.fs-6 .word_id').text();
-                            inputElement.val(word_id + "");
+                            var inputElement = $('input[name="question_deleted"]');
+                            var question_id = $('.py-5.fs-6 .question_id').text();
+                            inputElement.val(question_id);
                             // Submit form
                             form.submit();
                         });
                     } else if (result.dismiss === 'cancel') {
                         Swal.fire({
-                            text: topicName + " was not deleted.",
+                            text: eleName + " was not deleted.",
                             icon: "error",
                             buttonsStyling: false,
                             confirmButtonText: "Ok, got it!",

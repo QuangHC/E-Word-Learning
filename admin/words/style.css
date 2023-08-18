@@ -25,13 +25,12 @@
     position: absolute;
     right: 0;
     top: 4px;
-
 }
 
 @media screen and (max-width: 800px) {
     * {}
 
-    table#kt_customers_table {
+    table#kt_words_table {
         display: block;
         overflow: auto !important;
         white-space: nowrap;

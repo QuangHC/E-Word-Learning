@@ -7,8 +7,8 @@ $(function () {
             // Delete button on click
             d.addEventListener('click', function (e) {
                 e.preventDefault();
-                // Get word name
-                const eleName = $('.word-name').text();
+                // Get user name
+                const eleName = $('.us-name').text();
                 // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
                 Swal.fire({
                     text: "Are you sure you want to delete " + eleName + "?",
@@ -32,10 +32,10 @@ $(function () {
                                 confirmButton: "btn fw-bold btn-primary",
                             }
                         }).then(function () {
-                            var form = $('.d-flex.fs-4.py-3 form');
-                            var inputElement = $('input[name="word_deleted"]');
-                            var word_id = $('.py-5.fs-6 .word_id').text();
-                            inputElement.val(word_id + "");
+                            var form = $('.delete-user form');
+                            var inputElement = $('input[name="user_deleted"]');
+                            var user_id = $('.account_id').text();
+                            inputElement.val(user_id + "");
                             // Submit form
                             form.submit();
                         });
