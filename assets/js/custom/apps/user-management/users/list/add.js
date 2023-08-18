@@ -22,6 +22,11 @@ var KTUsersAddUser = function () {
         return phoneRegex.test(phoneNumber);
     }
 
+    function isValidEmail(email) {
+        var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return emailRegex.test(email);
+    }
+
     // Password input validation
     var validatePassword = function () {
         return (passwordMeter.getScore() === 100);
@@ -46,7 +51,15 @@ var KTUsersAddUser = function () {
                         validators: {
                             notEmpty: {
                                 message: 'Valid email address is required'
-                            }
+                            },
+                            callback: {
+                                message: 'Please enter a valid email',
+                                callback: function (input) {
+                                    if (input.value.length > 0) {
+                                        return isValidEmail(input.value);
+                                    }
+                                }
+                            },
                         }
                     },
                     'password': {

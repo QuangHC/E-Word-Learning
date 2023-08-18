@@ -13,8 +13,76 @@ var KTUsersUpdateDetails = function () {
     const form = element.querySelector('#kt_modal_update_user_form');
     const modal = new bootstrap.Modal(element);
 
+    function isValidPhoneNumber(phoneNumber) {
+        // Biểu thức chính quy để kiểm tra định dạng số điện thoại
+        var phoneRegex = /^[0-9]{10}$/;
+
+        // Kiểm tra giá trị với biểu thức chính quy
+        return phoneRegex.test(phoneNumber);
+    }
+
+    function isValidEmail(email) {
+        var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return emailRegex.test(email);
+    }
+
     // Init add schedule modal
     var initUpdateDetails = () => {
+        // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
+        var validator = FormValidation.formValidation(
+            form,
+            {
+                fields: {
+                    'email': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Valid email address is required'
+                            },
+                            callback: {
+                                message: 'Please enter a valid email',
+                                callback: function (input) {
+                                    if (input.value.length > 0) {
+                                        return isValidEmail(input.value);
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    'full_name': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Full name is required'
+                            }
+                        }
+                    },
+
+                    'phone': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Phone number is required'
+                            },
+                            callback: {
+                                message: 'Please enter a valid phone number',
+                                callback: function (input) {
+                                    if (input.value.length > 0) {
+                                        return isValidPhoneNumber(input.value);
+                                    }
+                                }
+                            }
+                        }
+                    },
+                },
+
+                plugins: {
+                    trigger: new FormValidation.plugins.Trigger(),
+                    bootstrap: new FormValidation.plugins.Bootstrap5({
+                        rowSelector: '.fv-row',
+                        eleInvalidClass: '',
+                        eleValidClass: ''
+                    })
+                }
+            }
+        );
 
         // Close button handler
         const closeButton = element.querySelector('[data-kt-users-modal-action="close"]');
