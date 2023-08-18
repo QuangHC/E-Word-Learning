@@ -11,6 +11,20 @@ $(function () {
         }
     }, 1000);
 
+    let list_id = $('.question-id');
+    list_id.each(function (index, l) {
+        let parent = $(this).closest('div.Quiz-inner');
+        let idDiv = "question-" + $(this).text().split(' ')[1];
+        parent.attr('id', idDiv);
+
+        let inputEle = $(`#question-${index + 1} input[type="radio"]`);
+        let idEle = "question" + (index + 1);
+        inputEle.each(function (index, l) {
+            $(this).attr('name', idEle);
+        });
+    });
+
+    $(`#question-1.Quiz-inner`).css("display", "block");
     // begin: Task 1
     let question_index_current = 1;
     const total_questions = $('.Quiz-inner').length;
@@ -26,7 +40,6 @@ $(function () {
         ableButton(question_index_current);
         task_selectedData = null;
         confirmSubmit();
-
     });
 
 
@@ -40,25 +53,54 @@ $(function () {
         confirmSubmit();
     });
 
-    $(".radio label").click(function () {
+    $(".radio input").on('click', function () {
         task_selectedData = $(this);
         $('.selecting-answer').removeClass('selecting-answer');
-        ($(this).prev()).addClass('selecting-answer');
+        ($(this)).addClass('selecting-answer');
         $(`#question-${question_index_current} .Quiz-confidence-buttons .btn`).removeClass('disabled');
+        $(`#question-${question_index_current} .Quiz-confidence-buttons .selecting-btn`).removeClass('selecting-btn');
+        resetValInput();
         changeRemainingQuestions();
         confirmSubmit();
     });
 
 
+    $(".radio label").click(function () {
+        task_selectedData = $(this);
+        $('.selecting-answer').removeClass('selecting-answer');
+        ($(this).prev()).addClass('selecting-answer');
+        $(`#question-${question_index_current} .Quiz-confidence-buttons .btn`).removeClass('disabled');
+        $(`#question-${question_index_current} .Quiz-confidence-buttons .selecting-btn`).removeClass('selecting-btn');
+        resetValInput();
+        changeRemainingQuestions();
+        confirmSubmit();
+    });
+
+    function resetValInput() {
+        list_input = $(`#question-${question_index_current} input`);
+        list_input.each(function (index, l) {
+            if (!$(this).hasClass('selecting-answer')) {
+                $(this).val(index + 1);
+            }
+        });
+    }
+
+    function resetValDefault() {
+        list_input = $(`#question-${question_index_current} input`);
+        list_input.each(function (index, l) {
+            $(this).val(index + 1);
+        });
+    }
+
     $(`.Quiz-confidence-buttons a`).click(function () {
         let data_topic = $(`#question-${question_index_current}`).attr('data-topic') + "_";
         let data_degree = "_" + $(this).attr('data-degree');
+        resetValDefault();
         let data_answer = $(`#question-${question_index_current} .selecting-answer`).val();
         $(`#question-${question_index_current} .Quiz-confidence-buttons .selecting-btn`).removeClass('selecting-btn');
         $(this).addClass('selecting-btn');
         $(this).css('background-color', '#DEDEDE');
-        // }
-        $(`#question-${question_index_current} .selecting-answer`).val(data_topic + data_answer[0] + data_degree);
+        $(`#question-${question_index_current} .selecting-answer`).val(data_topic + data_answer + data_degree);
         changeRemainingQuestions();
         confirmSubmit();
     });
@@ -102,6 +144,7 @@ $(function () {
         }
         ableButton(question_index_current);
     }
+
 
     function changeRemainingQuestions() {
         filledAll(question_index_current);
